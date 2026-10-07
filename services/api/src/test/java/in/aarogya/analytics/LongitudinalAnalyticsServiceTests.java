@@ -185,12 +185,16 @@ class LongitudinalAnalyticsServiceTests {
     ) {
         var entry = mock(MealEntry.class);
 
+        var energyNutrient = nutrient("ENERGY_KCAL", energy, "kcal");
+        var proteinNutrient = nutrient("PROTEIN_G", protein, "g");
+        var fibreNutrient = nutrient("FIBRE_G", fibre, "g");
+
         when(entry.getMealDate()).thenReturn(date);
         when(entry.getMealType()).thenReturn(mealType);
         when(entry.getNutrientSnapshots()).thenReturn(Set.of(
-            nutrient("ENERGY_KCAL", energy, "kcal"),
-            nutrient("PROTEIN_G", protein, "g"),
-            nutrient("FIBRE_G", fibre, "g")
+            energyNutrient,
+            proteinNutrient,
+            fibreNutrient
         ));
 
         return entry;
