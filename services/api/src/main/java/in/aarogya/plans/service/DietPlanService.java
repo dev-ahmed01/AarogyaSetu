@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -25,8 +26,9 @@ import in.aarogya.plans.domain.DietPlanItem;
 import in.aarogya.plans.repository.DietPlanRepository;
 import in.aarogya.profile.api.ProfileResponse;
 import in.aarogya.profile.service.ProfileService;
-import in.aarogya.recommendations.api.RecommendationAssessmentResponse;
 import in.aarogya.recommendations.service.RecommendationEngineService;
+import in.aarogya.regional.service.RegionalIntelligenceService;
+import in.aarogya.regional.service.RegionalIntelligenceService.RegionalFit;
 
 @Service
 public class DietPlanService {
@@ -41,6 +43,7 @@ public class DietPlanService {
     private final ProfileService profileService;
     private final RecommendationEngineService recommendationEngine;
     private final PlanGenerationPolicy policy;
+    private final RegionalIntelligenceService regionalService;
 
     public DietPlanService(
         DietPlanRepository planRepository,
@@ -48,7 +51,8 @@ public class DietPlanService {
         UserAccountRepository userRepository,
         ProfileService profileService,
         RecommendationEngineService recommendationEngine,
-        PlanGenerationPolicy policy
+        PlanGenerationPolicy policy,
+        RegionalIntelligenceService regionalService
     ) {
         this.planRepository = planRepository;
         this.foodRepository = foodRepository;
@@ -56,6 +60,7 @@ public class DietPlanService {
         this.profileService = profileService;
         this.recommendationEngine = recommendationEngine;
         this.policy = policy;
+        this.regionalService = regionalService;
     }
 
     @Transactional(readOnly = true)
@@ -65,9 +70,7 @@ public class DietPlanService {
 
         var plan = planRepository
             .findTopByUser_IdAndPlanDateAndStatusOrderByCreatedAtDesc(
-                userId,
-                date,
-                "DRAFT"
+                userId, date, "DRAFT"
             )
             .orElse(null);
 
@@ -78,7 +81,14 @@ public class DietPlanService {
         return new PlanDayResponse(
             date,
             true,
-            DietPlanResponse.from(plan, notices(profile, plan.getGenerationMode()))
+            DietPlanResponse.from(
+                plan,
+                notices(
+                    profile,
+                    plan.getGenerationMode(),
+                    plan.getRegionalContextLabel()
+                )
+            )
         );
     }
 
@@ -92,10 +102,21 @@ public class DietPlanService {
         var profile = requireReadyProfile(userId);
         var assessment = recommendationEngine.assess(userId, date);
         var focus = policy.focusFrom(assessment);
+        var candidates = eligibleFoods(profile);
+        var fits = regionalService.fitsFor(
+            candidates,
+            profile.stateOrRegion()
+        );
 
-        return rankedFoods(profile, focus, null, Set.of()).stream()
+        return rankedFoods(
+            candidates,
+            focus,
+            null,
+            Set.of(),
+            fits
+        ).stream()
             .limit(Math.min(Math.max(limit, 1), 12))
-            .map(food -> toSuggestion(food, focus))
+            .map(food -> toSuggestion(food, focus, fits.get(food.getId())))
             .toList();
     }
 
@@ -112,14 +133,12 @@ public class DietPlanService {
             .orElseThrow(() -> new IllegalArgumentException("Account not found."));
         var assessment = recommendationEngine.assess(userId, date);
         var focus = policy.focusFrom(assessment);
-
-        var candidates = foodRepository
-            .findByActiveTrueAndNutrientStatusOrderByCanonicalNameAsc(
-                "SOURCE_REFERENCED"
-            )
-            .stream()
-            .filter(food -> policy.isEligibleFood(profile, food))
-            .toList();
+        var context = regionalService.context(userId);
+        var candidates = eligibleFoods(profile);
+        var fits = regionalService.fitsFor(
+            candidates,
+            profile.stateOrRegion()
+        );
 
         if (candidates.isEmpty()) {
             throw new PlanGenerationUnavailableException(
@@ -128,10 +147,15 @@ public class DietPlanService {
         }
 
         planRepository.findByUser_IdAndPlanDateAndStatus(
-            userId,
-            date,
-            "DRAFT"
+            userId, date, "DRAFT"
         ).forEach(DietPlan::archive);
+
+        var contextCode = context.stateCode() != null
+            ? context.stateCode()
+            : context.macroRegionCode();
+        var contextLabel = context.stateLabel() != null
+            ? context.stateLabel()
+            : context.macroRegionLabel();
 
         var plan = new DietPlan(
             user,
@@ -139,7 +163,9 @@ public class DietPlanService {
             focus.mode(),
             assessment.status(),
             focus.sourceRuleCode(),
-            focus.sourceRuleVersion()
+            focus.sourceRuleVersion(),
+            context.supported() ? contextCode : null,
+            context.supported() ? contextLabel : null
         );
 
         var usedSlugs = new HashSet<String>();
@@ -152,7 +178,8 @@ public class DietPlanService {
                 focus,
                 mealType,
                 usedSlugs,
-                usedCategories
+                usedCategories,
+                fits
             );
 
             if (selected == null) {
@@ -163,12 +190,13 @@ public class DietPlanService {
             var grams = portion == null
                 ? new BigDecimal("100.00")
                 : portion.getGrams().setScale(2, RoundingMode.HALF_UP);
-
+            var fit = fits.get(selected.getId());
             var explanation = explanation(
                 selected,
                 mealType,
                 focus,
-                grams
+                grams,
+                fit
             );
 
             plan.addItem(new DietPlanItem(
@@ -180,7 +208,10 @@ public class DietPlanService {
                 grams,
                 focus.nutrientCode(),
                 focus.reasonCode(),
-                explanation
+                explanation,
+                fit == null ? null : fit.score(),
+                fit == null ? null : regionalService.fitLabel(fit),
+                fit == null ? null : fit.affinity().getRationale()
             ));
 
             usedSlugs.add(selected.getSlug());
@@ -197,7 +228,7 @@ public class DietPlanService {
 
         return DietPlanResponse.from(
             saved,
-            notices(profile, focus.mode())
+            notices(profile, focus.mode(), contextLabel)
         );
     }
 
@@ -205,8 +236,17 @@ public class DietPlanService {
     public void archive(UUID userId, UUID planId) {
         var plan = planRepository.findByIdAndUser_Id(planId, userId)
             .orElseThrow(() -> new IllegalArgumentException("Plan was not found."));
-
         plan.archive();
+    }
+
+    private List<Food> eligibleFoods(ProfileResponse profile) {
+        return foodRepository
+            .findByActiveTrueAndNutrientStatusOrderByCanonicalNameAsc(
+                "SOURCE_REFERENCED"
+            )
+            .stream()
+            .filter(food -> policy.isEligibleFood(profile, food))
+            .toList();
     }
 
     private ProfileResponse requireReadyProfile(UUID userId) {
@@ -249,51 +289,29 @@ public class DietPlanService {
         PlanGenerationPolicy.Focus focus,
         String mealType,
         Set<String> usedSlugs,
-        Set<String> usedCategories
+        Set<String> usedCategories,
+        Map<UUID, RegionalFit> fits
     ) {
-        var unused = rankedFoods(
+        var ranked = rankedFoods(
             candidates,
             focus,
             mealType,
-            usedCategories
-        ).stream()
+            usedCategories,
+            fits
+        );
+
+        return ranked.stream()
             .filter(food -> !usedSlugs.contains(food.getSlug()))
-            .findFirst();
-
-        if (unused.isPresent()) {
-            return unused.get();
-        }
-
-        return rankedFoods(
-            candidates,
-            focus,
-            mealType,
-            usedCategories
-        ).stream().findFirst().orElse(null);
-    }
-
-    private List<Food> rankedFoods(
-        ProfileResponse profile,
-        PlanGenerationPolicy.Focus focus,
-        String mealType,
-        Set<String> usedCategories
-    ) {
-        var foods = foodRepository
-            .findByActiveTrueAndNutrientStatusOrderByCanonicalNameAsc(
-                "SOURCE_REFERENCED"
-            )
-            .stream()
-            .filter(food -> policy.isEligibleFood(profile, food))
-            .toList();
-
-        return rankedFoods(foods, focus, mealType, usedCategories);
+            .findFirst()
+            .orElseGet(() -> ranked.stream().findFirst().orElse(null));
     }
 
     private List<Food> rankedFoods(
         List<Food> foods,
         PlanGenerationPolicy.Focus focus,
         String mealType,
-        Set<String> usedCategories
+        Set<String> usedCategories,
+        Map<UUID, RegionalFit> fits
     ) {
         return foods.stream()
             .sorted(
@@ -303,7 +321,10 @@ public class DietPlanService {
                             food,
                             focus,
                             mealType,
-                            usedCategories
+                            usedCategories,
+                            regionalService.planningBonus(
+                                fits.get(food.getId())
+                            )
                         )
                     )
                     .reversed()
@@ -314,7 +335,8 @@ public class DietPlanService {
 
     private SmartFoodSuggestionResponse toSuggestion(
         Food food,
-        PlanGenerationPolicy.Focus focus
+        PlanGenerationPolicy.Focus focus,
+        RegionalFit fit
     ) {
         var portion = policy.defaultPortion(food);
         var grams = portion == null
@@ -338,9 +360,12 @@ public class DietPlanService {
             focusAmount,
             policy.nutrientUnit(food, focus.nutrientCode()),
             focus.reasonCode(),
-            explanation(food, null, focus, grams),
+            explanation(food, null, focus, grams, fit),
             food.getSource() == null ? null : food.getSource().getSourceCode(),
-            food.getSourceFoodRef()
+            food.getSourceFoodRef(),
+            fit == null ? null : fit.score(),
+            fit == null ? null : regionalService.fitLabel(fit),
+            fit == null ? null : fit.affinity().getRationale()
         );
     }
 
@@ -348,16 +373,22 @@ public class DietPlanService {
         Food food,
         String mealType,
         PlanGenerationPolicy.Focus focus,
-        BigDecimal grams
+        BigDecimal grams,
+        RegionalFit fit
     ) {
         var mealText = mealType == null
             ? "your food options"
             : mealType.toLowerCase(java.util.Locale.ROOT);
+        var regionText = fit != null
+            && !"ALL_INDIA".equals(fit.affinity().getRelationship())
+                ? " A small regional-familiarity bonus also affected ordering after safety and nutrition checks."
+                : "";
 
         if (focus.nutrientCode() == null) {
             return food.getCanonicalName()
                 + " was selected for " + mealText
-                + " as a source-referenced catalog option compatible with your recorded diet and allergy filters. The draft uses variety heuristics, not a prescribed calorie target.";
+                + " as a source-referenced catalog option compatible with your recorded diet and allergy filters. The draft uses variety heuristics, not a prescribed calorie target."
+                + regionText;
         }
 
         var amount = policy.nutrientForGrams(
@@ -376,12 +407,14 @@ public class DietPlanService {
             + amount.setScale(1, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString()
             + " " + unit
             + " of " + nutrientLabel
-            + "; it is an example option, not a prescribed target.";
+            + "; it is an example option, not a prescribed target."
+            + regionText;
     }
 
     private List<String> notices(
         ProfileResponse profile,
-        String generationMode
+        String generationMode,
+        String regionalContextLabel
     ) {
         var notices = new ArrayList<String>();
         notices.add(
@@ -390,9 +423,14 @@ public class DietPlanService {
         notices.add(
             "Foods are filtered against recorded dietary pattern and catalog allergen flags before ranking."
         );
-        notices.add(
-            "Regional preference ranking is intentionally deferred to Phase 11; current region metadata does not change the order yet."
-        );
+
+        if (regionalContextLabel != null) {
+            notices.add(
+                "Regional familiarity for "
+                    + regionalContextLabel
+                    + " can add only a small ranking bonus after safety, source and nutrition checks. It is cultural relevance metadata, not nutrition guidance."
+            );
+        }
 
         if ("BALANCED_FOUNDATION".equals(generationMode)) {
             notices.add(

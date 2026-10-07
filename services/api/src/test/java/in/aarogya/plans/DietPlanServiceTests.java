@@ -22,6 +22,7 @@ import in.aarogya.profile.api.ProfileResponse;
 import in.aarogya.profile.service.ProfileService;
 import in.aarogya.recommendations.service.RecommendationEngineService;
 import in.aarogya.recommendations.service.RecommendationPolicy;
+import in.aarogya.regional.service.RegionalIntelligenceService;
 
 class DietPlanServiceTests {
 
@@ -32,6 +33,7 @@ class DietPlanServiceTests {
         var users = mock(UserAccountRepository.class);
         var profiles = mock(ProfileService.class);
         var recommendations = mock(RecommendationEngineService.class);
+        var regional = mock(RegionalIntelligenceService.class);
 
         var service = new DietPlanService(
             plans,
@@ -39,7 +41,8 @@ class DietPlanServiceTests {
             users,
             profiles,
             recommendations,
-            new PlanGenerationPolicy(new RecommendationPolicy())
+            new PlanGenerationPolicy(new RecommendationPolicy()),
+            regional
         );
 
         var userId = UUID.randomUUID();
@@ -70,6 +73,6 @@ class DietPlanServiceTests {
             )
         );
 
-        verifyNoInteractions(recommendations, foods, plans, users);
+        verifyNoInteractions(recommendations, foods, plans, users, regional);
     }
 }

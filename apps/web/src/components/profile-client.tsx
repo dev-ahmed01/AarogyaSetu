@@ -82,6 +82,11 @@ export function ProfileClient() {
             <Detail label="Height" value={profile.heightCm ? `${profile.heightCm} cm` : "Not provided"} />
             <Detail label="Weight" value={profile.weightKg ? `${profile.weightKg} kg` : "Not provided"} />
           </dl>
+          {profile.stateOrRegion ? (
+            <Link className="quietLink profileRegionalLink" href="/regional">
+              Explore regional food context
+            </Link>
+          ) : null}
         </Surface>
 
         <Surface className="profileCard">

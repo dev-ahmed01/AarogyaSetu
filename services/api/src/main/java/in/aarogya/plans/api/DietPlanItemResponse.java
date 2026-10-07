@@ -23,25 +23,22 @@ public record DietPlanItemResponse(
     String explanation,
     String sourceCode,
     String sourceFoodRef,
+    Integer regionalFitScore,
+    String regionalFitLabel,
+    String regionalReason,
     List<PlanNutrientResponse> nutrients
 ) {
-
     public static DietPlanItemResponse from(DietPlanItem item) {
         return new DietPlanItemResponse(
-            item.getId(),
-            item.getMealType(),
-            item.getDisplayOrder(),
-            item.getFood().getSlug(),
-            item.getFoodNameSnapshot(),
+            item.getId(), item.getMealType(), item.getDisplayOrder(),
+            item.getFood().getSlug(), item.getFoodNameSnapshot(),
             item.getDietaryClassificationSnapshot(),
             item.getPortion() == null ? null : item.getPortion().getId(),
-            item.getPortionLabelSnapshot(),
-            item.getQuantityGrams(),
-            item.getNutrientFocusCode(),
-            item.getReasonCode(),
-            item.getExplanation(),
-            item.getSourceCodeSnapshot(),
-            item.getSourceFoodRefSnapshot(),
+            item.getPortionLabelSnapshot(), item.getQuantityGrams(),
+            item.getNutrientFocusCode(), item.getReasonCode(),
+            item.getExplanation(), item.getSourceCodeSnapshot(),
+            item.getSourceFoodRefSnapshot(), item.getRegionalFitScore(),
+            item.getRegionalFitLabel(), item.getRegionalReasonSnapshot(),
             item.getNutrients().stream()
                 .sorted(Comparator.comparing(DietPlanItemNutrient::getNutrientCode))
                 .map(PlanNutrientResponse::from)

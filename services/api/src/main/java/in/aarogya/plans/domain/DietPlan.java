@@ -48,21 +48,22 @@ public class DietPlan {
     @Column(name = "source_rule_version")
     private Integer sourceRuleVersion;
 
+    @Column(name = "regional_context_code", length = 80)
+    private String regionalContextCode;
+
+    @Column(name = "regional_context_label", length = 120)
+    private String regionalContextLabel;
+
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
-    @OneToMany(
-        mappedBy = "plan",
-        cascade = CascadeType.ALL,
-        orphanRemoval = true
-    )
+    @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<DietPlanItem> items = new LinkedHashSet<>();
 
-    protected DietPlan() {
-    }
+    protected DietPlan() {}
 
     public DietPlan(
         UserAccount user,
@@ -72,6 +73,20 @@ public class DietPlan {
         String sourceRuleCode,
         Integer sourceRuleVersion
     ) {
+        this(user, planDate, generationMode, engineStatus, sourceRuleCode,
+            sourceRuleVersion, null, null);
+    }
+
+    public DietPlan(
+        UserAccount user,
+        LocalDate planDate,
+        String generationMode,
+        String engineStatus,
+        String sourceRuleCode,
+        Integer sourceRuleVersion,
+        String regionalContextCode,
+        String regionalContextLabel
+    ) {
         this.id = UUID.randomUUID();
         this.user = user;
         this.planDate = planDate;
@@ -80,6 +95,8 @@ public class DietPlan {
         this.engineStatus = engineStatus;
         this.sourceRuleCode = sourceRuleCode;
         this.sourceRuleVersion = sourceRuleVersion;
+        this.regionalContextCode = regionalContextCode;
+        this.regionalContextLabel = regionalContextLabel;
     }
 
     @PrePersist
@@ -91,18 +108,10 @@ public class DietPlan {
     }
 
     @PreUpdate
-    void onUpdate() {
-        updatedAt = Instant.now();
-    }
+    void onUpdate() { updatedAt = Instant.now(); }
 
-    public void addItem(DietPlanItem item) {
-        items.add(item);
-    }
-
-    public void archive() {
-        this.status = "ARCHIVED";
-        this.updatedAt = Instant.now();
-    }
+    public void addItem(DietPlanItem item) { items.add(item); }
+    public void archive() { status = "ARCHIVED"; updatedAt = Instant.now(); }
 
     public UUID getId() { return id; }
     public LocalDate getPlanDate() { return planDate; }
@@ -111,6 +120,8 @@ public class DietPlan {
     public String getEngineStatus() { return engineStatus; }
     public String getSourceRuleCode() { return sourceRuleCode; }
     public Integer getSourceRuleVersion() { return sourceRuleVersion; }
+    public String getRegionalContextCode() { return regionalContextCode; }
+    public String getRegionalContextLabel() { return regionalContextLabel; }
     public Instant getCreatedAt() { return createdAt; }
     public Set<DietPlanItem> getItems() { return Set.copyOf(items); }
 }

@@ -16,6 +16,9 @@ public record SmartFoodSuggestionResponse(
     String reasonCode,
     String explanation,
     String sourceCode,
-    String sourceFoodRef
+    String sourceFoodRef,
+    Integer regionalFitScore,
+    String regionalFitLabel,
+    String regionalReason
 ) {
 }

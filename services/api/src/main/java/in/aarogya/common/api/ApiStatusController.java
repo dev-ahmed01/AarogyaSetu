@@ -16,7 +16,7 @@ public class ApiStatusController {
         return Map.of(
             "service", "aarogya-api",
             "status", "ok",
-            "phase", "10/16",
+            "phase", "11/16",
             "timestamp", Instant.now().toString()
         );
     }

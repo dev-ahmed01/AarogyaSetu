@@ -77,6 +77,15 @@
     ├── snooze / acknowledge / dismiss
     └── optional history
 
+/regional
+└── regional familiarity workspace
+    ├── self-reported region basis
+    ├── no precise-location statement
+    ├── familiar foods / dishes
+    ├── localized aliases
+    ├── planning-eligible vs discovery-only status
+    └── ranking-boundary explanation
+
 /health
 └── longitudinal health-record workspace
     ├── compact record / observation summary

@@ -69,26 +69,34 @@ public class DietPlanItem {
     @Column(name = "source_food_ref_snapshot", length = 120)
     private String sourceFoodRefSnapshot;
 
-    @OneToMany(
-        mappedBy = "planItem",
-        cascade = CascadeType.ALL,
-        orphanRemoval = true
-    )
+    @Column(name = "regional_fit_score")
+    private Integer regionalFitScore;
+
+    @Column(name = "regional_fit_label", length = 60)
+    private String regionalFitLabel;
+
+    @Column(name = "regional_reason_snapshot", length = 700)
+    private String regionalReasonSnapshot;
+
+    @OneToMany(mappedBy = "planItem", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<DietPlanItemNutrient> nutrients = new LinkedHashSet<>();
 
-    protected DietPlanItem() {
+    protected DietPlanItem() {}
+
+    public DietPlanItem(
+        DietPlan plan, String mealType, int displayOrder, Food food,
+        FoodPortion portion, BigDecimal quantityGrams, String nutrientFocusCode,
+        String reasonCode, String explanation
+    ) {
+        this(plan, mealType, displayOrder, food, portion, quantityGrams,
+            nutrientFocusCode, reasonCode, explanation, null, null, null);
     }
 
     public DietPlanItem(
-        DietPlan plan,
-        String mealType,
-        int displayOrder,
-        Food food,
-        FoodPortion portion,
-        BigDecimal quantityGrams,
-        String nutrientFocusCode,
-        String reasonCode,
-        String explanation
+        DietPlan plan, String mealType, int displayOrder, Food food,
+        FoodPortion portion, BigDecimal quantityGrams, String nutrientFocusCode,
+        String reasonCode, String explanation, Integer regionalFitScore,
+        String regionalFitLabel, String regionalReasonSnapshot
     ) {
         this.id = UUID.randomUUID();
         this.plan = plan;
@@ -104,16 +112,16 @@ public class DietPlanItem {
         this.reasonCode = reasonCode;
         this.explanation = explanation;
         this.sourceCodeSnapshot = food.getSource() == null
-            ? null
-            : food.getSource().getSourceCode();
+            ? null : food.getSource().getSourceCode();
         this.sourceFoodRefSnapshot = food.getSourceFoodRef();
+        this.regionalFitScore = regionalFitScore;
+        this.regionalFitLabel = regionalFitLabel;
+        this.regionalReasonSnapshot = regionalReasonSnapshot;
 
         for (var nutrient : food.getNutrients()) {
             nutrients.add(new DietPlanItemNutrient(
-                this,
-                nutrient.getNutrientCode(),
-                nutrient.amountForGrams(quantityGrams),
-                nutrient.getUnit()
+                this, nutrient.getNutrientCode(),
+                nutrient.amountForGrams(quantityGrams), nutrient.getUnit()
             ));
         }
     }
@@ -132,5 +140,8 @@ public class DietPlanItem {
     public String getExplanation() { return explanation; }
     public String getSourceCodeSnapshot() { return sourceCodeSnapshot; }
     public String getSourceFoodRefSnapshot() { return sourceFoodRefSnapshot; }
+    public Integer getRegionalFitScore() { return regionalFitScore; }
+    public String getRegionalFitLabel() { return regionalFitLabel; }
+    public String getRegionalReasonSnapshot() { return regionalReasonSnapshot; }
     public Set<DietPlanItemNutrient> getNutrients() { return Set.copyOf(nutrients); }
 }

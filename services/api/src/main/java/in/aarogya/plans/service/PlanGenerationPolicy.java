@@ -81,7 +81,18 @@ public class PlanGenerationPolicy {
         String mealType,
         Set<String> usedCategories
     ) {
-        double score = mealAffinity(food.getCategoryCode(), mealType);
+        return score(food, focus, mealType, usedCategories, 0.0);
+    }
+
+    public double score(
+        Food food,
+        Focus focus,
+        String mealType,
+        Set<String> usedCategories,
+        double regionalBonus
+    ) {
+        double score = mealAffinity(food.getCategoryCode(), mealType)
+            + regionalBonus;
 
         if (!usedCategories.contains(food.getCategoryCode())) {
             score += 8.0;

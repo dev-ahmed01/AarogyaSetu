@@ -17,20 +17,18 @@ public record DietPlanResponse(
     String engineStatus,
     String sourceRuleCode,
     Integer sourceRuleVersion,
+    String regionalContextCode,
+    String regionalContextLabel,
     Instant createdAt,
     List<DietPlanItemResponse> items,
     List<String> notices
 ) {
-
     public static DietPlanResponse from(DietPlan plan, List<String> notices) {
         return new DietPlanResponse(
-            plan.getId(),
-            plan.getPlanDate(),
-            plan.getStatus(),
-            plan.getGenerationMode(),
-            plan.getEngineStatus(),
-            plan.getSourceRuleCode(),
-            plan.getSourceRuleVersion(),
+            plan.getId(), plan.getPlanDate(), plan.getStatus(),
+            plan.getGenerationMode(), plan.getEngineStatus(),
+            plan.getSourceRuleCode(), plan.getSourceRuleVersion(),
+            plan.getRegionalContextCode(), plan.getRegionalContextLabel(),
             plan.getCreatedAt(),
             plan.getItems().stream()
                 .sorted(Comparator.comparingInt(DietPlanItem::getDisplayOrder))

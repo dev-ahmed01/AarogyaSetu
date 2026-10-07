@@ -119,7 +119,7 @@ export function FoodCatalogClient() {
       <PageHeader
         eyebrow="Nutrition knowledge"
         title="A food library that shows its evidence state."
-        description="Search canonical foods and regional dishes without hiding whether nutrient data is verified, pending, or only editorial metadata."
+        description="Search canonical foods, familiar aliases and supported local-script names without hiding whether nutrient data is verified, pending, or only editorial metadata."
       />
 
       <section className="catalogToolbar" aria-label="Food filters">
@@ -129,7 +129,7 @@ export function FoodCatalogClient() {
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Try banana, chana, palak…"
+            placeholder="Try banana, chana, palak, ಅನ್ನ…"
           />
         </label>
 

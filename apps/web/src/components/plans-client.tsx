@@ -133,7 +133,7 @@ export function PlansClient() {
       <PageHeader
         eyebrow="Plans"
         title="A draft meal sketch you can question and change."
-        description="Aarogya ranks only source-referenced foods that pass your recorded diet and allergy filters. The result is a planning draft, not a prescribed diet."
+        description="Aarogya ranks only source-referenced foods that pass your recorded diet and allergy filters. Regional familiarity can refine ordering, but never eligibility or clinical safety."
         action={
           <Link className="button button--secondary" href="/guidance">
             Review guidance
@@ -277,9 +277,14 @@ export function PlansClient() {
               </p>
             )}
 
-            <Link className="quietLink smartSuggestionPanel__link" href="/foods">
-              Inspect the food library
-            </Link>
+            <div className="smartSuggestionPanel__links">
+              <Link className="quietLink smartSuggestionPanel__link" href="/foods">
+                Inspect the food library
+              </Link>
+              <Link className="quietLink smartSuggestionPanel__link" href="/regional">
+                Explore regional context
+              </Link>
+            </div>
           </aside>
         </div>
       )}
@@ -300,6 +305,12 @@ function PlanMealCard({ item }: { item: DietPlanItem }) {
         <p>
           {item.portionLabel ?? "Custom portion"} · {formatNumber(item.quantityGrams)}g
         </p>
+        {item.regionalFitLabel ? (
+          <span className="regionalFitMini">
+            {item.regionalFitLabel}
+            {item.regionalFitScore !== null ? ` · ${item.regionalFitScore}/100` : ""}
+          </span>
+        ) : null}
       </div>
 
       <div className="planMealCard__metrics">
@@ -364,6 +375,15 @@ function SuggestionCard({
           <small>{formatNumber(suggestion.quantityGrams)}g</small>
         </div>
       )}
+
+      {suggestion.regionalFitLabel ? (
+        <div className="smartSuggestion__regional">
+          <span>{suggestion.regionalFitLabel}</span>
+          {suggestion.regionalFitScore !== null ? (
+            <strong>{suggestion.regionalFitScore}/100</strong>
+          ) : null}
+        </div>
+      ) : null}
 
       <p>{suggestion.explanation}</p>
     </article>

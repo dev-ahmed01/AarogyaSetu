@@ -19,6 +19,9 @@ export type DietPlanItem = {
   explanation: string;
   sourceCode: string | null;
   sourceFoodRef: string | null;
+  regionalFitScore: number | null;
+  regionalFitLabel: string | null;
+  regionalReason: string | null;
   nutrients: PlanNutrient[];
 };
 
@@ -30,6 +33,8 @@ export type DietPlan = {
   engineStatus: string;
   sourceRuleCode: string | null;
   sourceRuleVersion: number | null;
+  regionalContextCode: string | null;
+  regionalContextLabel: string | null;
   createdAt: string;
   items: DietPlanItem[];
   notices: string[];
@@ -56,6 +61,9 @@ export type SmartFoodSuggestion = {
   explanation: string;
   sourceCode: string | null;
   sourceFoodRef: string | null;
+  regionalFitScore: number | null;
+  regionalFitLabel: string | null;
+  regionalReason: string | null;
 };
 
 const API_BASE =

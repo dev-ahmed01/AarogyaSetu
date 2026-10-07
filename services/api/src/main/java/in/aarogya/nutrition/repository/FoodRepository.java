@@ -29,6 +29,12 @@ public interface FoodRepository extends JpaRepository<Food, UUID> {
             :query is null
             or lower(f.canonicalName) like lower(concat('%', :query, '%'))
             or lower(foodAlias) like lower(concat('%', :query, '%'))
+            or exists (
+                select localizedAlias.id
+                from FoodLocalizedAlias localizedAlias
+                where localizedAlias.food = f
+                  and lower(localizedAlias.alias) like lower(concat('%', :query, '%'))
+            )
           )
           and (:category is null or f.categoryCode = :category)
           and (:dietary is null or f.dietaryClassification = :dietary)

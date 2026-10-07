@@ -133,6 +133,26 @@ The health-record path is separately consent-gated and currently permits only a 
 
 Lab-value interpretation, diagnostic thresholds and emergency escalation are outside the Phase 10 architecture.
 
+## Regional-personalization architecture
+
+Regional intelligence is a preference layer over the nutrition and safety layers.
+
+```text
+self-reported state/region
+        ↓
+state / macro / all-India hierarchy
+        ↓
+regional affinity metadata
+        ↓
+small ranking bonus
+```
+
+The regional module never changes food eligibility. Source state, dietary compatibility and allergen filtering are evaluated first.
+
+Regional affinity scores and macro-region groupings are project-authored heuristics. They are stored separately from nutrient provenance and official guidance references.
+
+Generated plan snapshots retain the regional context and per-item reason used at generation time.
+
 ## Health-data safety
 
 This application is a wellness/research prototype. It does not diagnose conditions or prescribe medical treatment.

@@ -8,7 +8,7 @@ The product explores how a digital-health platform could responsibly extend into
 
 ## Phase status
 
-**Phase 10/16 — Health-aware Nudges & Alerts: complete**
+**Phase 11/16 — Regional Dietary Intelligence: complete**
 
 See [docs/ROADMAP.md](docs/ROADMAP.md) for the full delivery sequence.
 
@@ -146,6 +146,19 @@ Authenticated:
 - top-bar active-alert count
 - Today shows only the highest-priority active nudge
 
+### Regional dietary intelligence
+
+- self-reported state/region resolver with broad macro-region fallback
+- no GPS or precise-location dependency
+- project-authored regional familiarity scores kept separate from nutrition provenance
+- selected Kannada and Hindi script aliases
+- localized aliases participate in catalog search
+- regional discovery foods remain visibly distinct from planning-eligible foods
+- recorded-allergy profiles do not receive pending-curation regional dishes
+- Jain regional personalization remains disabled pending ingredient-level constraints
+- regional plan bonus capped at 12 points
+- generated plans snapshot the regional context and per-item regional reason
+
 ## Data provenance
 
 The prototype keeps nutrition sources explicit.
@@ -178,6 +191,7 @@ V6__recommendation_engine.sql
 V7__diet_plans.sql
 V8__health_records_and_abdm.sql
 V9__nudges_and_alerts.sql
+V10__regional_dietary_intelligence.sql
 ```
 
 ## Nutrition and meal endpoints
@@ -225,6 +239,10 @@ GET  /api/nudges/summary
 PUT  /api/nudges/{nudgeId}/snooze
 PUT  /api/nudges/{nudgeId}/acknowledge
 PUT  /api/nudges/{nudgeId}/dismiss
+
+GET /api/regional/context
+GET /api/regional/foods?limit=10
+GET /api/regional/foods/{slug}/alternatives
 ```
 
 Meal history is snapshot-based: later catalog edits do not silently rewrite previously saved nutrient totals. Recommendation responses carry rule/version/reason/evidence metadata rather than returning an opaque score.
@@ -261,6 +279,7 @@ See:
 - [Diet plans & suggestions](docs/DIET_PLANS.md)
 - [Health records & ABDM architecture](docs/HEALTH_RECORDS_ABDM.md)
 - [Nudges & alerts](docs/NUDGES_AND_ALERTS.md)
+- [Regional dietary intelligence](docs/REGIONAL_DIETARY_INTELLIGENCE.md)
 
 ## Local development
 

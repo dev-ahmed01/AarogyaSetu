@@ -152,13 +152,13 @@ These affinities and score weights are **Aarogya product heuristics**.
 
 They are not nutritional guidelines and must not be presented as such.
 
-## Regional boundary
+## Regional ranking
 
-Phase 8 carries regional metadata but does not use it for ranking.
+Phase 11 now adds regional familiarity as a small ranking signal.
 
-Regional preference intelligence is intentionally deferred to Phase 11.
+The generator first applies source-state, diet and allergy eligibility. Only then can a project-authored regional fit contribute a capped bonus.
 
-That keeps the current generator from pretending that a broad state/region field is sufficient to infer cultural food preference.
+Regional fit is cultural familiarity metadata, not a nutrition guideline, and it is snapshotted into generated plans for provenance.
 
 ## Snapshot model
 
