@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: aarogya-api
+
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/aarogya}
+    username: ${POSTGRES_USER:aarogya}
+    password: ${POSTGRES_PASSWORD:aarogya_local}
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+
+  flyway:
+    enabled: true
+
+server:
+  port: ${API_PORT:8080}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+app:
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000}

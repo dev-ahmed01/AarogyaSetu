@@ -8,7 +8,9 @@ The product explores how a digital-health platform could responsibly extend into
 
 ## Phase status
 
-**Phase 1/16 — Repository & Architecture Foundation: in progress**
+**Phase 1/16 — Repository & Architecture Foundation: complete**
+
+See [docs/ROADMAP.md](docs/ROADMAP.md) for the full delivery sequence.
 
 ## Product principles
 
@@ -26,31 +28,15 @@ The product explores how a digital-health platform could responsibly extend into
 ```text
 apps/web            Next.js + TypeScript frontend
 services/api        Java + Spring Boot REST API
-infra               Docker/local infrastructure
-docs                Architecture, UX, API and research notes
+infra               introduced as deployment needs grow
+docs                Architecture, UX and research notes
 ```
 
-PostgreSQL is the system of record. Redis is reserved for caching/rate-limit/session-adjacent use cases when the product reaches the relevant phases.
-
-## Planned modules
-
-1. Authentication & access control
-2. Health onboarding and profile
-3. Nutrition knowledge base
-4. Meal logging
-5. Explainable recommendation engine
-6. Diet plans and food substitutions
-7. Health records / mock ABDM integration boundary
-8. Health-aware nudges
-9. Regional dietary intelligence
-10. Goals and engagement
-11. Longitudinal analytics
-12. Admin / nutritionist workspace
-13. Research evaluation
+PostgreSQL is the system of record. Redis is reserved for later phases where caching or rate limiting provides a concrete benefit.
 
 ## Visual direction
 
-The UI follows the visual hierarchy principles of the supplied Purrfect reference: generous whitespace, restrained warm surfaces, strong typography contrast, rounded controls, clear sections and progressive disclosure. Aarogya uses a distinct health-oriented identity rather than copying the pet-travel branding.
+The UI follows the visual-hierarchy principles of the supplied Purrfect reference: generous whitespace, restrained warm surfaces, strong typography contrast, rounded controls, clear sections and progressive disclosure. Aarogya uses a distinct health-oriented identity rather than copying the pet-travel branding.
 
 ## Local development
 
@@ -61,21 +47,21 @@ Prerequisites:
 - Maven 3.9+
 - Docker / Docker Compose
 
-### Infrastructure
+### 1. Start PostgreSQL
 
 ```bash
 cp .env.example .env
 docker compose up -d db
 ```
 
-### API
+### 2. Start the API
 
 ```bash
 cd services/api
-./mvnw spring-boot:run
+mvn spring-boot:run
 ```
 
-### Web
+### 3. Start the web application
 
 ```bash
 cd apps/web
@@ -86,8 +72,8 @@ npm run dev
 Default local endpoints:
 
 - Web: http://localhost:3000
-- API: http://localhost:8080
-- Health: http://localhost:8080/actuator/health
+- API status: http://localhost:8080/api/status
+- API health: http://localhost:8080/actuator/health
 
 ## Safety boundary
 

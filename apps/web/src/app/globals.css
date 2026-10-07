@@ -1,0 +1,269 @@
+:root {
+  --canvas: #fbfaf7;
+  --surface: #ffffff;
+  --surface-soft: #f3f6ef;
+  --primary: #4f7d61;
+  --primary-dark: #365c46;
+  --accent-warm: #d98e5f;
+  --text: #253029;
+  --muted: #6b756f;
+  --border: #e5e9e3;
+  --shadow: 0 18px 54px rgba(37, 48, 41, 0.08);
+  --radius-control: 12px;
+  --radius-card: 16px;
+  --radius-feature: 22px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--canvas);
+}
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.topbar {
+  height: 68px;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.94);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  backdrop-filter: blur(12px);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+  text-decoration: none;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.brandMark {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  color: white;
+  background: var(--primary);
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 17px;
+}
+
+.prototypeBadge,
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.prototypeBadge {
+  padding: 8px 12px;
+  background: var(--surface-soft);
+  color: var(--primary-dark);
+  border: 1px solid #dce5d7;
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 104px 32px 112px;
+  background:
+    radial-gradient(circle at 78% 18%, rgba(217, 142, 95, 0.13), transparent 25%),
+    radial-gradient(circle at 18% 90%, rgba(79, 125, 97, 0.12), transparent 30%),
+    linear-gradient(135deg, #fbfaf7 0%, #f6f5ef 100%);
+}
+
+.heroInner,
+.foundation {
+  width: min(1160px, 100%);
+  margin: 0 auto;
+}
+
+.heroInner {
+  max-width: 900px;
+  text-align: center;
+}
+
+.eyebrow {
+  padding: 7px 12px;
+  margin-bottom: 22px;
+  background: rgba(79, 125, 97, 0.1);
+  color: var(--primary-dark);
+}
+
+.hero h1,
+.sectionHeading h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  letter-spacing: -0.035em;
+}
+
+.hero h1 {
+  max-width: 860px;
+  margin: 0 auto;
+  font-size: clamp(48px, 7vw, 78px);
+  line-height: 1.02;
+  font-weight: 700;
+}
+
+.hero h1 span {
+  color: var(--primary);
+}
+
+.hero p {
+  max-width: 650px;
+  margin: 24px auto 0;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.75;
+}
+
+.heroActions {
+  margin-top: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.primaryButton {
+  border: 0;
+  border-radius: var(--radius-control);
+  padding: 13px 20px;
+  background: var(--primary);
+  color: white;
+  font-weight: 700;
+  box-shadow: 0 10px 30px rgba(79, 125, 97, 0.18);
+}
+
+.supportingText {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.foundation {
+  padding: 84px 32px 96px;
+}
+
+.sectionHeading {
+  max-width: 620px;
+  margin: 0 auto 42px;
+  text-align: center;
+}
+
+.sectionHeading h2 {
+  margin: 0;
+  font-size: clamp(34px, 4vw, 48px);
+  line-height: 1.08;
+}
+
+.sectionHeading p {
+  margin: 16px 0 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.principleGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.principleCard {
+  min-height: 210px;
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-feature);
+  box-shadow: 0 8px 30px rgba(37, 48, 41, 0.04);
+}
+
+.cardKicker {
+  color: var(--accent-warm);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.principleCard h3 {
+  margin: 50px 0 8px;
+  font-size: 20px;
+}
+
+.principleCard p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+footer {
+  padding: 28px 32px 42px;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-size: 13px;
+}
+
+@media (max-width: 760px) {
+  .topbar {
+    height: 62px;
+    padding: 0 18px;
+  }
+
+  .prototypeBadge {
+    display: none;
+  }
+
+  .hero {
+    padding: 74px 20px 82px;
+  }
+
+  .hero p {
+    font-size: 16px;
+  }
+
+  .foundation {
+    padding: 64px 20px 72px;
+  }
+
+  .principleGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .principleCard {
+    min-height: 160px;
+  }
+
+  .principleCard h3 {
+    margin-top: 28px;
+  }
+}
