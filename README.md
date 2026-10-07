@@ -8,9 +8,20 @@ The product explores how a digital-health platform could responsibly extend into
 
 ## Phase status
 
-**Phase 1/16 — Repository & Architecture Foundation: complete**
+**Phase 2/16 — Aarogya Design System & Application Shell: complete**
 
 See [docs/ROADMAP.md](docs/ROADMAP.md) for the full delivery sequence.
+
+## Current product surfaces
+
+- `/` — research/product landing page
+- `/dashboard` — Today dashboard shell
+- `/meals` — meal workspace foundation
+- `/plans` — diet-plan workspace foundation
+- `/health` — health-record workspace foundation
+- `/progress` — longitudinal progress workspace foundation
+
+Phase 2 placeholders intentionally establish navigation and information hierarchy without pretending later features already work.
 
 ## Product principles
 
@@ -28,7 +39,6 @@ See [docs/ROADMAP.md](docs/ROADMAP.md) for the full delivery sequence.
 ```text
 apps/web            Next.js + TypeScript frontend
 services/api        Java + Spring Boot REST API
-infra               introduced as deployment needs grow
 docs                Architecture, UX and research notes
 ```
 
@@ -36,7 +46,15 @@ PostgreSQL is the system of record. Redis is reserved for later phases where cac
 
 ## Visual direction
 
-The UI follows the visual-hierarchy principles of the supplied Purrfect reference: generous whitespace, restrained warm surfaces, strong typography contrast, rounded controls, clear sections and progressive disclosure. Aarogya uses a distinct health-oriented identity rather than copying the pet-travel branding.
+The interface follows the hierarchy principles of the supplied Purrfect reference: generous whitespace, restrained warm surfaces, strong display/body typography contrast, rounded controls, clear sections and progressive disclosure.
+
+Aarogya uses a distinct green/warm health identity and deliberately avoids dense medical-dashboard styling.
+
+See:
+
+- [Design system](docs/DESIGN_SYSTEM.md)
+- [UX architecture](docs/UX_ARCHITECTURE.md)
+- [System architecture](docs/ARCHITECTURE.md)
 
 ## Local development
 

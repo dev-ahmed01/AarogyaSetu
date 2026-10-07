@@ -1,7 +1,7 @@
 # Delivery Roadmap
 
 - [x] Phase 1 — Repository & architecture foundation
-- [ ] Phase 2 — Aarogya design system & application shell
+- [x] Phase 2 — Aarogya design system & application shell
 - [ ] Phase 3 — Authentication & security
 - [ ] Phase 4 — Health onboarding & user profile
 - [ ] Phase 5 — Nutrition knowledge platform
