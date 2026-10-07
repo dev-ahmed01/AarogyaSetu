@@ -81,7 +81,9 @@ function AppShellInner({ children }: { children: ReactNode }) {
         <div className="sideNav__label">Your health</div>
         <nav className="sideNav__links">
           {primaryNavigation.map((item) => {
-            const active = pathname === item.href;
+            const active =
+              pathname === item.href
+              || (item.href === "/progress" && pathname === "/analytics");
 
             return (
               <Link
@@ -107,7 +109,9 @@ function AppShellInner({ children }: { children: ReactNode }) {
 
       <nav className="mobileNav" aria-label="Aarogya workspace mobile">
         {primaryNavigation.map((item) => {
-          const active = pathname === item.href;
+          const active =
+            pathname === item.href
+            || (item.href === "/progress" && pathname === "/analytics");
 
           return (
             <Link

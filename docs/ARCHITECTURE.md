@@ -177,6 +177,28 @@ Goal state is independent from achievement state. Pausing a goal does not erase 
 
 The engagement module intentionally has no calorie, weight, fasting, restrictive-eating, leaderboard or points-based reward mechanics.
 
+## Analytics architecture
+
+Longitudinal analytics are computed read models over persisted source facts.
+
+~~~text
+immutable meal snapshots
+      +
+manual consented health observations
+      ↓
+7 / 30-day current window
+      +
+previous equal-length window
+      ↓
+coverage + daily totals + descriptive comparisons
+~~~
+
+Unlogged days remain missing data and are never converted to zero intake. Analytics do not write back into meals, recommendations, goals, nudges or health records.
+
+Phase 13 deliberately adds no analytics fact table: the current calculations are bounded, reproducible from source records, and avoid creating a second source of truth.
+
+Health analytics require HEALTH_RECORD_ANALYSIS consent and currently query only MANUAL BODY_WEIGHT observations in kg. Synthetic ABDM_MOCK values are excluded before calculation, and the series is not interpreted clinically.
+
 ## Health-data safety
 
 This application is a wellness/research prototype. It does not diagnose conditions or prescribe medical treatment.

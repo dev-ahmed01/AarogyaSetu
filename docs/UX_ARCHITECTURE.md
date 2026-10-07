@@ -102,7 +102,18 @@
     ├── one optional weekly logging goal
     ├── pause / resume / target adjustment
     ├── finite milestone achievements
-    └── explicit no-perfect-streak boundary
+    └── link to longitudinal analytics
+
+/analytics
+└── longitudinal evidence workspace
+    ├── 7 / 30-day window control
+    ├── current / previous coverage
+    ├── daily nutrition bars
+    ├── logged-day nutrient comparisons
+    ├── meal-pattern counts
+    ├── deterministic descriptive insights
+    ├── consent-aware manual health series
+    └── data-quality boundary
 ```
 
 ## Primary product flow
@@ -230,10 +241,12 @@ The screen answers three questions in order:
 
 A missed day never removes an achievement, and the UI avoids "streak broken" or failure language.
 
-Longitudinal nutrient analysis remains separate and belongs to Phase 13.
+Longitudinal nutrient analysis remains separate in `/analytics` so consistency and interpretation do not compete for attention.
+
+## Analytics hierarchy
+
+Analytics belongs to the Progress navigation family but has its own route. It leads with data coverage before any trend, keeps unlogged days visibly missing, and uses descriptive rather than evaluative language. Manual health observations appear as dated values without diagnostic bands or success/failure coloring.
 
 ## Future route ownership
-
-- Phase 13: longitudinal nutrition and health analytics
 
 Admin and research routes are deferred to their corresponding phases.

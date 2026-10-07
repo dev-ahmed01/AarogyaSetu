@@ -323,9 +323,15 @@ export function ProgressClient() {
             <p>
               This screen deliberately avoids calorie targets, weight-loss
               rewards and nutrient perfection scores. Longitudinal nutrition
-              charts belong to the next phase, once the repeated data is
-              available.
+              charts stay in a separate workspace so consistency and analytics
+              do not compete for attention.
             </p>
+            <Link
+              className="button button--secondary progressAnalyticsLink"
+              href="/analytics"
+            >
+              Open longitudinal analytics
+            </Link>
           </section>
         </>
       )}

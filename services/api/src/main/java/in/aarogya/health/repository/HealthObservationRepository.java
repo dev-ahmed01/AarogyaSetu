@@ -18,4 +18,11 @@ public interface HealthObservationRepository
             String sourceType,
             String observationCode
         );
+
+    java.util.List<HealthObservation>
+        findByHealthRecord_User_IdAndHealthRecord_SourceTypeAndObservationCodeAndValueNumericIsNotNullOrderByObservedAtAsc(
+            UUID userId,
+            String sourceType,
+            String observationCode
+        );
 }

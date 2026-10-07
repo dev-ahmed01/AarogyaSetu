@@ -8,7 +8,7 @@ The product explores how a digital-health platform could responsibly extend into
 
 ## Phase status
 
-**Phase 12/16 — Goals, Streaks & Gamification: complete**
+**Phase 13/16 — Health Dashboard & Longitudinal Analytics: complete**
 
 See [docs/ROADMAP.md](docs/ROADMAP.md) for the full delivery sequence.
 
@@ -30,6 +30,7 @@ Authenticated:
 - `/health` — longitudinal health-record timeline, provenance, consent and ABDM architecture demo
 - `/alerts` — focused alert inbox with snooze, acknowledge, dismiss and history
 - `/progress` — weekly consistency goal, forgiving streaks and milestone achievements
+- `/analytics` — 7/30-day descriptive nutrition trends, comparison windows and consent-aware manual health series
 
 ## Implemented foundation
 
@@ -172,6 +173,22 @@ Authenticated:
 - no points economy, leaderboard or streak-loss punishment
 - `/progress` now uses real meal-log history instead of a placeholder
 
+### Longitudinal analytics
+
+- 7-day and 30-day current windows
+- equal-length immediately preceding comparison windows
+- unlogged days remain missing rather than becoming zero intake
+- logged-day averages for energy, protein and fibre
+- explicit current/previous observed-day counts
+- coverage labels describe data completeness, not health quality
+- descriptive higher/lower/similar comparison language
+- meal-type entry/day pattern counts
+- deterministic descriptive insights
+- manual `BODY_WEIGHT` series only when health-record analysis consent is granted
+- `ABDM_MOCK` values excluded from health trend calculation
+- derived analytics computed on demand rather than persisted as another source of truth
+- `/analytics` grouped under Progress in navigation
+
 ## Data provenance
 
 The prototype keeps nutrition sources explicit.
@@ -263,6 +280,9 @@ POST /api/progress/evaluate?date=YYYY-MM-DD
 PUT  /api/progress/goals/meal-logging
 POST /api/progress/goals/meal-logging/pause
 POST /api/progress/goals/meal-logging/resume
+
+GET /api/analytics/longitudinal?date=YYYY-MM-DD&window=7
+GET /api/analytics/longitudinal?date=YYYY-MM-DD&window=30
 ```
 
 Meal history is snapshot-based: later catalog edits do not silently rewrite previously saved nutrient totals. Recommendation responses carry rule/version/reason/evidence metadata rather than returning an opaque score.
@@ -301,6 +321,7 @@ See:
 - [Nudges & alerts](docs/NUDGES_AND_ALERTS.md)
 - [Regional dietary intelligence](docs/REGIONAL_DIETARY_INTELLIGENCE.md)
 - [Goals, streaks & gentle gamification](docs/GOALS_STREAKS_GAMIFICATION.md)
+- [Longitudinal analytics](docs/LONGITUDINAL_ANALYTICS.md)
 
 ## Local development
 

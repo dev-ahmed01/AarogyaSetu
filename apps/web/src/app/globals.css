@@ -5157,3 +5157,496 @@ textarea:focus-visible {
     min-height: 190px;
   }
 }
+
+
+/* Phase 13 — longitudinal analytics */
+
+.analyticsWindowControl {
+  padding: 4px;
+  display: inline-flex;
+  gap: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: #fff;
+}
+
+.analyticsWindowControl button,
+.analyticsMetricTabs button {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 9px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.analyticsWindowControl button {
+  min-height: 34px;
+  padding: 0 13px;
+  border-radius: var(--radius-pill);
+}
+
+.analyticsWindowControl button.is-active,
+.analyticsMetricTabs button.is-active {
+  background: var(--primary);
+  color: #fff;
+}
+
+.analyticsSummaryStrip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-feature);
+  background: #fff;
+}
+
+.analyticsSummaryStrip > div {
+  min-height: 88px;
+  padding: 17px 19px;
+  display: grid;
+  align-content: center;
+  gap: 6px;
+  border-right: 1px solid var(--border);
+}
+
+.analyticsSummaryStrip > div:last-child {
+  border-right: 0;
+}
+
+.analyticsSummaryStrip span {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.analyticsSummaryStrip strong {
+  font-family: var(--font-display);
+  font-size: 22px;
+}
+
+.analyticsCoverageNote {
+  margin-top: 12px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border-radius: var(--radius-card);
+  background: var(--surface-soft);
+}
+
+.analyticsCoverageNote > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.analyticsCoverageNote strong {
+  font-size: 10px;
+}
+
+.analyticsCoverageNote p {
+  max-width: 620px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.analyticsTrendPanel,
+.analyticsPatternPanel,
+.analyticsInsightPanel,
+.healthTrendPanel,
+.analyticsQualityPanel {
+  margin-top: 18px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-feature);
+  background: #fff;
+}
+
+.analyticsSectionHeading,
+.achievementSection__heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.analyticsSectionHeading h2,
+.analyticsPatternPanel h2,
+.analyticsInsightPanel h2,
+.analyticsQualityPanel h2 {
+  margin: 7px 0 0;
+  font-family: var(--font-display);
+  line-height: 1.08;
+}
+
+.analyticsSectionHeading h2 {
+  font-size: 30px;
+}
+
+.analyticsMetricTabs {
+  padding: 4px;
+  display: inline-flex;
+  gap: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-soft);
+}
+
+.analyticsMetricTabs button {
+  min-height: 30px;
+  padding: 0 11px;
+  border-radius: var(--radius-pill);
+}
+
+.analyticsBarsWrap {
+  margin-top: 24px;
+}
+
+.analyticsBars {
+  min-height: 210px;
+  padding: 12px 8px 0;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  align-items: end;
+  gap: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.analyticsBars--30 {
+  grid-template-columns: repeat(30, minmax(4px, 1fr));
+  gap: 4px;
+}
+
+.analyticsBarDay {
+  height: 190px;
+  display: grid;
+  grid-template-rows: 1fr 24px;
+  gap: 7px;
+}
+
+.analyticsBarDay__value {
+  min-height: 0;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+}
+
+.analyticsBarDay__value span {
+  width: min(28px, 82%);
+  min-height: 4px;
+  border-radius: 6px 6px 2px 2px;
+  background: var(--primary);
+}
+
+.analyticsBars--30 .analyticsBarDay__value span {
+  width: 100%;
+}
+
+.analyticsBarDay__value i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--border);
+}
+
+.analyticsBarDay small {
+  min-width: 0;
+  overflow: visible;
+  color: var(--muted);
+  font-size: 8px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.analyticsBarsLegend {
+  margin-top: 10px;
+  display: flex;
+  gap: 16px;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.analyticsBarsLegend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.analyticsBarsLegend b {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--primary);
+}
+
+.analyticsBarsLegend i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border);
+}
+
+.nutrientComparisonGrid {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.nutrientComparisonCard {
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--canvas);
+}
+
+.nutrientComparisonCard > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.nutrientComparisonCard > div > span {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.nutrientComparisonCard > strong {
+  display: block;
+  margin-top: 14px;
+  font-family: var(--font-display);
+  font-size: 24px;
+}
+
+.nutrientComparisonCard > small,
+.nutrientComparisonCard footer {
+  color: var(--muted);
+  font-size: 8px;
+}
+
+.nutrientComparisonCard p {
+  min-height: 48px;
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.nutrientComparisonCard footer {
+  margin-top: 13px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.analyticsTwoColumn {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 14px;
+}
+
+.analyticsPatternPanel h2,
+.analyticsInsightPanel h2 {
+  font-size: 26px;
+}
+
+.mealPatternList,
+.analyticsInsightList {
+  margin-top: 18px;
+  display: grid;
+  gap: 9px;
+}
+
+.mealPatternList > div {
+  padding: 12px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  border-bottom: 1px solid var(--border);
+}
+
+.mealPatternList > div:last-child {
+  border-bottom: 0;
+}
+
+.mealPatternList > div > div {
+  display: grid;
+  gap: 3px;
+}
+
+.mealPatternList strong,
+.mealPatternList b {
+  font-size: 10px;
+}
+
+.mealPatternList span {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.analyticsInsightList p {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.58;
+}
+
+.analyticsInsightList p span {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--surface-soft);
+  color: var(--primary-dark);
+  font-size: 8px;
+  font-weight: 800;
+}
+
+.healthTrendPanel__notice {
+  max-width: 840px;
+  margin: 13px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.healthTrendTimeline {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 9px;
+}
+
+.healthTrendTimeline > div {
+  padding: 13px;
+  display: grid;
+  gap: 5px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--canvas);
+}
+
+.healthTrendTimeline span,
+.healthTrendTimeline small {
+  color: var(--muted);
+  font-size: 8px;
+}
+
+.healthTrendTimeline strong {
+  font-family: var(--font-display);
+  font-size: 20px;
+}
+
+.analyticsEmptyInline {
+  margin-top: 16px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border-radius: var(--radius-card);
+  background: var(--surface-soft);
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.analyticsQualityPanel {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 28px;
+  background: var(--surface-soft);
+}
+
+.analyticsQualityPanel h2 {
+  font-size: 27px;
+}
+
+.analyticsQualityPanel > div:last-child {
+  display: grid;
+  gap: 8px;
+}
+
+.analyticsQualityPanel p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.progressAnalyticsLink {
+  margin-top: 16px;
+}
+
+@media (max-width: 920px) {
+  .analyticsTwoColumn,
+  .analyticsQualityPanel {
+    grid-template-columns: 1fr;
+  }
+
+  .nutrientComparisonGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .analyticsSummaryStrip {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .analyticsSummaryStrip > div:nth-child(2) {
+    border-right: 0;
+  }
+
+  .analyticsSummaryStrip > div:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .analyticsCoverageNote,
+  .analyticsSectionHeading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .analyticsBars--30 {
+    overflow-x: auto;
+    grid-template-columns: repeat(30, 12px);
+  }
+}
+
+@media (max-width: 520px) {
+  .analyticsSummaryStrip {
+    grid-template-columns: 1fr;
+  }
+
+  .analyticsSummaryStrip > div {
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .analyticsSummaryStrip > div:last-child {
+    border-bottom: 0;
+  }
+
+  .analyticsWindowControl,
+  .analyticsMetricTabs {
+    width: 100%;
+  }
+
+  .analyticsWindowControl button,
+  .analyticsMetricTabs button {
+    flex: 1;
+  }
+
+  .analyticsEmptyInline {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
