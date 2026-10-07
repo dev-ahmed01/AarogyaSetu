@@ -11,7 +11,7 @@
 - [x] Phase 9 — Health records & ABDM architecture
 - [x] Phase 10 — Health-aware nudges & alerts
 - [x] Phase 11 — Regional dietary intelligence
-- [ ] Phase 12 — Goals, streaks & gamification
+- [x] Phase 12 — Goals, streaks & gamification
 - [ ] Phase 13 — Health dashboard & longitudinal analytics
 - [ ] Phase 14 — Nutritionist/admin console
 - [ ] Phase 15 — Research & evaluation module

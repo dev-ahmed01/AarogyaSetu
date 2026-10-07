@@ -8,7 +8,7 @@ The product explores how a digital-health platform could responsibly extend into
 
 ## Phase status
 
-**Phase 11/16 — Regional Dietary Intelligence: complete**
+**Phase 12/16 — Goals, Streaks & Gamification: complete**
 
 See [docs/ROADMAP.md](docs/ROADMAP.md) for the full delivery sequence.
 
@@ -29,7 +29,7 @@ Authenticated:
 - `/plans` — smart food suggestions and persisted draft meal sketches
 - `/health` — longitudinal health-record timeline, provenance, consent and ABDM architecture demo
 - `/alerts` — focused alert inbox with snooze, acknowledge, dismiss and history
-- `/progress` — longitudinal progress workspace foundation
+- `/progress` — weekly consistency goal, forgiving streaks and milestone achievements
 
 ## Implemented foundation
 
@@ -159,6 +159,19 @@ Authenticated:
 - regional plan bonus capped at 12 points
 - generated plans snapshot the regional context and per-item regional reason
 
+### Goals, streaks & gentle gamification
+
+- optional weekly meal-logging consistency goal
+- user-selected 2–7 days/week target
+- distinct-day progress rather than entry-volume scoring
+- forgiving current-run rule that does not mark today as missed before the day is over
+- longest-run and total-logging-day metrics
+- append-only milestone achievements
+- pause/resume without deleting progress history
+- no calorie, fasting, weight-loss or restrictive-diet rewards
+- no points economy, leaderboard or streak-loss punishment
+- `/progress` now uses real meal-log history instead of a placeholder
+
 ## Data provenance
 
 The prototype keeps nutrition sources explicit.
@@ -192,6 +205,7 @@ V7__diet_plans.sql
 V8__health_records_and_abdm.sql
 V9__nudges_and_alerts.sql
 V10__regional_dietary_intelligence.sql
+V11__goals_streaks_gamification.sql
 ```
 
 ## Nutrition and meal endpoints
@@ -243,6 +257,12 @@ PUT  /api/nudges/{nudgeId}/dismiss
 GET /api/regional/context
 GET /api/regional/foods?limit=10
 GET /api/regional/foods/{slug}/alternatives
+
+GET  /api/progress/overview?date=YYYY-MM-DD
+POST /api/progress/evaluate?date=YYYY-MM-DD
+PUT  /api/progress/goals/meal-logging
+POST /api/progress/goals/meal-logging/pause
+POST /api/progress/goals/meal-logging/resume
 ```
 
 Meal history is snapshot-based: later catalog edits do not silently rewrite previously saved nutrient totals. Recommendation responses carry rule/version/reason/evidence metadata rather than returning an opaque score.
@@ -280,6 +300,7 @@ See:
 - [Health records & ABDM architecture](docs/HEALTH_RECORDS_ABDM.md)
 - [Nudges & alerts](docs/NUDGES_AND_ALERTS.md)
 - [Regional dietary intelligence](docs/REGIONAL_DIETARY_INTELLIGENCE.md)
+- [Goals, streaks & gentle gamification](docs/GOALS_STREAKS_GAMIFICATION.md)
 
 ## Local development
 

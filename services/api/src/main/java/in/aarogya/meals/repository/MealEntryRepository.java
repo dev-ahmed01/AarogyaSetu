@@ -7,6 +7,8 @@ import java.util.UUID;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import in.aarogya.meals.domain.MealEntry;
 
@@ -26,4 +28,14 @@ public interface MealEntryRepository extends JpaRepository<MealEntry, UUID> {
     Optional<MealEntry> findByIdAndUser_Id(UUID id, UUID userId);
 
     List<MealEntry> findByUser_IdOrderByCreatedAtDesc(UUID userId, Pageable pageable);
+
+    @Query("""
+        select distinct entry.mealDate
+        from MealEntry entry
+        where entry.user.id = :userId
+        order by entry.mealDate asc
+        """)
+    List<LocalDate> findDistinctMealDatesByUserId(
+        @Param("userId") UUID userId
+    );
 }

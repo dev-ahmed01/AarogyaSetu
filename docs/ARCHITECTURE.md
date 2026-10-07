@@ -153,6 +153,30 @@ Regional affinity scores and macro-region groupings are project-authored heurist
 
 Generated plan snapshots retain the regional context and per-item reason used at generation time.
 
+## Engagement architecture
+
+Phase 12 treats engagement as measurement of useful data consistency, not as a score of dietary virtue.
+
+```text
+meal-log dates
+      ↓
+ProgressPolicy
+      ├── weekly distinct logging days
+      ├── current logging run
+      ├── longest logging run
+      └── total logging days
+                ↓
+       finite milestones
+```
+
+The current-run calculation anchors to yesterday when today has not yet been logged. This prevents an unfinished day from being interpreted as a broken streak.
+
+Achievements are append-only and are never revoked because a later day was missed.
+
+Goal state is independent from achievement state. Pausing a goal does not erase history.
+
+The engagement module intentionally has no calorie, weight, fasting, restrictive-eating, leaderboard or points-based reward mechanics.
+
 ## Health-data safety
 
 This application is a wellness/research prototype. It does not diagnose conditions or prescribe medical treatment.

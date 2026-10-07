@@ -96,7 +96,13 @@
     └── separate health-record analysis consent
 
 /progress
-└── longitudinal progress workspace placeholder
+└── consistency and milestone workspace
+    ├── current / longest logging run
+    ├── total logging days
+    ├── one optional weekly logging goal
+    ├── pause / resume / target adjustment
+    ├── finite milestone achievements
+    └── explicit no-perfect-streak boundary
 ```
 
 ## Primary product flow
@@ -212,8 +218,22 @@ Today surfaces at most one highest-priority active nudge. The full alert inbox o
 
 This prevents the application from duplicating warning cards across every screen.
 
+## Progress hierarchy
+
+Progress does not lead with a score.
+
+The screen answers three questions in order:
+
+1. Is the user building a useful logging rhythm?
+2. What weekly consistency target did the user choose?
+3. Which finite milestones have already been earned?
+
+A missed day never removes an achievement, and the UI avoids "streak broken" or failure language.
+
+Longitudinal nutrient analysis remains separate and belongs to Phase 13.
+
 ## Future route ownership
 
-- Phase 13: progress analytics
+- Phase 13: longitudinal nutrition and health analytics
 
 Admin and research routes are deferred to their corresponding phases.
