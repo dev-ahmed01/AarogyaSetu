@@ -23,6 +23,8 @@ public record MealEntryResponse(
     String sourceCode,
     String sourceFoodRef,
     String nutrientStatus,
+    String dietaryClassification,
+    java.util.Set<String> allergens,
     List<MealNutrientResponse> nutrients,
     Instant createdAt,
     Instant updatedAt
@@ -47,6 +49,8 @@ public record MealEntryResponse(
             entry.getSourceCodeSnapshot(),
             entry.getSourceFoodRefSnapshot(),
             entry.getNutrientStatusSnapshot(),
+            entry.getDietaryClassificationSnapshot(),
+            entry.getAllergenSnapshots(),
             nutrients,
             entry.getCreatedAt(),
             entry.getUpdatedAt()

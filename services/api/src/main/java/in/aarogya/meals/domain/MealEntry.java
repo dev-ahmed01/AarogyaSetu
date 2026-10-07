@@ -11,7 +11,9 @@ import in.aarogya.identity.domain.UserAccount;
 import in.aarogya.nutrition.domain.Food;
 import in.aarogya.nutrition.domain.FoodPortion;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -67,6 +69,17 @@ public class MealEntry {
 
     @Column(name = "nutrient_status_snapshot", nullable = false, length = 50)
     private String nutrientStatusSnapshot;
+
+    @Column(name = "dietary_classification_snapshot", nullable = false, length = 50)
+    private String dietaryClassificationSnapshot;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+        name = "meal_entry_allergens",
+        joinColumns = @JoinColumn(name = "meal_entry_id")
+    )
+    @Column(name = "allergen_code", nullable = false, length = 50)
+    private Set<String> allergenSnapshots = new LinkedHashSet<>();
 
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;
@@ -124,6 +137,9 @@ public class MealEntry {
         this.sourceCodeSnapshot = sourceCode;
         this.sourceFoodRefSnapshot = sourceFoodRef;
         this.nutrientStatusSnapshot = food.getNutrientStatus();
+        this.dietaryClassificationSnapshot = food.getDietaryClassification();
+        this.allergenSnapshots.clear();
+        this.allergenSnapshots.addAll(food.getAllergens());
         this.updatedAt = Instant.now();
         this.nutrientSnapshots.clear();
 
@@ -150,6 +166,12 @@ public class MealEntry {
     public String getSourceCodeSnapshot() { return sourceCodeSnapshot; }
     public String getSourceFoodRefSnapshot() { return sourceFoodRefSnapshot; }
     public String getNutrientStatusSnapshot() { return nutrientStatusSnapshot; }
+    public String getDietaryClassificationSnapshot() {
+        return dietaryClassificationSnapshot;
+    }
+    public Set<String> getAllergenSnapshots() {
+        return Set.copyOf(allergenSnapshots);
+    }
     public Instant getCreatedAt() { return createdAt; }
     public Instant getUpdatedAt() { return updatedAt; }
     public Set<MealEntryNutrient> getNutrientSnapshots() {

@@ -29,6 +29,8 @@ class MealEntrySnapshotTests {
 
         when(food.getCanonicalName()).thenReturn("Chickpeas, cooked");
         when(food.getNutrientStatus()).thenReturn("SOURCE_REFERENCED");
+        when(food.getDietaryClassification()).thenReturn("VEGAN");
+        when(food.getAllergens()).thenReturn(Set.of("PEANUT"));
         when(food.getNutrients()).thenReturn(Set.of(energy, protein));
 
         when(energy.getNutrientCode()).thenReturn("ENERGY_KCAL");
@@ -57,6 +59,8 @@ class MealEntrySnapshotTests {
         assertEquals("Chickpeas, cooked", entry.getFoodNameSnapshot());
         assertEquals(new BigDecimal("164.00"), entry.getQuantityGrams());
         assertEquals("USDA_FDC", entry.getSourceCodeSnapshot());
+        assertEquals("VEGAN", entry.getDietaryClassificationSnapshot());
+        assertEquals(Set.of("PEANUT"), entry.getAllergenSnapshots());
         assertEquals(2, entry.getNutrientSnapshots().size());
         assertNotNull(entry.getUpdatedAt());
     }

@@ -8,21 +8,28 @@ import { PageHeader } from "@/components/page-header";
 import { StatusChip, Surface } from "@/components/ui";
 import { getMealDay, type DailyMealLog } from "@/lib/meals";
 import { getProfile, type Profile } from "@/lib/profile";
+import {
+  getTodayRecommendations,
+  type RecommendationAssessment
+} from "@/lib/recommendations";
 
 export function DashboardClient() {
   const { user } = useAuth();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [mealDay, setMealDay] = useState<DailyMealLog | null>(null);
+  const [guidance, setGuidance] = useState<RecommendationAssessment | null>(null);
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     Promise.all([
       getProfile(),
-      getMealDay(todayKey())
+      getMealDay(todayKey()),
+      getTodayRecommendations(todayKey())
     ])
-      .then(([profileResult, mealResult]) => {
+      .then(([profileResult, mealResult, guidanceResult]) => {
         setProfile(profileResult);
         setMealDay(mealResult);
+        setGuidance(guidanceResult);
       })
       .catch(() => setFailed(true));
   }, []);
@@ -50,7 +57,7 @@ export function DashboardClient() {
         </div>
       ) : null}
 
-      {!profile || !mealDay ? (
+      {!profile || !mealDay || !guidance ? (
         <div className="dashboardLoading">
           <div className="sessionLoading__mark">A</div>
           <p>Loading today&apos;s workspace…</p>
@@ -119,12 +126,25 @@ export function DashboardClient() {
             </Surface>
 
             <Surface className="dashboardCard">
-              <span className="cardEyebrow">Recommendations</span>
-              <h2 className="profileSectionTitle">Still intentionally off</h2>
+              <span className="cardEyebrow">Guidance</span>
+              <h2 className="profileSectionTitle">
+                {guidance.recommendations[0]?.title ?? "No recommendation forced"}
+              </h2>
               <p className="dashboardTruthCopy">
-                Meal data now exists, but Aarogya will not label foods as “good”, “bad” or personalized until the explainable rule engine is built in Phase 7.
+                {guidance.recommendations[0]?.observation
+                  ?? guidance.notices[guidance.notices.length - 1]
+                  ?? "Aarogya has no explainable guidance to surface yet."}
               </p>
-              <StatusChip>Evidence rules next</StatusChip>
+              <div className="dashboardGuidanceFooter">
+                <StatusChip
+                  tone={guidance.status.includes("SAFETY") ? "attention" : "positive"}
+                >
+                  {guidance.status.replaceAll("_", " ").toLowerCase()}
+                </StatusChip>
+                <Link className="quietLink" href="/guidance">
+                  Why this?
+                </Link>
+              </div>
             </Surface>
           </div>
         </>

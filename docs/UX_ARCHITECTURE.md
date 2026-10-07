@@ -42,6 +42,14 @@
     ├── master result list
     └── inline detail + provenance
 
+/guidance
+└── explainable personalized guidance
+    ├── engine status + data window
+    ├── what Aarogya noticed
+    ├── why it matters
+    ├── what you could consider
+    └── rule / version / evidence
+
 /meals
 └── daily meal logging
     ├── date navigation
@@ -144,6 +152,12 @@ Each page should have:
 Meal logging uses the day as the primary object. Daily totals are visually secondary to the four meal slots, and add/edit controls live in one contextual panel rather than opening a dense modal or separate route.
 
 The Today dashboard can now surface real logged totals, but it still does not interpret them as personalized success/failure before Phase 7.
+
+## Guidance hierarchy
+
+Guidance is deliberately not a primary navigation destination. Today surfaces only the highest-priority item and links to `/guidance` for explanation. This keeps the application from turning recommendations into a persistent alarm surface.
+
+The detailed view exposes reasoning and evidence instead of a score-first interface.
 
 ## Future route ownership
 

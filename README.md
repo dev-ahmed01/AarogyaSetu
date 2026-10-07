@@ -8,7 +8,7 @@ The product explores how a digital-health platform could responsibly extend into
 
 ## Phase status
 
-**Phase 6/16 — Meal Logging: complete**
+**Phase 7/16 — Personalized Nutrition Engine: complete**
 
 See [docs/ROADMAP.md](docs/ROADMAP.md) for the full delivery sequence.
 
@@ -22,9 +22,10 @@ Public:
 Authenticated:
 - `/onboarding` — focused health-profile setup
 - `/profile` — profile and consent review
-- `/dashboard` — truthful Today workspace
+- `/dashboard` — truthful Today workspace with real meal totals and top explainable guidance
 - `/foods` — source-aware food knowledge library
 - `/meals` — full daily meal logging, history, favourites and recent foods
+- `/guidance` — explainable personalized recommendation detail
 - `/plans` — diet-plan workspace foundation
 - `/health` — health-record workspace foundation
 - `/progress` — longitudinal progress workspace foundation
@@ -84,7 +85,21 @@ Authenticated:
 - date navigation and 31-day history API
 - favourites and recent foods
 - Today dashboard backed by real meal totals
-- no personalized target judgments before Phase 7
+- historical meal snapshots for nutrient and safety interpretation
+
+### Explainable personalized guidance
+
+- consent-gated recommendation evaluation
+- seven completed-day analysis window
+- data-quality gate before trend interpretation
+- versioned recommendation rules and evidence metadata
+- WHO-referenced fibre trend rule
+- WHO/FAO/UNU-referenced adult protein trend rule
+- allergy conflict detection from meal snapshots
+- dietary-pattern consistency checks
+- safety suppression for kidney and pregnancy/breastfeeding contexts
+- no calorie-deficit prescription for weight-management goals
+- `/guidance` explanation surface with rule/reason/evidence visibility
 
 ## Data provenance
 
@@ -114,6 +129,7 @@ V2__identity_and_sessions.sql
 V3__health_profiles_and_consent.sql
 V4__nutrition_catalog.sql
 V5__meal_logging.sql
+V6__recommendation_engine.sql
 ```
 
 ## Nutrition and meal endpoints
@@ -134,9 +150,11 @@ GET    /api/meals/recent
 GET    /api/meals/favorites
 PUT    /api/meals/favorites/{foodSlug}
 DELETE /api/meals/favorites/{foodSlug}
+
+GET /api/recommendations/today?date=YYYY-MM-DD
 ```
 
-Meal history is snapshot-based: later catalog edits do not silently rewrite previously saved nutrient totals.
+Meal history is snapshot-based: later catalog edits do not silently rewrite previously saved nutrient totals. Recommendation responses carry rule/version/reason/evidence metadata rather than returning an opaque score.
 
 ## Product principles
 
@@ -166,6 +184,7 @@ See:
 - [Profile & consent model](docs/PROFILE_AND_CONSENT.md)
 - [Nutrition catalog](docs/NUTRITION_CATALOG.md)
 - [Meal logging](docs/MEAL_LOGGING.md)
+- [Recommendation engine](docs/RECOMMENDATION_ENGINE.md)
 
 ## Local development
 

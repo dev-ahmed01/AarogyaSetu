@@ -71,9 +71,31 @@ PostgreSQL is the source of truth. Flyway owns schema evolution. Production code
 
 The baseline schema intentionally starts small. New tables are added by feature migrations so each phase has a reviewable data-model history.
 
+## Recommendation architecture
+
+The recommendation module is deterministic and versioned.
+
+```text
+Profile + consent
+      +
+Meal snapshots
+      +
+Versioned rules
+      +
+Evidence metadata
+      ↓
+Recommendation engine
+      ↓
+Observation + reason code + safety class + evidence
+```
+
+The browser does not independently calculate personalized guidance. External dietary references and Aarogya-specific product heuristics remain explicitly separated.
+
 ## Health-data safety
 
 This application is a wellness/research prototype. It does not diagnose conditions or prescribe medical treatment.
+
+Health context may suppress generic recommendations. It must not be used to infer a disease-specific treatment plan.
 
 ## Integration boundary
 
