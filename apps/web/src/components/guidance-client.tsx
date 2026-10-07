@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import { PageHeader } from "@/components/page-header";
 import { StatusChip } from "@/components/ui";
+import { trackResearchEvent } from "@/lib/research";
 import {
   getTodayRecommendations,
   type RecommendationAssessment,
@@ -17,6 +18,7 @@ export function GuidanceClient() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    void trackResearchEvent("GUIDANCE_VIEWED");
     getTodayRecommendations(todayKey())
       .then(setAssessment)
       .catch((cause) =>

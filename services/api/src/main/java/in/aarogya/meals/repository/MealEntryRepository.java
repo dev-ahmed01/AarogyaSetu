@@ -1,6 +1,7 @@
 package in.aarogya.meals.repository;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -21,6 +22,12 @@ public interface MealEntryRepository extends JpaRepository<MealEntry, UUID> {
 
     List<MealEntry> findByUser_IdAndMealDateBetweenOrderByMealDateDescCreatedAtAsc(
         UUID userId,
+        LocalDate from,
+        LocalDate to
+    );
+
+    List<MealEntry> findByUser_IdInAndMealDateBetweenOrderByMealDateAscCreatedAtAsc(
+        Collection<UUID> userIds,
         LocalDate from,
         LocalDate to
     );

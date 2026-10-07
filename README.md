@@ -8,7 +8,7 @@ The product explores how a digital-health platform could responsibly extend into
 
 ## Phase status
 
-**Phase 14/16 — Nutritionist & Admin Console: complete**
+**Phase 15/16 — Research & Evaluation Module: complete**
 
 See [docs/ROADMAP.md](docs/ROADMAP.md) for the full delivery sequence.
 
@@ -32,6 +32,7 @@ Authenticated:
 - `/progress` — weekly consistency goal, forgiving streaks and milestone achievements
 - `/analytics` — 7/30-day descriptive nutrition trends, comparison windows and consent-aware manual health series
 - `/admin` — role-gated nutrition content review, provenance, publication and audit operations
+- `/research` — admin-only privacy-safe research evaluation and aggregate export
 
 ## Implemented foundation
 
@@ -191,6 +192,25 @@ Authenticated:
 - no individual health-record or meal-log browsing in the operations console
 - historical meal and plan snapshots remain unchanged after catalog edits
 
+### Research & evaluation
+
+- separate append-only `RESEARCH_PARTICIPATION` consent
+- research use remains optional and independent from personalization
+- revocation deletes per-user research feature events
+- daily de-duplicated feature exposures instead of detailed clickstream collection
+- guidance, plans, plan generation, alerts, analytics and regional-context exposure events
+- meal activity before the latest research consent grant is excluded
+- minimum reportable cohort of five participants
+- suppressed small-cohort values return null instead of exact counts
+- versioned, database-backed metric definitions
+- active-logger and logging-consistency metrics
+- seven-day pre/post logging association around first retained feature exposure
+- broad dietary-pattern cohort summaries with small-cell suppression
+- admin-only aggregate research workspace
+- aggregate CSV export with no names, emails, user IDs, raw meals or health records
+- every research export creates an audit event
+- explicit observational/causal interpretation boundary
+
 ### Longitudinal analytics
 
 - 7-day and 30-day current windows
@@ -242,6 +262,7 @@ V9__nudges_and_alerts.sql
 V10__regional_dietary_intelligence.sql
 V11__goals_streaks_gamification.sql
 V12__admin_content_curation.sql
+V13__research_evaluation.sql
 ```
 
 ## Nutrition and meal endpoints
@@ -316,6 +337,15 @@ POST /api/admin/foods/{foodId}/unpublish
 POST /api/admin/foods/{foodId}/return
 POST /api/admin/sources
 GET  /api/admin/audit
+
+GET  /api/research/consent
+PUT  /api/research/consent
+POST /api/research/events
+
+# ADMIN only
+GET /api/admin/research/overview
+GET /api/admin/research/metrics
+GET /api/admin/research/export
 ```
 
 Meal history is snapshot-based: later catalog edits do not silently rewrite previously saved nutrient totals. Recommendation responses carry rule/version/reason/evidence metadata rather than returning an opaque score.
@@ -356,6 +386,7 @@ See:
 - [Goals, streaks & gentle gamification](docs/GOALS_STREAKS_GAMIFICATION.md)
 - [Longitudinal analytics](docs/LONGITUDINAL_ANALYTICS.md)
 - [Nutritionist & admin operations](docs/ADMIN_OPERATIONS.md)
+- [Research & evaluation](docs/RESEARCH_EVALUATION.md)
 
 ## Local development
 

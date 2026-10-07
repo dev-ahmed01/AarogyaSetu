@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import { PageHeader } from "@/components/page-header";
 import { StatusChip } from "@/components/ui";
+import { trackResearchEvent } from "@/lib/research";
 import {
   archivePlan,
   generatePlan,
@@ -66,6 +67,10 @@ export function PlansClient() {
   }
 
   useEffect(() => {
+    void trackResearchEvent("PLANS_VIEWED");
+  }, []);
+
+  useEffect(() => {
     void load(date);
   }, [date]);
 
@@ -76,6 +81,7 @@ export function PlansClient() {
     try {
       const generated = await generatePlan(date);
       setPlan(generated);
+      void trackResearchEvent("PLAN_GENERATED");
 
       try {
         setSuggestions(await getSmartSuggestions(date));

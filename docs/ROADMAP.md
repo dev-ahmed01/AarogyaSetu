@@ -14,5 +14,5 @@
 - [x] Phase 12 — Goals, streaks & gamification
 - [x] Phase 13 — Health dashboard & longitudinal analytics
 - [x] Phase 14 — Nutritionist/admin console
-- [ ] Phase 15 — Research & evaluation module
+- [x] Phase 15 — Research & evaluation module
 - [ ] Phase 16 — Hardening, testing & production readiness

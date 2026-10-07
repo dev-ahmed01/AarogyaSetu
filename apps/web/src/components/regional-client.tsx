@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import { PageHeader } from "@/components/page-header";
 import { StatusChip } from "@/components/ui";
+import { trackResearchEvent } from "@/lib/research";
 import {
   getRegionalContext,
   getRegionalFoods,
@@ -19,6 +20,7 @@ export function RegionalClient() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    void trackResearchEvent("REGIONAL_VIEWED");
     Promise.all([getRegionalContext(), getRegionalFoods(12)])
       .then(([contextResult, foodResult]) => {
         setContext(contextResult);

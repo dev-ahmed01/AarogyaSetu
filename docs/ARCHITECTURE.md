@@ -236,6 +236,36 @@ The operations module does not provide staff access to individual health records
 
 Historical meal and plan snapshots remain immutable even when a current catalog food is unpublished or re-curated.
 
+## Research-evaluation architecture
+
+Phase 15 adds a separate research boundary rather than reusing operational analytics.
+
+~~~text
+explicit RESEARCH_PARTICIPATION consent
+        ↓
+minimal daily feature exposure events
+        +
+eligible meal-log dates after consent
+        ↓
+versioned evaluation metrics
+        ↓
+minimum cohort threshold (k = 5)
+        ↓
+aggregate admin console / CSV
+~~~
+
+Research feature events are intentionally low-granularity and de-duplicated to one event type per participant per UTC day.
+
+The research service resolves each participant's latest consent state before inclusion. Meal activity created before the latest consent grant is excluded. Revoking consent deletes that user's research feature-event instrumentation.
+
+Research aggregation may use internal user relations to calculate repeated-measures metrics, but no research API or export returns participant identifiers.
+
+Metric definitions are versioned in the database. The pre/post metric uses the participant's first retained feature exposure and compares distinct meal-logging days in seven-day windows before and after that exposure. It is explicitly observational and cannot be interpreted as causal effect.
+
+Dietary-pattern cohorts and all outcome/exposure cells below five participants are suppressed.
+
+The research module does not expose raw health records, allergies, health contexts, individual meal logs or personalized recommendation details.
+
 ## Health-data safety
 
 This application is a wellness/research prototype. It does not diagnose conditions or prescribe medical treatment.

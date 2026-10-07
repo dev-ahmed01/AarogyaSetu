@@ -10,15 +10,29 @@ import {
   updatePersonalizationConsent,
   type Profile
 } from "@/lib/profile";
+import {
+  getResearchConsent,
+  updateResearchConsent,
+  type ResearchConsent
+} from "@/lib/research";
 
 export function ProfileClient() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [updatingConsent, setUpdatingConsent] = useState(false);
+  const [researchConsent, setResearchConsent] =
+    useState<ResearchConsent | null>(null);
+  const [updatingResearch, setUpdatingResearch] = useState(false);
 
   useEffect(() => {
-    getProfile()
-      .then(setProfile)
+    Promise.all([
+      getProfile(),
+      getResearchConsent()
+    ])
+      .then(([nextProfile, nextResearchConsent]) => {
+        setProfile(nextProfile);
+        setResearchConsent(nextResearchConsent);
+      })
       .catch((cause) =>
         setError(cause instanceof Error ? cause.message : "Could not load your profile.")
       );
@@ -35,6 +49,27 @@ export function ProfileClient() {
       setError(cause instanceof Error ? cause.message : "Could not update consent.");
     } finally {
       setUpdatingConsent(false);
+    }
+  }
+
+  async function toggleResearchConsent() {
+    if (!researchConsent) return;
+
+    setUpdatingResearch(true);
+    setError(null);
+
+    try {
+      setResearchConsent(
+        await updateResearchConsent(!researchConsent.granted)
+      );
+    } catch (cause) {
+      setError(
+        cause instanceof Error
+          ? cause.message
+          : "Could not update research participation."
+      );
+    } finally {
+      setUpdatingResearch(false);
     }
   }
 
@@ -126,6 +161,53 @@ export function ProfileClient() {
           <p className="cardFootnote">
             Policy version {profile.consentPolicyVersion ?? "—"}.
             Revoking consent does not delete stored data in this prototype; data-deletion controls are part of production hardening.
+          </p>
+        </Surface>
+
+        <Surface className="profileCard">
+          <div className="cardHeader">
+            <div>
+              <span className="cardEyebrow">Research participation</span>
+              <h2>Optional evaluation consent</h2>
+            </div>
+            <StatusChip
+              tone={researchConsent?.granted ? "positive" : "neutral"}
+            >
+              {researchConsent?.granted ? "Opted in" : "Not participating"}
+            </StatusChip>
+          </div>
+
+          <div className="consentStatus">
+            <p>
+              {researchConsent?.granted
+                ? "Aarogya may include de-identified product-use and meal-logging patterns in aggregate research evaluation. Small cohorts are suppressed."
+                : "Research evaluation is separate from personalization. Nothing is included unless you opt in."}
+            </p>
+          </div>
+
+          <button
+            className={
+              researchConsent?.granted
+                ? "button button--ghost profileConsentAction"
+                : "button button--secondary profileConsentAction"
+            }
+            type="button"
+            disabled={!researchConsent || updatingResearch}
+            onClick={() => void toggleResearchConsent()}
+          >
+            {updatingResearch
+              ? "Updating…"
+              : researchConsent?.granted
+                ? "Leave research evaluation"
+                : "Opt in to research evaluation"}
+          </button>
+
+          <p className="cardFootnote">
+            Feature exposure is recorded at most once per feature per day.
+            Leaving research evaluation deletes Aarogya's research-event
+            instrumentation for your account and excludes you from future
+            aggregate calculations. Consent policy{" "}
+            {researchConsent?.policyVersion ?? "—"}.
           </p>
         </Surface>
 

@@ -129,6 +129,17 @@
     │   └── admin-only source creation
     └── Audit (ADMIN)
         └── recent operational events
+
+/research
+└── admin-only research evaluation workspace
+    ├── bounded date window
+    ├── opted-in participant count
+    ├── privacy-thresholded metrics
+    ├── feature-exposure summaries
+    ├── dietary-pattern cohorts
+    ├── versioned metric definitions
+    ├── interpretation boundary
+    └── aggregate CSV export
 ```
 
 ## Primary product flow
@@ -262,6 +273,16 @@ Longitudinal nutrient analysis remains separate in `/analytics` so consistency a
 
 Analytics belongs to the Progress navigation family but has its own route. It leads with data coverage before any trend, keeps unlogged days visibly missing, and uses descriptive rather than evaluative language. Manual health observations appear as dated values without diagnostic bands or success/failure coloring.
 
+## Research hierarchy
+
+Research participation is controlled from `/profile` and is visually separate from personalization consent.
+
+The admin-only `/research` route leads with the privacy boundary and evaluation window before metrics. Suppressed small cohorts display a suppression state rather than a number.
+
+Metric definitions are visible on the same screen so a researcher can understand exactly what each result means before exporting it.
+
+The route never provides drill-down to an individual participant, meal record or health record.
+
 ## Future route ownership
 
-Admin and research routes are deferred to their corresponding phases.
+Production hardening is deferred to Phase 16.

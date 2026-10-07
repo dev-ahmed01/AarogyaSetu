@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import { PageHeader } from "@/components/page-header";
 import { StatusChip } from "@/components/ui";
+import { trackResearchEvent } from "@/lib/research";
 import {
   getLongitudinalAnalytics,
   type DailyNutritionPoint,
@@ -31,6 +32,10 @@ export function AnalyticsClient() {
   const [analytics, setAnalytics] = useState<LongitudinalAnalytics | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    void trackResearchEvent("ANALYTICS_VIEWED");
+  }, []);
 
   useEffect(() => {
     setLoading(true);

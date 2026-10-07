@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import { PageHeader } from "@/components/page-header";
 import { StatusChip } from "@/components/ui";
+import { trackResearchEvent } from "@/lib/research";
 import {
   acknowledgeNudge,
   announceNudgeChange,
@@ -52,6 +53,7 @@ export function AlertsClient() {
   }
 
   useEffect(() => {
+    void trackResearchEvent("ALERTS_VIEWED");
     void refresh(false);
   }, []);
 

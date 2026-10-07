@@ -52,6 +52,7 @@ public class ConsentRecord {
         this.recordedAt = Instant.now();
     }
 
+    public UserAccount getUser() { return user; }
     public boolean isGranted() { return granted; }
     public String getConsentType() { return consentType; }
     public String getPolicyVersion() { return policyVersion; }

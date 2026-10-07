@@ -6257,3 +6257,323 @@ textarea:focus-visible {
     width: 100%;
   }
 }
+
+
+/* Phase 15 — privacy-safe research evaluation */
+
+.researchWindowBar {
+  margin-bottom: 16px;
+  padding: 14px;
+  display: grid;
+  grid-template-columns: 180px 180px auto;
+  align-items: end;
+  gap: 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: #fff;
+}
+
+.researchWindowBar label {
+  display: grid;
+  gap: 6px;
+}
+
+.researchWindowBar label > span {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 750;
+}
+
+.researchWindowBar input {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+}
+
+.researchWindowBar input:focus {
+  outline: 2px solid rgba(79, 125, 97, 0.16);
+  border-color: var(--primary);
+}
+
+.researchSummaryStrip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-feature);
+  background: #fff;
+}
+
+.researchSummaryStrip > div {
+  min-height: 84px;
+  padding: 16px 18px;
+  display: grid;
+  align-content: center;
+  gap: 5px;
+  border-right: 1px solid var(--border);
+}
+
+.researchSummaryStrip > div:last-child {
+  border-right: 0;
+}
+
+.researchSummaryStrip span {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.researchSummaryStrip strong {
+  font-family: var(--font-display);
+  font-size: 22px;
+}
+
+.researchMetricGrid {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.researchMetricCard,
+.researchPanel,
+.researchDefinitionsPanel,
+.researchBoundaryPanel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-feature);
+  background: #fff;
+}
+
+.researchMetricCard {
+  padding: 17px;
+}
+
+.researchMetricCard > div:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 9px;
+}
+
+.researchMetricCard h2 {
+  margin: 16px 0 0;
+  font-family: var(--font-display);
+  font-size: 28px;
+}
+
+.researchMetricCard p {
+  min-height: 62px;
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.6;
+}
+
+.researchMetricCard footer {
+  margin-top: 13px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 8px;
+}
+
+.researchTwoColumn {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.researchPanel,
+.researchDefinitionsPanel,
+.researchBoundaryPanel {
+  padding: 22px;
+}
+
+.researchSectionHeading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.researchSectionHeading h2,
+.researchBoundaryPanel h2 {
+  margin: 7px 0 0;
+  font-family: var(--font-display);
+  line-height: 1.08;
+}
+
+.researchSectionHeading h2 {
+  font-size: 27px;
+}
+
+.researchSectionHeading > span {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.researchExposureList {
+  margin-top: 16px;
+  display: grid;
+}
+
+.researchExposureList > div {
+  padding: 11px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.researchExposureList > div:last-child {
+  border-bottom: 0;
+}
+
+.researchExposureList span {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.researchExposureList strong {
+  font-size: 10px;
+}
+
+.researchEmptyCopy {
+  margin: 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.researchDefinitionsPanel {
+  margin-top: 14px;
+}
+
+.researchDefinitionList {
+  margin-top: 17px;
+  display: grid;
+  gap: 9px;
+}
+
+.researchDefinitionList article {
+  padding: 14px;
+  display: grid;
+  gap: 7px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--canvas);
+}
+
+.researchDefinitionList article > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.researchDefinitionList strong {
+  font-size: 10px;
+}
+
+.researchDefinitionList span,
+.researchDefinitionList small {
+  color: var(--muted);
+  font-size: 8px;
+}
+
+.researchDefinitionList p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.6;
+}
+
+.researchBoundaryPanel {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 26px;
+  background: var(--surface-soft);
+}
+
+.researchBoundaryPanel h2 {
+  font-size: 28px;
+}
+
+.researchBoundaryPanel > div:last-child {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+
+.researchBoundaryPanel p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.6;
+}
+
+@media (max-width: 980px) {
+  .researchMetricGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .researchTwoColumn,
+  .researchBoundaryPanel {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .researchWindowBar {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .researchWindowBar .button {
+    grid-column: 1 / -1;
+  }
+
+  .researchSummaryStrip {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .researchSummaryStrip > div:nth-child(2) {
+    border-right: 0;
+  }
+
+  .researchSummaryStrip > div:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+@media (max-width: 520px) {
+  .researchWindowBar,
+  .researchSummaryStrip,
+  .researchMetricGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .researchWindowBar .button {
+    grid-column: auto;
+  }
+
+  .researchSummaryStrip > div {
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .researchSummaryStrip > div:last-child {
+    border-bottom: 0;
+  }
+
+  .researchDefinitionList article > div {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
