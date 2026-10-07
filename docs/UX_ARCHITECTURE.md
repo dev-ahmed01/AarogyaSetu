@@ -70,7 +70,13 @@
     └── flexible smart food suggestions
 
 /health
-└── health-record workspace placeholder
+└── longitudinal health-record workspace
+    ├── compact record / observation summary
+    ├── chronological timeline
+    ├── one record detail / add panel
+    ├── visible provenance
+    ├── mock ABDM source controls
+    └── separate health-record analysis consent
 
 /progress
 └── longitudinal progress workspace placeholder
@@ -173,9 +179,16 @@ The draft meal sketch is a planning artifact, not a meal-log mutation. Example n
 
 Each item retains a "Why this appeared" explanation so Phase 7 reasoning remains visible after food ranking.
 
+## Health-record hierarchy
+
+Health records are intentionally not turned into a diagnostic dashboard.
+
+The primary hierarchy is timeline first, record detail second, provenance always visible. Mock integration controls and analytical consent are separated from record browsing so source-management actions do not compete with the health timeline.
+
+Imported demo records are visually labelled synthetic at the row and detail levels.
+
 ## Future route ownership
 
-- Phase 9: health-record workflows
 - Phase 13: progress analytics
 
 Admin and research routes are deferred to their corresponding phases.

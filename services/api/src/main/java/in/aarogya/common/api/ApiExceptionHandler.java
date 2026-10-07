@@ -11,6 +11,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import in.aarogya.health.service.HealthIntegrationUnavailableException;
+import in.aarogya.health.service.HealthRecordNotFoundException;
 import in.aarogya.identity.service.AccountExistsException;
 import in.aarogya.identity.service.InvalidRefreshTokenException;
 import in.aarogya.meals.service.FoodNotLoggableException;
@@ -50,7 +52,11 @@ public class ApiExceptionHandler {
         );
     }
 
-    @ExceptionHandler({FoodNotFoundException.class, MealEntryNotFoundException.class})
+    @ExceptionHandler({
+        FoodNotFoundException.class,
+        MealEntryNotFoundException.class,
+        HealthRecordNotFoundException.class
+    })
     ResponseEntity<Map<String, Object>> notFound(RuntimeException exception) {
         return response(HttpStatus.NOT_FOUND, "NOT_FOUND", exception.getMessage());
     }
@@ -62,6 +68,17 @@ public class ApiExceptionHandler {
         return response(
             HttpStatus.UNPROCESSABLE_ENTITY,
             "PLAN_GENERATION_UNAVAILABLE",
+            exception.getMessage()
+        );
+    }
+
+    @ExceptionHandler(HealthIntegrationUnavailableException.class)
+    ResponseEntity<Map<String, Object>> integrationUnavailable(
+        HealthIntegrationUnavailableException exception
+    ) {
+        return response(
+            HttpStatus.UNPROCESSABLE_ENTITY,
+            "HEALTH_INTEGRATION_UNAVAILABLE",
             exception.getMessage()
         );
     }

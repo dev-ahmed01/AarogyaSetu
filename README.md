@@ -8,7 +8,7 @@ The product explores how a digital-health platform could responsibly extend into
 
 ## Phase status
 
-**Phase 8/16 — Diet Plans & Smart Food Suggestions: complete**
+**Phase 9/16 — Health Records & ABDM Architecture: complete**
 
 See [docs/ROADMAP.md](docs/ROADMAP.md) for the full delivery sequence.
 
@@ -27,7 +27,7 @@ Authenticated:
 - `/meals` — full daily meal logging, history, favourites and recent foods
 - `/guidance` — explainable personalized recommendation detail
 - `/plans` — smart food suggestions and persisted draft meal sketches
-- `/health` — health-record workspace foundation
+- `/health` — longitudinal health-record timeline, provenance, consent and ABDM architecture demo
 - `/progress` — longitudinal progress workspace foundation
 
 ## Implemented foundation
@@ -115,6 +115,21 @@ Authenticated:
 - Jain automatic planning explicitly disabled until ingredient-level constraints are modeled
 - regional ranking deliberately deferred to Phase 11
 
+### Health records & ABDM architecture
+
+- longitudinal health-record envelopes with structured observations
+- self-reported/manual provenance state
+- external source/reference metadata
+- source payload hashes for imported provenance
+- append-only health-record analysis consent
+- security audit events for sensitive record/integration actions
+- deterministic mock ABDM/ABHA adapter
+- explicit mock mode with `liveConnectivity = false`
+- demo identifiers that cannot be mistaken for ABHA numbers
+- duplicate-safe mock imports
+- disconnect without silently deleting local copies
+- health records deliberately excluded from Phase 7 recommendation logic until Phase 10
+
 ## Data provenance
 
 The prototype keeps nutrition sources explicit.
@@ -145,6 +160,7 @@ V4__nutrition_catalog.sql
 V5__meal_logging.sql
 V6__recommendation_engine.sql
 V7__diet_plans.sql
+V8__health_records_and_abdm.sql
 ```
 
 ## Nutrition and meal endpoints
@@ -172,6 +188,19 @@ GET    /api/plans/day?date=YYYY-MM-DD
 GET    /api/plans/suggestions?date=YYYY-MM-DD&limit=6
 POST   /api/plans/generate
 DELETE /api/plans/{planId}
+
+GET    /api/health/summary
+GET    /api/health/records
+GET    /api/health/records/{recordId}
+POST   /api/health/records
+DELETE /api/health/records/{recordId}
+GET    /api/health/consent
+PUT    /api/health/consent
+
+GET    /api/health/integrations/abdm/status
+POST   /api/health/integrations/abdm/connect
+POST   /api/health/integrations/abdm/import
+DELETE /api/health/integrations/abdm/connection
 ```
 
 Meal history is snapshot-based: later catalog edits do not silently rewrite previously saved nutrient totals. Recommendation responses carry rule/version/reason/evidence metadata rather than returning an opaque score.
@@ -206,6 +235,7 @@ See:
 - [Meal logging](docs/MEAL_LOGGING.md)
 - [Recommendation engine](docs/RECOMMENDATION_ENGINE.md)
 - [Diet plans & suggestions](docs/DIET_PLANS.md)
+- [Health records & ABDM architecture](docs/HEALTH_RECORDS_ABDM.md)
 
 ## Local development
 

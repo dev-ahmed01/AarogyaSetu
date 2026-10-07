@@ -3766,3 +3766,517 @@ textarea:focus-visible {
     grid-column: auto;
   }
 }
+
+
+/* Phase 9 — health records and ABDM integration boundary */
+
+.healthSummaryStrip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-feature);
+  background: #fff;
+}
+
+.healthSummaryStrip > div {
+  min-height: 96px;
+  display: grid;
+  align-content: center;
+  gap: 6px;
+  padding: 18px 20px;
+  border-right: 1px solid var(--border);
+}
+
+.healthSummaryStrip > div:last-child {
+  border-right: 0;
+}
+
+.healthSummaryStrip span {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.healthSummaryStrip strong {
+  font-family: var(--font-display);
+  font-size: 21px;
+  line-height: 1.1;
+}
+
+.healthWorkspace {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.9fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.healthTimeline,
+.healthDetailPanel,
+.healthSourceCard,
+.healthConsentCard {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-feature);
+  background: #fff;
+}
+
+.healthTimeline {
+  overflow: hidden;
+}
+
+.healthTimeline__heading {
+  min-height: 78px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.healthTimeline__heading h2 {
+  margin: 6px 0 0;
+  font-family: var(--font-display);
+  font-size: 26px;
+}
+
+.healthTimeline__heading > span {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.healthRecordList {
+  display: grid;
+}
+
+.healthRecordRow {
+  width: 100%;
+  min-height: 82px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.healthRecordRow:last-child {
+  border-bottom: 0;
+}
+
+.healthRecordRow:hover,
+.healthRecordRow.is-selected {
+  background: var(--surface-soft);
+}
+
+.healthRecordRow.is-selected {
+  box-shadow: inset 3px 0 0 var(--primary);
+}
+
+.healthRecordRow > div {
+  min-width: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.healthRecordRow strong {
+  overflow: hidden;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.healthRecordRow span:not(.statusChip) {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.healthTimeline__empty {
+  min-height: 300px;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 12px;
+  padding: 30px;
+  text-align: center;
+}
+
+.healthTimeline__empty p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.healthDetailPanel {
+  min-height: 520px;
+  position: sticky;
+  top: 92px;
+}
+
+.healthDetailEmpty {
+  min-height: 520px;
+  display: grid;
+  align-content: center;
+  padding: 30px;
+}
+
+.healthDetailEmpty h2,
+.healthDetailHeading h2 {
+  margin: 7px 0 0;
+  font-family: var(--font-display);
+  font-size: 29px;
+  line-height: 1.08;
+}
+
+.healthDetailEmpty p {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.62;
+}
+
+.healthRecordDetail,
+.healthComposer {
+  padding: 25px;
+}
+
+.healthDetailHeading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.healthRecordDetail__summary {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.healthRecordMeta {
+  margin: 22px 0 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.healthRecordMeta > div {
+  min-height: 62px;
+  padding: 12px;
+  display: grid;
+  align-content: center;
+  gap: 5px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--canvas);
+}
+
+.healthRecordMeta dt,
+.healthObservationRow span,
+.healthProvenance > span {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.healthRecordMeta dd {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.healthObservationList {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.healthObservationList__heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.healthObservationList__heading h3 {
+  margin: 0;
+  font-size: 12px;
+}
+
+.healthObservationList__heading span {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.healthObservationRow {
+  min-height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.healthObservationRow > div {
+  display: grid;
+  gap: 4px;
+}
+
+.healthObservationRow > div:last-child {
+  justify-items: end;
+}
+
+.healthObservationRow strong {
+  font-size: 11px;
+}
+
+.healthObservationEmpty {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.healthProvenance {
+  margin-top: 22px;
+  padding: 16px;
+  border-radius: var(--radius-card);
+  background: var(--surface-soft);
+}
+
+.healthProvenance > strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 11px;
+}
+
+.healthProvenance p,
+.healthProvenance small {
+  display: block;
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.healthDeleteAction {
+  margin-top: 16px;
+  color: var(--danger-text);
+}
+
+.healthComposer .formField {
+  margin-top: 16px;
+}
+
+.healthFormGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.healthTextarea {
+  min-height: 105px;
+  padding-top: 10px;
+  resize: vertical;
+}
+
+.manualObservationSection {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+
+.manualObservationSection__heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: center;
+}
+
+.manualObservationSection__heading > div {
+  display: grid;
+  gap: 3px;
+}
+
+.manualObservationSection__heading small {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.manualObservationRow {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 0.8fr 0.7fr auto;
+  gap: 7px;
+}
+
+.manualObservationRow input {
+  min-width: 0;
+  min-height: 38px;
+  padding: 0 9px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--canvas);
+  color: var(--text);
+  font-size: 10px;
+}
+
+.manualObservationRow button {
+  width: 34px;
+  border: 0;
+  border-radius: 9px;
+  background: var(--danger-soft);
+  color: var(--danger-text);
+  cursor: pointer;
+}
+
+.healthSaveButton {
+  width: 100%;
+  margin-top: 22px;
+}
+
+.healthSourceSection {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 18px;
+}
+
+.healthSourceCard,
+.healthConsentCard {
+  padding: 24px;
+}
+
+.healthSourceCard__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.healthSourceCard h2,
+.healthConsentCard h2 {
+  margin: 7px 0 0;
+  font-family: var(--font-display);
+  font-size: 27px;
+  line-height: 1.08;
+}
+
+.healthSourceCard__copy,
+.healthConsentCard > p {
+  margin: 13px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.62;
+}
+
+.healthSourceMeta {
+  margin: 20px 0 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.healthSourceMeta > div {
+  padding: 11px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--canvas);
+}
+
+.healthSourceMeta dt {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.healthSourceMeta dd {
+  margin: 5px 0 0;
+  overflow-wrap: anywhere;
+  font-size: 10px;
+  font-weight: 750;
+}
+
+.healthSourceActions {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.healthConsentCard {
+  display: grid;
+  align-content: start;
+}
+
+.healthConsentState {
+  margin-top: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+@media (max-width: 1080px) {
+  .healthWorkspace,
+  .healthSourceSection {
+    grid-template-columns: 1fr;
+  }
+
+  .healthDetailPanel {
+    position: static;
+    min-height: 0;
+  }
+
+  .healthDetailEmpty {
+    min-height: 240px;
+  }
+}
+
+@media (max-width: 760px) {
+  .healthSummaryStrip {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .healthSummaryStrip > div:nth-child(2) {
+    border-right: 0;
+  }
+
+  .healthSummaryStrip > div:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .healthRecordRow,
+  .healthDetailHeading,
+  .healthSourceCard__top,
+  .healthConsentState {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .healthFormGrid,
+  .healthRecordMeta,
+  .healthSourceMeta {
+    grid-template-columns: 1fr;
+  }
+
+  .manualObservationRow {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .manualObservationRow button {
+    width: 100%;
+  }
+
+  .healthSourceActions {
+    flex-direction: column;
+  }
+
+  .healthSourceActions .button,
+  .healthConsentState .button {
+    width: 100%;
+  }
+}

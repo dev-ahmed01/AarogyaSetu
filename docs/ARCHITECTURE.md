@@ -119,9 +119,39 @@ This application is a wellness/research prototype. It does not diagnose conditio
 
 Health context may suppress generic recommendations. It must not be used to infer a disease-specific treatment plan.
 
+## Health-record architecture
+
+Health records use an internal normalization layer:
+
+```text
+manual entry / external adapter
+            ↓
+      health record envelope
+            +
+   structured observations
+            ↓
+ provenance-aware local store
+```
+
+External integration details do not leak into downstream nutrition modules.
+
+The internal record keeps source-system/reference, interoperability resource type, verification state and provenance text. Imported records additionally keep a source-payload hash.
+
+Health-record analysis has a separate append-only consent purpose and is not automatically implied by storing or importing a record.
+
 ## Integration boundary
 
-Real ABDM/ABHA connectivity is not assumed. The system will first implement an adapter interface and deterministic mock provider so demos do not misrepresent access to government health infrastructure.
+ABDM concepts inform the interoperability boundary, including consent-based exchange and FHIR alignment. Real ABDM/ABHA connectivity is not assumed.
+
+```text
+AbdmHealthRecordAdapter
+        ↓
+MockAbdmHealthRecordAdapter
+```
+
+The current adapter is deterministic, local-only and explicitly reports `liveConnectivity = false`. Demo subject identifiers are not ABHA numbers.
+
+A future live provider must be implemented behind the same application contract and must not replace the mock label with a live claim unless actual credentials, conformance and consent handling exist.
 
 ## Deployment direction
 
