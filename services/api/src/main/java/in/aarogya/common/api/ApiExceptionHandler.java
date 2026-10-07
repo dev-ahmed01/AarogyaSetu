@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import in.aarogya.identity.service.AccountExistsException;
 import in.aarogya.identity.service.InvalidRefreshTokenException;
+import in.aarogya.nutrition.service.FoodNotFoundException;
 import in.aarogya.profile.service.ProfileIncompleteException;
 
 @RestControllerAdvice
@@ -35,6 +36,11 @@ public class ApiExceptionHandler {
             "PROFILE_INCOMPLETE",
             exception.getMessage()
         );
+    }
+
+    @ExceptionHandler(FoodNotFoundException.class)
+    ResponseEntity<Map<String, Object>> foodNotFound(FoodNotFoundException exception) {
+        return response(HttpStatus.NOT_FOUND, "FOOD_NOT_FOUND", exception.getMessage());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

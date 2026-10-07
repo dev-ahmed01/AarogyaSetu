@@ -2230,3 +2230,410 @@ textarea:focus-visible {
     width: 100%;
   }
 }
+
+
+/* Phase 5 — nutrition knowledge catalog */
+
+.catalogToolbar {
+  display: grid;
+  grid-template-columns: minmax(260px, 1.6fr) repeat(4, minmax(135px, 0.7fr));
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-feature);
+  background: #fff;
+}
+
+.catalogToolbar label {
+  display: grid;
+  gap: 7px;
+}
+
+.catalogToolbar label > span {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.catalogToolbar input,
+.catalogToolbar select {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-control);
+  background: var(--canvas);
+  color: var(--text);
+  outline: 0;
+}
+
+.catalogToolbar input:focus,
+.catalogToolbar select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79, 125, 97, 0.1);
+}
+
+.catalogSummary {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 14px 2px;
+}
+
+.catalogSummary > div {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+}
+
+.catalogSummary strong {
+  font-family: var(--font-display);
+  font-size: 24px;
+}
+
+.catalogSummary span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.catalogSummary .textAction {
+  margin-left: auto;
+}
+
+.catalogLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(340px, 0.82fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.catalogResults,
+.foodDetailPanel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-feature);
+  background: #fff;
+}
+
+.catalogResults {
+  overflow: hidden;
+}
+
+.foodResult {
+  width: 100%;
+  min-height: 100px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 112px;
+  gap: 22px;
+  align-items: center;
+  padding: 20px 22px;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.foodResult:last-child {
+  border-bottom: 0;
+}
+
+.foodResult:hover,
+.foodResult.is-selected {
+  background: var(--surface-soft);
+}
+
+.foodResult.is-selected {
+  box-shadow: inset 3px 0 0 var(--primary);
+}
+
+.foodResult__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.foodResult__top strong {
+  font-size: 15px;
+}
+
+.foodResult__main p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.foodResult__metric {
+  display: grid;
+  justify-items: end;
+  gap: 3px;
+}
+
+.foodResult__metric strong {
+  font-family: var(--font-display);
+  font-size: 26px;
+}
+
+.foodResult__metric span {
+  color: var(--muted-light);
+  font-size: 10px;
+}
+
+.catalogEmpty {
+  min-height: 220px;
+  display: grid;
+  place-items: center;
+  padding: 30px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 13px;
+}
+
+.foodDetailPanel {
+  min-height: 520px;
+  position: sticky;
+  top: 92px;
+}
+
+.foodDetailPlaceholder {
+  min-height: 520px;
+  display: grid;
+  align-content: center;
+  padding: 34px;
+}
+
+.foodDetailPlaceholder h2 {
+  margin: 8px 0 0;
+  font-family: var(--font-display);
+  font-size: 32px;
+}
+
+.foodDetailPlaceholder p {
+  margin: 12px 0 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.foodDetail {
+  padding: 26px;
+}
+
+.foodDetail__heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.foodDetail__heading h2 {
+  margin: 6px 0 0;
+  font-family: var(--font-display);
+  font-size: 30px;
+  line-height: 1.08;
+}
+
+.foodDetail__description {
+  margin: 14px 0 0;
+  color: var(--muted);
+  line-height: 1.62;
+  font-size: 13px;
+}
+
+.foodDetail__section {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.foodDetail__section h3 {
+  margin: 0 0 12px;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+.nutrientList {
+  margin: 0;
+  display: grid;
+}
+
+.nutrientList > div,
+.portionList > div {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.nutrientList > div:first-child,
+.portionList > div:first-child {
+  border-top: 0;
+}
+
+.nutrientList dt,
+.portionList span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.nutrientList dd,
+.portionList strong {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.nutritionPending {
+  padding: 15px;
+  border-radius: var(--radius-control);
+  background: var(--warning-soft);
+  color: var(--warning-text);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.allergenList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.allergenList span {
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: var(--danger-soft);
+  color: var(--danger-text);
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.foodSourceBox {
+  padding: 16px;
+  border: 0;
+  border-radius: var(--radius-card);
+  background: var(--surface-soft);
+}
+
+.foodSourceBox > span {
+  color: var(--muted);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+}
+
+.foodSourceBox > strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+}
+
+.foodSourceBox p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.catalogProvenance {
+  margin-top: 42px;
+  padding: 28px;
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 34px;
+  border-radius: var(--radius-feature);
+  background: var(--surface-soft);
+}
+
+.catalogProvenance h2 {
+  margin: 7px 0 0;
+  font-family: var(--font-display);
+  font-size: 28px;
+  line-height: 1.1;
+}
+
+.catalogProvenance p {
+  margin: 0;
+  align-self: end;
+  color: var(--muted);
+  line-height: 1.68;
+  font-size: 13px;
+}
+
+.mealFoundationGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+@media (max-width: 1080px) {
+  .catalogToolbar {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .catalogSearch {
+    grid-column: 1 / -1;
+  }
+
+  .catalogLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .foodDetailPanel {
+    min-height: 0;
+    position: static;
+  }
+
+  .foodDetailPlaceholder {
+    min-height: 240px;
+  }
+}
+
+@media (max-width: 760px) {
+  .catalogToolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .catalogSearch {
+    grid-column: auto;
+  }
+
+  .catalogSummary {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px 24px;
+  }
+
+  .catalogSummary .textAction {
+    width: 100%;
+    margin-left: 0;
+    text-align: left;
+  }
+
+  .foodResult {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .foodResult__top {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .foodResult__metric {
+    justify-items: start;
+  }
+
+  .foodDetail__heading {
+    flex-direction: column;
+  }
+
+  .catalogProvenance,
+  .mealFoundationGrid {
+    grid-template-columns: 1fr;
+  }
+}

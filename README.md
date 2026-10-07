@@ -8,7 +8,7 @@ The product explores how a digital-health platform could responsibly extend into
 
 ## Phase status
 
-**Phase 4/16 — Health Onboarding & User Profile: complete**
+**Phase 5/16 — Nutrition Knowledge Platform: complete**
 
 See [docs/ROADMAP.md](docs/ROADMAP.md) for the full delivery sequence.
 
@@ -23,7 +23,8 @@ Authenticated:
 - `/onboarding` — focused health-profile setup
 - `/profile` — profile and consent review
 - `/dashboard` — truthful Today workspace
-- `/meals` — meal workspace foundation
+- `/foods` — source-aware food knowledge library
+- `/meals` — meal workspace foundation linked to the catalog
 - `/plans` — diet-plan workspace foundation
 - `/health` — health-record workspace foundation
 - `/progress` — longitudinal progress workspace foundation
@@ -37,9 +38,7 @@ Authenticated:
 - `USER`, `NUTRITIONIST`, and `ADMIN` roles
 - signed access and refresh JWTs
 - HttpOnly browser cookies
-- persisted refresh-session hashes
-- refresh-token rotation
-- logout/revocation
+- refresh-token rotation and revocation
 - protected workspace session gate
 - JSON 401/403 responses
 - security audit-event foundation
@@ -56,30 +55,40 @@ Authenticated:
 - food allergies
 - optional self-reported health context
 - append-only personalization consent records
-- consent revocation / personalization pause
-- auditable onboarding completion
 - server-side prevention of profile writes before consent
 
-The browser does not store auth tokens in `localStorage`, and the onboarding wizard does not send the in-memory health profile to the server before consent.
+### Nutrition knowledge
 
-## Product principles
+- canonical food identity and stable slugs
+- aliases for search
+- portions mapped to grams
+- nutrients stored per 100g
+- dietary classifications
+- allergen flags
+- broad region tags
+- ingredient relationships for composed dishes
+- source/provenance records
+- explicit nutrient-data quality state
+- paginated/filterable catalog API
+- source-aware food library UI
+- regional discovery foods that remain unloggable until curated
 
-- Evidence before novelty.
-- Explainable recommendations over black-box medical claims.
-- Privacy and consent by design.
-- Data minimization.
-- Progressive disclosure instead of dense health dashboards.
-- Indian and regional food context.
-- Strong separation between wellness guidance and medical diagnosis.
-- Accessible, responsive user experience.
-- Auditable backend behaviour.
+## Data provenance
+
+The prototype keeps nutrition sources explicit.
+
+USDA FoodData Central is used for the initial public-domain nutrient seed layer.
+
+ICMR-NIN 2024 Dietary Guidelines are registered as a guidance reference only. Their numeric tables are **not** copied into the product because the publication states that electronic-product reproduction/storage requires prior permission.
+
+See [docs/NUTRITION_CATALOG.md](docs/NUTRITION_CATALOG.md).
 
 ## Architecture
 
 ```text
 apps/web            Next.js + TypeScript frontend
 services/api        Java + Spring Boot REST API
-docs                Architecture, UX, security, profile and research notes
+docs                Architecture, UX, security, profile and nutrition notes
 ```
 
 PostgreSQL is the system of record.
@@ -90,7 +99,34 @@ Database migrations currently include:
 V1__baseline.sql
 V2__identity_and_sessions.sql
 V3__health_profiles_and_consent.sql
+V4__nutrition_catalog.sql
 ```
+
+## Nutrition endpoints
+
+Authenticated:
+
+```text
+GET /api/nutrition/foods
+GET /api/nutrition/foods/{slug}
+GET /api/nutrition/metadata
+```
+
+Search supports name/alias, category, dietary classification, broad region, nutrient-data status and pagination.
+
+## Product principles
+
+- Evidence before novelty.
+- Explainable recommendations over black-box medical claims.
+- Privacy and consent by design.
+- Data minimization.
+- Source provenance for nutrition data.
+- No invented nutrient values for uncurated foods.
+- Progressive disclosure instead of dense health dashboards.
+- Indian and regional food context.
+- Strong separation between wellness guidance and medical diagnosis.
+- Accessible, responsive user experience.
+- Auditable backend behaviour.
 
 ## Visual direction
 
@@ -104,6 +140,7 @@ See:
 - [System architecture](docs/ARCHITECTURE.md)
 - [Security model](docs/SECURITY.md)
 - [Profile & consent model](docs/PROFILE_AND_CONSENT.md)
+- [Nutrition catalog](docs/NUTRITION_CATALOG.md)
 
 ## Local development
 
@@ -139,12 +176,6 @@ Default local endpoints:
 - Web: http://localhost:3000
 - API status: http://localhost:8080/api/status
 - API health: http://localhost:8080/actuator/health
-
-Profile endpoints:
-- `GET /api/profile`
-- `PUT /api/profile`
-- `PUT /api/profile/consent`
-- `POST /api/profile/complete`
 
 ## Safety boundary
 

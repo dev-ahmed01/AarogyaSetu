@@ -34,8 +34,17 @@
     ├── current profile foundation
     └── truthful feature-empty states
 
+/foods
+└── nutrition knowledge library
+    ├── name / alias search
+    ├── category / diet / region filters
+    ├── evidence-state filter
+    ├── master result list
+    └── inline detail + provenance
+
 /meals
-└── meal workspace placeholder
+└── meal workspace foundation
+    └── links into /foods before logging arrives
 
 /plans
 └── diet-plan workspace placeholder
@@ -57,6 +66,8 @@ Focused onboarding
 Explicit personalization consent
   ↓
 Today
+  ↓
+Browse canonical food knowledge
   ↓
 Log / review meals
   ↓
@@ -85,6 +96,24 @@ The user can leave before finishing.
 
 Health profile data remains in component memory until consent is explicitly granted and the final save begins.
 
+## Food-library hierarchy
+
+The food library uses a master/detail pattern rather than separate pages for every record.
+
+The user can search and filter on the left, then inspect:
+
+- nutrient state,
+- nutrients,
+- portions,
+- aliases,
+- allergens,
+- ingredient structure,
+- provenance
+
+in one secondary panel.
+
+This keeps data inspection available without turning the primary navigation into a long list of nutrition tools.
+
 ## Information architecture rule
 
 Health records are not the home screen.
@@ -93,9 +122,9 @@ The product starts from what the user can understand and act on today. Health re
 
 ## Product-integrity rule
 
-Once real authentication/profile data exists, the dashboard must not display fabricated personalized metrics.
+The dashboard and meal surfaces must not display fabricated personalized metrics.
 
-Therefore Phase 4 removes the Phase 2 preview calorie/fibre/score values from the authenticated dashboard. Real nutrition totals return only when meal logging and nutrition computation exist.
+Regional dishes may be discoverable before their nutrition composition is approved, but they stay visibly unloggable and publish no made-up nutrient numbers.
 
 ## Interaction hierarchy
 
@@ -106,7 +135,6 @@ Each page should have:
 
 ## Future route ownership
 
-- Phase 5: nutrition knowledge/catalog foundations
 - Phase 6: meal workflows
 - Phase 8: plan workflows
 - Phase 9: health-record workflows
