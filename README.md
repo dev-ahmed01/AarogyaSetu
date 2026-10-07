@@ -286,6 +286,7 @@ V10__regional_dietary_intelligence.sql
 V11__goals_streaks_gamification.sql
 V12__admin_content_curation.sql
 V13__research_evaluation.sql
+V14__schema_type_alignment.sql
 ```
 
 ## Nutrition and meal endpoints
@@ -419,7 +420,7 @@ See:
 ## Local development
 
 Prerequisites:
-- Node.js 20+
+- Node.js 22+
 - Java 21
 - Maven 3.9+
 - Docker / Docker Compose

@@ -33,7 +33,7 @@ API + PostgreSQL checks
   ├── Java 21 build/test
   ├── PostgreSQL 16 service
   ├── Spring application context
-  ├── Flyway V1 → V13
+  ├── Flyway V1 → V14
   ├── readiness probe
   └── security-header smoke test
 
@@ -225,7 +225,7 @@ spring.flyway.validate-on-migrate=true
 
 Application startup fails when entity/schema expectations do not match.
 
-The CI integration test boots against PostgreSQL 16 and confirms migration V13 is successfully applied.
+The CI integration test boots against PostgreSQL 16 and confirms migration V14 is successfully applied.
 
 ## Containers
 
@@ -253,10 +253,10 @@ Release baseline:
 Java              21
 Spring Boot       3.5.x
 PostgreSQL        16
-Node.js           20
+Node.js           22 LTS
 Next.js           15.5.x maintained backport
 React             19.1
-TypeScript        5.7
+TypeScript        5.7.3
 ~~~
 
 Dependabot monitors:

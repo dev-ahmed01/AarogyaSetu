@@ -45,12 +45,12 @@ class ReleaseReadinessIntegrationTests {
     AccountDataService accountDataService;
 
     @Test
-    void allFlywayMigrationsReachPhaseFifteenSchema() {
+    void allFlywayMigrationsReachReleaseSchema() {
         var applied = jdbcTemplate.queryForObject(
             """
             SELECT COUNT(*)
             FROM flyway_schema_history
-            WHERE version = '13'
+            WHERE version = '14'
               AND success = TRUE
             """,
             Integer.class
