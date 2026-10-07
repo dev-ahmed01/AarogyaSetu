@@ -8,7 +8,7 @@ The product explores how a digital-health platform could responsibly extend into
 
 ## Phase status
 
-**Phase 9/16 — Health Records & ABDM Architecture: complete**
+**Phase 10/16 — Health-aware Nudges & Alerts: complete**
 
 See [docs/ROADMAP.md](docs/ROADMAP.md) for the full delivery sequence.
 
@@ -28,6 +28,7 @@ Authenticated:
 - `/guidance` — explainable personalized recommendation detail
 - `/plans` — smart food suggestions and persisted draft meal sketches
 - `/health` — longitudinal health-record timeline, provenance, consent and ABDM architecture demo
+- `/alerts` — focused alert inbox with snooze, acknowledge, dismiss and history
 - `/progress` — longitudinal progress workspace foundation
 
 ## Implemented foundation
@@ -128,7 +129,22 @@ Authenticated:
 - demo identifiers that cannot be mistaken for ABHA numbers
 - duplicate-safe mock imports
 - disconnect without silently deleting local copies
-- health records deliberately excluded from Phase 7 recommendation logic until Phase 10
+
+### Health-aware nudges & alerts
+
+- versioned nudge-routing rules
+- deterministic per-user deduplication keys
+- active, snoozed, acknowledged, dismissed and resolved states
+- rule-specific cooldowns for alert-fatigue control
+- Phase 7 recommendation-to-nudge routing
+- allergy conflicts surfaced as attention alerts
+- nutrition trends surfaced as standard nudges
+- separate profile/data-consistency nudges
+- health-record analysis consent required before manual record data can influence a nudge
+- synthetic `ABDM_MOCK` observations excluded from personalization
+- no lab-value classification or diagnostic threshold engine
+- top-bar active-alert count
+- Today shows only the highest-priority active nudge
 
 ## Data provenance
 
@@ -161,6 +177,7 @@ V5__meal_logging.sql
 V6__recommendation_engine.sql
 V7__diet_plans.sql
 V8__health_records_and_abdm.sql
+V9__nudges_and_alerts.sql
 ```
 
 ## Nutrition and meal endpoints
@@ -201,6 +218,13 @@ GET    /api/health/integrations/abdm/status
 POST   /api/health/integrations/abdm/connect
 POST   /api/health/integrations/abdm/import
 DELETE /api/health/integrations/abdm/connection
+
+POST /api/nudges/evaluate?date=YYYY-MM-DD
+GET  /api/nudges?includeHistory=false
+GET  /api/nudges/summary
+PUT  /api/nudges/{nudgeId}/snooze
+PUT  /api/nudges/{nudgeId}/acknowledge
+PUT  /api/nudges/{nudgeId}/dismiss
 ```
 
 Meal history is snapshot-based: later catalog edits do not silently rewrite previously saved nutrient totals. Recommendation responses carry rule/version/reason/evidence metadata rather than returning an opaque score.
@@ -236,6 +260,7 @@ See:
 - [Recommendation engine](docs/RECOMMENDATION_ENGINE.md)
 - [Diet plans & suggestions](docs/DIET_PLANS.md)
 - [Health records & ABDM architecture](docs/HEALTH_RECORDS_ABDM.md)
+- [Nudges & alerts](docs/NUDGES_AND_ALERTS.md)
 
 ## Local development
 

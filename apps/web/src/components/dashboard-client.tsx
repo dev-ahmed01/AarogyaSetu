@@ -9,27 +9,33 @@ import { StatusChip, Surface } from "@/components/ui";
 import { getMealDay, type DailyMealLog } from "@/lib/meals";
 import { getProfile, type Profile } from "@/lib/profile";
 import {
-  getTodayRecommendations,
-  type RecommendationAssessment
-} from "@/lib/recommendations";
+  announceNudgeChange,
+  evaluateNudges,
+  getNudges,
+  type Nudge
+} from "@/lib/nudges";
 
 export function DashboardClient() {
   const { user } = useAuth();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [mealDay, setMealDay] = useState<DailyMealLog | null>(null);
-  const [guidance, setGuidance] = useState<RecommendationAssessment | null>(null);
+  const [nudges, setNudges] = useState<Nudge[] | null>(null);
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     Promise.all([
       getProfile(),
       getMealDay(todayKey()),
-      getTodayRecommendations(todayKey())
+      evaluateNudges(todayKey()).then(async () => {
+        const next = await getNudges(false);
+        announceNudgeChange();
+        return next;
+      })
     ])
-      .then(([profileResult, mealResult, guidanceResult]) => {
+      .then(([profileResult, mealResult, nudgeResult]) => {
         setProfile(profileResult);
         setMealDay(mealResult);
-        setGuidance(guidanceResult);
+        setNudges(nudgeResult);
       })
       .catch(() => setFailed(true));
   }, []);
@@ -48,7 +54,7 @@ export function DashboardClient() {
       <PageHeader
         eyebrow="Today"
         title={`Good morning, ${firstName(user.displayName)}.`}
-        description="Today now reflects real profile and meal-log data. Personalized recommendations stay separate until their evidence rules are built."
+        description="Today combines your real meal log with a restrained attention layer. Detailed reasoning stays one click away."
       />
 
       {failed ? (
@@ -57,7 +63,7 @@ export function DashboardClient() {
         </div>
       ) : null}
 
-      {!profile || !mealDay || !guidance ? (
+      {!profile || !mealDay || nudges === null ? (
         <div className="dashboardLoading">
           <div className="sessionLoading__mark">A</div>
           <p>Loading today&apos;s workspace…</p>
@@ -126,23 +132,35 @@ export function DashboardClient() {
             </Surface>
 
             <Surface className="dashboardCard">
-              <span className="cardEyebrow">Guidance</span>
+              <span className="cardEyebrow">Needs your attention</span>
               <h2 className="profileSectionTitle">
-                {guidance.recommendations[0]?.title ?? "No recommendation forced"}
+                {nudges.find((item) => item.status === "ACTIVE")?.title
+                  ?? "Nothing is being pushed right now"}
               </h2>
               <p className="dashboardTruthCopy">
-                {guidance.recommendations[0]?.observation
-                  ?? guidance.notices[guidance.notices.length - 1]
-                  ?? "Aarogya has no explainable guidance to surface yet."}
+                {nudges.find((item) => item.status === "ACTIVE")?.message
+                  ?? "Aarogya has no active nudge. Guidance remains available when you want to inspect it."}
               </p>
               <div className="dashboardGuidanceFooter">
                 <StatusChip
-                  tone={guidance.status.includes("SAFETY") ? "attention" : "positive"}
+                  tone={
+                    nudges.some(
+                      (item) =>
+                        item.status === "ACTIVE"
+                        && item.severity === "ATTENTION"
+                    )
+                      ? "attention"
+                      : nudges.some((item) => item.status === "ACTIVE")
+                        ? "warm"
+                        : "positive"
+                  }
                 >
-                  {guidance.status.replaceAll("_", " ").toLowerCase()}
+                  {nudges.filter((item) => item.status === "ACTIVE").length > 0
+                    ? `${nudges.filter((item) => item.status === "ACTIVE").length} active`
+                    : "clear"}
                 </StatusChip>
-                <Link className="quietLink" href="/guidance">
-                  Why this?
+                <Link className="quietLink" href="/alerts">
+                  Review alerts
                 </Link>
               </div>
             </Surface>

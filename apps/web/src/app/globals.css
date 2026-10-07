@@ -4280,3 +4280,303 @@ textarea:focus-visible {
     width: 100%;
   }
 }
+
+
+/* Phase 10 — health-aware nudges and alerts */
+
+.alertTopbarLink {
+  min-height: 34px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: #fff;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.alertTopbarLink:hover {
+  border-color: var(--primary);
+  color: var(--primary-dark);
+}
+
+.alertTopbarLink strong {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: var(--radius-pill);
+  background: var(--danger-soft);
+  color: var(--danger-text);
+  font-size: 9px;
+}
+
+.alertSummaryStrip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-feature);
+  background: #fff;
+}
+
+.alertSummaryStrip > div {
+  min-height: 92px;
+  padding: 18px 20px;
+  display: grid;
+  align-content: center;
+  gap: 6px;
+  border-right: 1px solid var(--border);
+}
+
+.alertSummaryStrip > div:last-child {
+  border-right: 0;
+}
+
+.alertSummaryStrip span {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.alertSummaryStrip strong {
+  font-family: var(--font-display);
+  font-size: 22px;
+  line-height: 1.08;
+}
+
+.alertList {
+  margin-top: 18px;
+  display: grid;
+  gap: 14px;
+}
+
+.alertCard {
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-feature);
+  background: #fff;
+}
+
+.alertCard--attention {
+  box-shadow: inset 4px 0 0 #b7584f;
+}
+
+.alertCard--standard {
+  box-shadow: inset 4px 0 0 var(--accent-warm);
+}
+
+.alertCard--info {
+  box-shadow: inset 4px 0 0 var(--primary);
+}
+
+.alertCard__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.alertCard__chips {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.alertCard__chips > span:not(.statusChip) {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.alertCard__top h2 {
+  margin: 10px 0 0;
+  font-family: var(--font-display);
+  font-size: 28px;
+  line-height: 1.08;
+}
+
+.alertCard__time {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.alertCard__message {
+  max-width: 900px;
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.68;
+}
+
+.alertCard__meta {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 0.8fr;
+  gap: 9px;
+}
+
+.alertCard__meta > div {
+  min-height: 62px;
+  padding: 12px;
+  display: grid;
+  align-content: center;
+  gap: 5px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--canvas);
+}
+
+.alertCard__meta span,
+.alertCard__evidence > span {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.alertCard__meta strong,
+.alertCard__evidence strong,
+.alertCard__evidence a {
+  font-size: 10px;
+  overflow-wrap: anywhere;
+}
+
+.alertCard__evidence {
+  margin-top: 12px;
+  padding: 13px 14px;
+  display: grid;
+  gap: 5px;
+  border-radius: var(--radius-card);
+  background: var(--surface-soft);
+}
+
+.alertCard__evidence a {
+  color: var(--primary-dark);
+  font-weight: 800;
+  text-underline-offset: 3px;
+}
+
+.alertCard__snoozed {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.alertCard__actions {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.alertCard__historyState {
+  width: fit-content;
+  margin-top: 18px;
+  padding: 8px 11px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-soft);
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.alertEmpty {
+  min-height: 330px;
+  margin-top: 18px;
+  padding: 42px;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-feature);
+  background: #fff;
+  text-align: center;
+}
+
+.alertEmpty h2 {
+  max-width: 640px;
+  margin: 8px 0 0;
+  font-family: var(--font-display);
+  font-size: 34px;
+  line-height: 1.08;
+}
+
+.alertEmpty p {
+  max-width: 600px;
+  margin: 13px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.alertFootnote {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.alertBoundaryNote {
+  margin-top: 18px;
+  padding: 24px 26px;
+  border-radius: var(--radius-feature);
+  background: var(--surface-soft);
+}
+
+.alertBoundaryNote h2 {
+  margin: 7px 0 0;
+  font-family: var(--font-display);
+  font-size: 27px;
+  line-height: 1.1;
+}
+
+.alertBoundaryNote p {
+  max-width: 820px;
+  margin: 11px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+@media (max-width: 820px) {
+  .alertSummaryStrip {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .alertSummaryStrip > div:nth-child(2) {
+    border-right: 0;
+  }
+
+  .alertSummaryStrip > div:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .alertCard__meta {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .alertTopbarLink > span {
+    display: none;
+  }
+
+  .alertCard__top,
+  .alertCard__actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .alertCard__actions .button {
+    width: 100%;
+  }
+}

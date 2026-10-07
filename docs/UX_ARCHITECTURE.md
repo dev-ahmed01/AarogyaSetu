@@ -69,6 +69,14 @@
     ├── regenerate / clear draft
     └── flexible smart food suggestions
 
+/alerts
+└── focused alert inbox
+    ├── active / attention / snoozed summary
+    ├── explainable alert cards
+    ├── one primary destination per alert
+    ├── snooze / acknowledge / dismiss
+    └── optional history
+
 /health
 └── longitudinal health-record workspace
     ├── compact record / observation summary
@@ -186,6 +194,14 @@ Health records are intentionally not turned into a diagnostic dashboard.
 The primary hierarchy is timeline first, record detail second, provenance always visible. Mock integration controls and analytical consent are separated from record browsing so source-management actions do not compete with the health timeline.
 
 Imported demo records are visually labelled synthetic at the row and detail levels.
+
+## Alert hierarchy
+
+Alerts stay outside primary workspace navigation. A small top-bar entry carries only the active count.
+
+Today surfaces at most one highest-priority active nudge. The full alert inbox owns lifecycle actions. Guidance remains the evidence/explanation destination.
+
+This prevents the application from duplicating warning cards across every screen.
 
 ## Future route ownership
 

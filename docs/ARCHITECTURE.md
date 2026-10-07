@@ -113,6 +113,26 @@ Plan items snapshot source and nutrient values so a later catalog update does no
 
 Regional ranking is deliberately outside this module until the regional-intelligence phase.
 
+## Nudge architecture
+
+Nudges are a materialized presentation/state layer over already explainable signals.
+
+```text
+recommendation engine / consented manual record signal
+                    ↓
+             versioned nudge rule
+                    ↓
+          deduplicated nudge instance
+                    ↓
+ ACTIVE / SNOOZED / ACKNOWLEDGED / DISMISSED / RESOLVED
+```
+
+Nudge state never changes recommendation evidence.
+
+The health-record path is separately consent-gated and currently permits only a manual body-weight/profile consistency heuristic. The observation query explicitly restricts `source_type = MANUAL`, so synthetic ABDM demo data cannot influence personalization.
+
+Lab-value interpretation, diagnostic thresholds and emergency escalation are outside the Phase 10 architecture.
+
 ## Health-data safety
 
 This application is a wellness/research prototype. It does not diagnose conditions or prescribe medical treatment.

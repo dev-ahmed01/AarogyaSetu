@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 import { AuthGate, useAuth } from "@/components/auth-gate";
 import { primaryNavigation } from "@/lib/navigation";
+import { getNudgeSummary } from "@/lib/nudges";
 
 export function AppShell({ children }: { children: ReactNode }) {
   return (
@@ -18,6 +19,30 @@ export function AppShell({ children }: { children: ReactNode }) {
 function AppShellInner({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const { user, signOut } = useAuth();
+  const [alertCount, setAlertCount] = useState(0);
+
+  useEffect(() => {
+    let active = true;
+
+    const load = () => {
+      getNudgeSummary()
+        .then((summary) => {
+          if (active) setAlertCount(summary.activeCount);
+        })
+        .catch(() => {
+          if (active) setAlertCount(0);
+        });
+    };
+
+    load();
+    window.addEventListener("aarogya:nudges-changed", load);
+
+    return () => {
+      active = false;
+      window.removeEventListener("aarogya:nudges-changed", load);
+    };
+  }, [pathname]);
+
   const initials = user.displayName
     .split(/\s+/)
     .filter(Boolean)
@@ -34,6 +59,10 @@ function AppShellInner({ children }: { children: ReactNode }) {
         </Link>
 
         <div className="appTopbar__meta">
+          <Link className="alertTopbarLink" href="/alerts">
+            <span>Alerts</span>
+            {alertCount > 0 ? <strong>{alertCount > 9 ? "9+" : alertCount}</strong> : null}
+          </Link>
           <span className="accountName">{user.displayName}</span>
           <button className="signOutButton" type="button" onClick={() => void signOut()}>
             Sign out

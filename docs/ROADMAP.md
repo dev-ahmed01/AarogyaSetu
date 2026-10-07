@@ -9,7 +9,7 @@
 - [x] Phase 7 — Personalized nutrition engine
 - [x] Phase 8 — Diet plans & smart food suggestions
 - [x] Phase 9 — Health records & ABDM architecture
-- [ ] Phase 10 — Health-aware nudges & alerts
+- [x] Phase 10 — Health-aware nudges & alerts
 - [ ] Phase 11 — Regional dietary intelligence
 - [ ] Phase 12 — Goals, streaks & gamification
 - [ ] Phase 13 — Health dashboard & longitudinal analytics
