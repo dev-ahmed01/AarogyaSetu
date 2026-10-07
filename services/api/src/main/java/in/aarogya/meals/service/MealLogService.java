@@ -369,7 +369,7 @@ public class MealLogService {
         var entryResponses = entries.stream()
             .sorted(
                 Comparator.comparingInt(
-                    entry -> MEAL_TYPES.indexOf(entry.getMealType())
+                    (MealEntry entry) -> MEAL_TYPES.indexOf(entry.getMealType())
                 ).thenComparing(MealEntry::getCreatedAt)
             )
             .map(MealEntryResponse::from)
