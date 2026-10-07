@@ -50,7 +50,7 @@ class ReleaseReadinessIntegrationTests {
             """
             SELECT COUNT(*)
             FROM flyway_schema_history
-            WHERE version = '14'
+            WHERE version = '15'
               AND success = TRUE
             """,
             Integer.class

@@ -287,6 +287,7 @@ V11__goals_streaks_gamification.sql
 V12__admin_content_curation.sql
 V13__research_evaluation.sql
 V14__schema_type_alignment.sql
+V15__refresh_token_hash_alignment.sql
 ```
 
 ## Nutrition and meal endpoints
