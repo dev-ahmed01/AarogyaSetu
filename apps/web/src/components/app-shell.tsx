@@ -19,7 +19,7 @@ function AppShellInner({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const { user, signOut } = useAuth();
   const initials = user.displayName
-    .split(/s+/)
+    .split(/\s+/)
     .filter(Boolean)
     .slice(0, 2)
     .map((part) => part[0]?.toUpperCase())
@@ -29,9 +29,7 @@ function AppShellInner({ children }: { children: ReactNode }) {
     <div className="appShell">
       <header className="appTopbar">
         <Link className="brand" href="/" aria-label="Aarogya home">
-          <span className="brandMark" aria-hidden="true">
-            A
-          </span>
+          <span className="brandMark" aria-hidden="true">A</span>
           <span>Aarogya</span>
         </Link>
 
@@ -40,9 +38,13 @@ function AppShellInner({ children }: { children: ReactNode }) {
           <button className="signOutButton" type="button" onClick={() => void signOut()}>
             Sign out
           </button>
-          <span className="profileButton" aria-label={`Signed in as ${user.displayName}`}>
+          <Link
+            className="profileButton"
+            href="/profile"
+            aria-label={`Open profile for ${user.displayName}`}
+          >
             {initials || "A"}
-          </span>
+          </Link>
         </div>
       </header>
 
@@ -67,7 +69,9 @@ function AppShellInner({ children }: { children: ReactNode }) {
         </nav>
 
         <div className="sideNav__footer">
-          <span className="sideNav__footerTitle">Privacy first</span>
+          <Link className="sideNav__profileLink" href="/profile">
+            Profile & privacy
+          </Link>
           <p>Your health context stays visible and controllable.</p>
         </div>
       </aside>

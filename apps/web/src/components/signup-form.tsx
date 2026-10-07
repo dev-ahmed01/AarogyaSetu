@@ -27,7 +27,7 @@ export function SignupForm() {
 
     try {
       await register(displayName, email, password);
-      router.replace("/dashboard");
+      router.replace("/onboarding");
       router.refresh();
     } catch (cause) {
       setError(
@@ -113,8 +113,8 @@ export function SignupForm() {
       </button>
 
       <p className="authForm__legal">
-        Health-profile consent is intentionally handled separately in onboarding.
-        Creating an account does not consent to health-data processing beyond authentication.
+        Account creation only establishes identity. Health-profile data is requested
+        separately and is not stored until you explicitly agree to personalization.
       </p>
     </form>
   );

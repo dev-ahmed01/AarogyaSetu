@@ -13,26 +13,33 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import in.aarogya.identity.service.AccountExistsException;
 import in.aarogya.identity.service.InvalidRefreshTokenException;
+import in.aarogya.profile.service.ProfileIncompleteException;
 
 @RestControllerAdvice
 public class ApiExceptionHandler {
 
     @ExceptionHandler(AccountExistsException.class)
     ResponseEntity<Map<String, Object>> accountExists(AccountExistsException exception) {
-        return response(
-            HttpStatus.CONFLICT,
-            "ACCOUNT_EXISTS",
-            exception.getMessage()
-        );
+        return response(HttpStatus.CONFLICT, "ACCOUNT_EXISTS", exception.getMessage());
     }
 
     @ExceptionHandler({BadCredentialsException.class, InvalidRefreshTokenException.class})
     ResponseEntity<Map<String, Object>> unauthorized(RuntimeException exception) {
+        return response(HttpStatus.UNAUTHORIZED, "UNAUTHORIZED", exception.getMessage());
+    }
+
+    @ExceptionHandler(ProfileIncompleteException.class)
+    ResponseEntity<Map<String, Object>> profileIncomplete(ProfileIncompleteException exception) {
         return response(
-            HttpStatus.UNAUTHORIZED,
-            "UNAUTHORIZED",
+            HttpStatus.UNPROCESSABLE_ENTITY,
+            "PROFILE_INCOMPLETE",
             exception.getMessage()
         );
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    ResponseEntity<Map<String, Object>> badRequest(IllegalArgumentException exception) {
+        return response(HttpStatus.BAD_REQUEST, "BAD_REQUEST", exception.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -40,10 +47,7 @@ public class ApiExceptionHandler {
         var fields = new LinkedHashMap<String, String>();
 
         for (var error : exception.getBindingResult().getFieldErrors()) {
-            fields.putIfAbsent(
-                error.getField(),
-                messageFor(error)
-            );
+            fields.putIfAbsent(error.getField(), messageFor(error));
         }
 
         Map<String, Object> body = new LinkedHashMap<>();

@@ -8,7 +8,7 @@ The product explores how a digital-health platform could responsibly extend into
 
 ## Phase status
 
-**Phase 3/16 — Authentication & Security: complete**
+**Phase 4/16 — Health Onboarding & User Profile: complete**
 
 See [docs/ROADMAP.md](docs/ROADMAP.md) for the full delivery sequence.
 
@@ -19,38 +19,55 @@ Public:
 - `/login` — sign in
 - `/signup` — account creation
 
-Authenticated workspace:
-- `/dashboard` — Today dashboard shell
+Authenticated:
+- `/onboarding` — focused health-profile setup
+- `/profile` — profile and consent review
+- `/dashboard` — truthful Today workspace
 - `/meals` — meal workspace foundation
 - `/plans` — diet-plan workspace foundation
 - `/health` — health-record workspace foundation
 - `/progress` — longitudinal progress workspace foundation
 
-## Phase 3 security
+## Implemented foundation
+
+### Authentication & security
 
 - PostgreSQL-backed user accounts
 - BCrypt password hashing
 - `USER`, `NUTRITIONIST`, and `ADMIN` roles
-- signed access JWTs
-- signed refresh JWTs
+- signed access and refresh JWTs
 - HttpOnly browser cookies
 - persisted refresh-session hashes
 - refresh-token rotation
-- server-side logout/revocation
-- authenticated `/api/auth/me`
-- JSON 401 / 403 responses
-- security audit-event foundation
+- logout/revocation
 - protected workspace session gate
+- JSON 401/403 responses
+- security audit-event foundation
 
-The browser UI does **not** store authentication tokens in localStorage.
+### Health profile & consent
 
-See [docs/SECURITY.md](docs/SECURITY.md) for the security model and deployment caveats.
+- age without storing full date of birth
+- optional nutrition-relevant sex
+- optional height and weight
+- activity level
+- dietary pattern
+- broad state/region only
+- nutrition goals
+- food allergies
+- optional self-reported health context
+- append-only personalization consent records
+- consent revocation / personalization pause
+- auditable onboarding completion
+- server-side prevention of profile writes before consent
+
+The browser does not store auth tokens in `localStorage`, and the onboarding wizard does not send the in-memory health profile to the server before consent.
 
 ## Product principles
 
 - Evidence before novelty.
 - Explainable recommendations over black-box medical claims.
 - Privacy and consent by design.
+- Data minimization.
 - Progressive disclosure instead of dense health dashboards.
 - Indian and regional food context.
 - Strong separation between wellness guidance and medical diagnosis.
@@ -62,22 +79,31 @@ See [docs/SECURITY.md](docs/SECURITY.md) for the security model and deployment c
 ```text
 apps/web            Next.js + TypeScript frontend
 services/api        Java + Spring Boot REST API
-docs                Architecture, UX, security and research notes
+docs                Architecture, UX, security, profile and research notes
 ```
 
-PostgreSQL is the system of record. Redis is reserved for later phases where caching or rate limiting provides a concrete benefit.
+PostgreSQL is the system of record.
+
+Database migrations currently include:
+
+```text
+V1__baseline.sql
+V2__identity_and_sessions.sql
+V3__health_profiles_and_consent.sql
+```
 
 ## Visual direction
 
 The interface follows the hierarchy principles of the supplied Purrfect reference: generous whitespace, restrained warm surfaces, strong display/body typography contrast, rounded controls, clear sections and progressive disclosure.
 
-Aarogya uses a distinct green/warm health identity and deliberately avoids dense medical-dashboard styling.
+Aarogya uses a distinct green/warm health identity and avoids dense medical-dashboard styling.
 
 See:
 - [Design system](docs/DESIGN_SYSTEM.md)
 - [UX architecture](docs/UX_ARCHITECTURE.md)
 - [System architecture](docs/ARCHITECTURE.md)
 - [Security model](docs/SECURITY.md)
+- [Profile & consent model](docs/PROFILE_AND_CONSENT.md)
 
 ## Local development
 
@@ -114,12 +140,11 @@ Default local endpoints:
 - API status: http://localhost:8080/api/status
 - API health: http://localhost:8080/actuator/health
 
-Authentication endpoints:
-- `POST /api/auth/register`
-- `POST /api/auth/login`
-- `POST /api/auth/refresh`
-- `POST /api/auth/logout`
-- `GET /api/auth/me`
+Profile endpoints:
+- `GET /api/profile`
+- `PUT /api/profile`
+- `PUT /api/profile/consent`
+- `POST /api/profile/complete`
 
 ## Safety boundary
 
