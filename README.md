@@ -8,20 +8,43 @@ The product explores how a digital-health platform could responsibly extend into
 
 ## Phase status
 
-**Phase 2/16 — Aarogya Design System & Application Shell: complete**
+**Phase 3/16 — Authentication & Security: complete**
 
 See [docs/ROADMAP.md](docs/ROADMAP.md) for the full delivery sequence.
 
 ## Current product surfaces
 
+Public:
 - `/` — research/product landing page
+- `/login` — sign in
+- `/signup` — account creation
+
+Authenticated workspace:
 - `/dashboard` — Today dashboard shell
 - `/meals` — meal workspace foundation
 - `/plans` — diet-plan workspace foundation
 - `/health` — health-record workspace foundation
 - `/progress` — longitudinal progress workspace foundation
 
-Phase 2 placeholders intentionally establish navigation and information hierarchy without pretending later features already work.
+## Phase 3 security
+
+- PostgreSQL-backed user accounts
+- BCrypt password hashing
+- `USER`, `NUTRITIONIST`, and `ADMIN` roles
+- signed access JWTs
+- signed refresh JWTs
+- HttpOnly browser cookies
+- persisted refresh-session hashes
+- refresh-token rotation
+- server-side logout/revocation
+- authenticated `/api/auth/me`
+- JSON 401 / 403 responses
+- security audit-event foundation
+- protected workspace session gate
+
+The browser UI does **not** store authentication tokens in localStorage.
+
+See [docs/SECURITY.md](docs/SECURITY.md) for the security model and deployment caveats.
 
 ## Product principles
 
@@ -39,7 +62,7 @@ Phase 2 placeholders intentionally establish navigation and information hierarch
 ```text
 apps/web            Next.js + TypeScript frontend
 services/api        Java + Spring Boot REST API
-docs                Architecture, UX and research notes
+docs                Architecture, UX, security and research notes
 ```
 
 PostgreSQL is the system of record. Redis is reserved for later phases where caching or rate limiting provides a concrete benefit.
@@ -51,15 +74,14 @@ The interface follows the hierarchy principles of the supplied Purrfect referenc
 Aarogya uses a distinct green/warm health identity and deliberately avoids dense medical-dashboard styling.
 
 See:
-
 - [Design system](docs/DESIGN_SYSTEM.md)
 - [UX architecture](docs/UX_ARCHITECTURE.md)
 - [System architecture](docs/ARCHITECTURE.md)
+- [Security model](docs/SECURITY.md)
 
 ## Local development
 
 Prerequisites:
-
 - Node.js 20+
 - Java 21
 - Maven 3.9+
@@ -88,10 +110,16 @@ npm run dev
 ```
 
 Default local endpoints:
-
 - Web: http://localhost:3000
 - API status: http://localhost:8080/api/status
 - API health: http://localhost:8080/actuator/health
+
+Authentication endpoints:
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `POST /api/auth/refresh`
+- `POST /api/auth/logout`
+- `GET /api/auth/me`
 
 ## Safety boundary
 

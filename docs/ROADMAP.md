@@ -2,7 +2,7 @@
 
 - [x] Phase 1 — Repository & architecture foundation
 - [x] Phase 2 — Aarogya design system & application shell
-- [ ] Phase 3 — Authentication & security
+- [x] Phase 3 — Authentication & security
 - [ ] Phase 4 — Health onboarding & user profile
 - [ ] Phase 5 — Nutrition knowledge platform
 - [ ] Phase 6 — Meal logging

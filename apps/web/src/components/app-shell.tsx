@@ -4,10 +4,26 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
+import { AuthGate, useAuth } from "@/components/auth-gate";
 import { primaryNavigation } from "@/lib/navigation";
 
 export function AppShell({ children }: { children: ReactNode }) {
+  return (
+    <AuthGate>
+      <AppShellInner>{children}</AppShellInner>
+    </AuthGate>
+  );
+}
+
+function AppShellInner({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const { user, signOut } = useAuth();
+  const initials = user.displayName
+    .split(/s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join("");
 
   return (
     <div className="appShell">
@@ -20,10 +36,13 @@ export function AppShell({ children }: { children: ReactNode }) {
         </Link>
 
         <div className="appTopbar__meta">
-          <span className="researchPill">Research prototype</span>
-          <button className="profileButton" type="button" aria-label="Profile">
-            AM
+          <span className="accountName">{user.displayName}</span>
+          <button className="signOutButton" type="button" onClick={() => void signOut()}>
+            Sign out
           </button>
+          <span className="profileButton" aria-label={`Signed in as ${user.displayName}`}>
+            {initials || "A"}
+          </span>
         </div>
       </header>
 

@@ -34,8 +34,9 @@ export default function HomePage() {
         <div className="marketingNav__links">
           <a href="#approach">Approach</a>
           <a href="#principles">Principles</a>
-          <LinkButton href="/dashboard" variant="primary">
-            Open prototype
+          <Link className="marketingNav__login" href="/login">Sign in</Link>
+          <LinkButton href="/signup" variant="primary">
+            Create account
           </LinkButton>
         </div>
       </nav>
@@ -53,10 +54,10 @@ export default function HomePage() {
           </p>
 
           <div className="marketingHero__actions">
-            <LinkButton href="/dashboard">Explore the interface</LinkButton>
-            <a className="quietLink" href="#approach">
-              See how it works
-            </a>
+            <LinkButton href="/signup">Start your profile</LinkButton>
+            <Link className="quietLink" href="/login">
+              I already have an account
+            </Link>
           </div>
 
           <div className="marketingHero__note">
@@ -142,8 +143,8 @@ export default function HomePage() {
           <span className="sectionLabel">Research translated into product</span>
           <h2>From dietary influence to an actual system users can evaluate.</h2>
         </div>
-        <LinkButton href="/dashboard" variant="secondary">
-          Enter workspace
+        <LinkButton href="/signup" variant="secondary">
+          Create account
         </LinkButton>
       </section>
 
