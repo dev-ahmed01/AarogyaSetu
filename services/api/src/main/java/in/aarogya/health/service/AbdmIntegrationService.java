@@ -79,7 +79,7 @@ public class AbdmIntegrationService {
             "HEALTH_INTEGRATION_CONNECTED",
             "SUCCESS",
             descriptor.providerCode(),
-            "{"mode":"MOCK","liveConnectivity":false}"
+            "mode=MOCK;liveConnectivity=false"
         );
 
         return toResponse(integration);
@@ -123,7 +123,7 @@ public class AbdmIntegrationService {
             "HEALTH_RECORDS_IMPORTED",
             "SUCCESS",
             descriptor.providerCode(),
-            "{"imported":" + imported + ","skippedExisting":" + skipped + "}"
+            "imported=" + imported + ";skippedExisting=" + skipped
         );
 
         return new HealthImportResponse(
@@ -156,7 +156,7 @@ public class AbdmIntegrationService {
             "HEALTH_INTEGRATION_DISCONNECTED",
             "SUCCESS",
             descriptor.providerCode(),
-            "{"localRecordsRetained":true}"
+            "localRecordsRetained=true"
         );
 
         return toResponse(integration);

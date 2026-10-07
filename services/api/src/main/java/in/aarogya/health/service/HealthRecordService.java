@@ -173,7 +173,7 @@ public class HealthRecordService {
             "HEALTH_RECORD_CREATED",
             "SUCCESS",
             "health-record:" + saved.getId(),
-            "{"source":"MANUAL"}"
+            "source=MANUAL"
         );
 
         return HealthRecordResponse.from(saved);
@@ -193,7 +193,7 @@ public class HealthRecordService {
             "HEALTH_RECORD_DELETED",
             "SUCCESS",
             "health-record:" + recordId,
-            "{"localCopyOnly":true}"
+            "localCopyOnly=true"
         );
     }
 
@@ -234,8 +234,8 @@ public class HealthRecordService {
             "SUCCESS",
             HEALTH_RECORD_ANALYSIS_CONSENT,
             request.granted()
-                ? "{"granted":true}"
-                : "{"granted":false}"
+                ? "granted=true"
+                : "granted=false"
         );
 
         return toConsentResponse(record);
