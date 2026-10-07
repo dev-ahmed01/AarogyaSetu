@@ -56,6 +56,13 @@ class AccountDataServiceTests {
         );
         verify(users).delete(user);
         verify(users).flush();
+        verify(audit).record(
+            null,
+            "ACCOUNT_DELETED",
+            "SUCCESS",
+            "deleted-account",
+            null
+        );
     }
 
     @Test

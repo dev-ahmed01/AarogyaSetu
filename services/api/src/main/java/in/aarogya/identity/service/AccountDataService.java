@@ -357,14 +357,6 @@ public class AccountDataService {
             );
         }
 
-        auditService.record(
-            user,
-            "ACCOUNT_DELETION_REQUESTED",
-            "SUCCESS",
-            "self-delete",
-            null
-        );
-
         jdbcTemplate.update(
             """
             UPDATE security_audit_events
@@ -381,6 +373,14 @@ public class AccountDataService {
 
         userRepository.delete(user);
         userRepository.flush();
+
+        auditService.record(
+            null,
+            "ACCOUNT_DELETED",
+            "SUCCESS",
+            "deleted-account",
+            null
+        );
     }
 
     private String sha256(String value) {
