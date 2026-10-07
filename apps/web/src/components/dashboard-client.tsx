@@ -1,39 +1,56 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { useAuth } from "@/components/auth-gate";
 import { PageHeader } from "@/components/page-header";
 import { StatusChip, Surface } from "@/components/ui";
+import { getMealDay, type DailyMealLog } from "@/lib/meals";
 import { getProfile, type Profile } from "@/lib/profile";
 
 export function DashboardClient() {
   const { user } = useAuth();
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [mealDay, setMealDay] = useState<DailyMealLog | null>(null);
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
-    getProfile()
-      .then(setProfile)
+    Promise.all([
+      getProfile(),
+      getMealDay(todayKey())
+    ])
+      .then(([profileResult, mealResult]) => {
+        setProfile(profileResult);
+        setMealDay(mealResult);
+      })
       .catch(() => setFailed(true));
   }, []);
+
+  const totals = useMemo(() => {
+    const values = new Map((mealDay?.totals ?? []).map((item) => [item.code, item.amount]));
+    return {
+      energy: values.get("ENERGY_KCAL") ?? 0,
+      protein: values.get("PROTEIN_G") ?? 0,
+      fibre: values.get("FIBRE_G") ?? 0
+    };
+  }, [mealDay]);
 
   return (
     <main className="workspacePage">
       <PageHeader
         eyebrow="Today"
         title={`Good morning, ${firstName(user.displayName)}.`}
-        description="Only information backed by your account and profile appears here now. Nutrition metrics arrive after meal tracking is built."
+        description="Today now reflects real profile and meal-log data. Personalized recommendations stay separate until their evidence rules are built."
       />
 
       {failed ? (
         <div className="formNotice formNotice--error" role="alert">
-          We could not load your profile right now.
+          We could not load today&apos;s workspace right now.
         </div>
       ) : null}
 
-      {!profile ? (
+      {!profile || !mealDay ? (
         <div className="dashboardLoading">
           <div className="sessionLoading__mark">A</div>
           <p>Loading today&apos;s workspace…</p>
@@ -45,8 +62,7 @@ export function DashboardClient() {
             <span className="dashboardHero__label">Your next useful action</span>
             <h2>Give Aarogya just enough context to personalize responsibly.</h2>
             <p>
-              Complete five short steps for dietary pattern, activity, goals and optional safety context.
-              Nothing is stored until you explicitly agree to personalization.
+              Complete the short profile flow for dietary pattern, activity, goals and optional safety context.
             </p>
           </div>
           <Link className="button button--primary" href="/onboarding">
@@ -57,30 +73,43 @@ export function DashboardClient() {
         <>
           <section className="setupHero setupHero--complete">
             <div>
-              <StatusChip tone={profile.personalizationConsentGranted ? "positive" : "attention"}>
-                {profile.personalizationConsentGranted ? "Profile ready" : "Personalization paused"}
+              <StatusChip tone={mealDay.entryCount > 0 ? "positive" : "warm"}>
+                {mealDay.entryCount > 0 ? "Meals logged today" : "No meals logged yet"}
               </StatusChip>
-              <span className="dashboardHero__label">Profile foundation</span>
+              <span className="dashboardHero__label">Today&apos;s nutrition record</span>
               <h2>
-                {profile.personalizationConsentGranted
-                  ? "Your context is ready for the nutrition layers that come next."
-                  : "Your stored context is visible, but personalization is currently paused."}
+                {mealDay.entryCount > 0
+                  ? "Your daily totals now come from foods you actually logged."
+                  : "Start with one meal. Aarogya will build the day from there."}
               </h2>
               <p>
-                {profile.personalizationConsentGranted
-                  ? "Meal logging and the nutrition engine will build on this profile without inventing data you have not entered."
-                  : "Re-enable consent from your profile before Aarogya uses stored context for personalized guidance."}
+                {mealDay.entryCount > 0
+                  ? `${mealDay.entryCount} ${mealDay.entryCount === 1 ? "food entry" : "food entries"} recorded. Historical nutrient values are frozen at log time.`
+                  : "Use the source-aware food catalog to add breakfast, lunch, dinner or snacks."}
               </p>
             </div>
-            <Link className="button button--secondary" href="/profile">
-              Review profile
+            <Link className="button button--primary" href="/meals">
+              {mealDay.entryCount > 0 ? "Review meals" : "Log a meal"}
             </Link>
           </section>
 
           <div className="dashboardGrid dashboardGrid--phase4">
             <Surface className="dashboardCard">
+              <span className="cardEyebrow">Today&apos;s totals</span>
+              <h2 className="profileSectionTitle">
+                {mealDay.entryCount > 0 ? "Recorded nutrition" : "Waiting for your first meal"}
+              </h2>
+              <dl className="profileDetails profileDetails--compact">
+                <Detail label="Energy" value={`${formatNumber(totals.energy)} kcal`} />
+                <Detail label="Protein" value={`${formatNumber(totals.protein)} g`} />
+                <Detail label="Fibre" value={`${formatNumber(totals.fibre)} g`} />
+                <Detail label="Entries" value={String(mealDay.entryCount)} />
+              </dl>
+            </Surface>
+
+            <Surface className="dashboardCard">
               <span className="cardEyebrow">Your context</span>
-              <h2 className="profileSectionTitle">Current foundation</h2>
+              <h2 className="profileSectionTitle">Profile foundation</h2>
               <dl className="profileDetails profileDetails--compact">
                 <Detail label="Diet" value={pretty(profile.dietaryPattern)} />
                 <Detail label="Activity" value={pretty(profile.activityLevel)} />
@@ -90,22 +119,12 @@ export function DashboardClient() {
             </Surface>
 
             <Surface className="dashboardCard">
-              <span className="cardEyebrow">Meals</span>
-              <h2 className="profileSectionTitle">No fabricated meal data</h2>
-              <p className="dashboardTruthCopy">
-                Meal tracking is not implemented yet, so this dashboard deliberately shows no calories,
-                fibre totals or nutrition score.
-              </p>
-              <StatusChip>Meal logging comes next</StatusChip>
-            </Surface>
-
-            <Surface className="dashboardCard">
               <span className="cardEyebrow">Recommendations</span>
-              <h2 className="profileSectionTitle">Waiting for real inputs</h2>
+              <h2 className="profileSectionTitle">Still intentionally off</h2>
               <p className="dashboardTruthCopy">
-                Personalized recommendations remain off until food data and the rule/evidence layer are available.
+                Meal data now exists, but Aarogya will not label foods as “good”, “bad” or personalized until the explainable rule engine is built in Phase 7.
               </p>
-              <StatusChip>Explainability preserved</StatusChip>
+              <StatusChip>Evidence rules next</StatusChip>
             </Surface>
           </div>
         </>
@@ -133,4 +152,18 @@ function pretty(value: string | null) {
     .toLowerCase()
     .replaceAll("_", " ")
     .replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
+
+function formatNumber(value: number) {
+  return new Intl.NumberFormat("en-IN", {
+    maximumFractionDigits: 1
+  }).format(value);
+}
+
+function todayKey() {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 }

@@ -2637,3 +2637,449 @@ textarea:focus-visible {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Phase 6 — meal logging */
+
+.mealDateBar {
+  min-height: 66px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-feature);
+  background: #fff;
+}
+
+.mealDateBar > button {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--canvas);
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.mealDateBar > button:disabled {
+  cursor: not-allowed;
+  opacity: 0.35;
+}
+
+.mealDateBar label {
+  min-width: 220px;
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+}
+
+.mealDateBar label > span {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.mealDateBar input {
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-weight: 800;
+  text-align: center;
+}
+
+.mealTotals {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-feature);
+  overflow: hidden;
+  background: #fff;
+}
+
+.mealTotals > div {
+  min-height: 104px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 5px;
+  border-right: 1px solid var(--border);
+}
+
+.mealTotals > div:last-child {
+  border-right: 0;
+}
+
+.mealTotals span,
+.mealTotals small {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.mealTotals strong {
+  font-family: var(--font-display);
+  font-size: 30px;
+  line-height: 1;
+}
+
+.mealWorkspace {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(340px, 0.82fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.mealDay {
+  display: grid;
+  gap: 14px;
+}
+
+.mealSlot {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-feature);
+  background: #fff;
+}
+
+.mealSlot__header {
+  min-height: 78px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.mealSlot__header > div {
+  display: grid;
+  gap: 5px;
+}
+
+.mealSlot__header > div > strong {
+  font-size: 12px;
+}
+
+.mealAddButton {
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-soft);
+  color: var(--primary-dark);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.mealSlot__empty {
+  margin: 0;
+  padding: 16px 20px 20px;
+  border-top: 1px solid var(--border);
+  color: var(--muted-light);
+  font-size: 11px;
+}
+
+.mealEntryList {
+  border-top: 1px solid var(--border);
+}
+
+.mealEntryRow {
+  min-height: 72px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 90px auto;
+  gap: 18px;
+  align-items: center;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.mealEntryRow:last-child {
+  border-bottom: 0;
+}
+
+.mealEntryRow > div:first-child {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+
+.mealEntryRow > div:first-child strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+.mealEntryRow > div:first-child span,
+.mealEntryRow__energy span {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.mealEntryRow__energy {
+  display: grid;
+  justify-items: end;
+  gap: 3px;
+}
+
+.mealEntryRow__energy strong {
+  font-family: var(--font-display);
+  font-size: 20px;
+}
+
+.mealEntryRow__actions {
+  display: flex;
+  gap: 4px;
+}
+
+.mealEntryRow__actions button,
+.textAction {
+  border: 0;
+  padding: 6px 7px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.mealEntryRow__actions button:hover,
+.textAction:hover {
+  color: var(--primary-dark);
+}
+
+.mealComposer {
+  min-height: 500px;
+  position: sticky;
+  top: 92px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-feature);
+  background: #fff;
+}
+
+.mealComposer__empty,
+.mealComposer__search,
+.mealComposer__form {
+  padding: 26px;
+}
+
+.mealComposer__empty {
+  min-height: 500px;
+  display: grid;
+  align-content: center;
+}
+
+.mealComposer__empty h2,
+.mealComposer__heading h2 {
+  margin: 7px 0 0;
+  font-family: var(--font-display);
+  font-size: 30px;
+  line-height: 1.08;
+}
+
+.mealComposer__empty p {
+  margin: 12px 0 0;
+  color: var(--muted);
+  line-height: 1.62;
+  font-size: 12px;
+}
+
+.mealComposer__heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.mealSearchField {
+  margin-top: 24px;
+  display: grid;
+  gap: 7px;
+}
+
+.mealSearchField > span,
+.mealComposer__subhead {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.mealSearchField input {
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-control);
+  background: var(--canvas);
+  color: var(--text);
+}
+
+.quickFoodGroup {
+  margin-top: 22px;
+}
+
+.quickFoodGroup > div {
+  margin-top: 9px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.quickFoodGroup button {
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-soft);
+  color: var(--primary-dark);
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 750;
+}
+
+.mealSearchResults {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+
+.mealSearchResults > p {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.mealSearchResults > button {
+  width: 100%;
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 12px 0;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.mealSearchResults > button > span {
+  display: grid;
+  gap: 4px;
+}
+
+.mealSearchResults strong {
+  font-size: 12px;
+}
+
+.mealSearchResults small {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.favoriteToggle {
+  margin: 20px 0 22px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--accent-warm-dark);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.mealComposer__form .formField + .formField {
+  margin-top: 16px;
+}
+
+.mealPreview {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.mealPreview > div {
+  min-height: 70px;
+  padding: 12px;
+  display: grid;
+  align-content: space-between;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--canvas);
+}
+
+.mealPreview span {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.mealPreview strong {
+  font-size: 12px;
+}
+
+.mealSourceNote {
+  margin: 18px 0 0;
+  color: var(--muted-light);
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.mealSaveButton {
+  width: 100%;
+  margin-top: 20px;
+}
+
+@media (max-width: 980px) {
+  .mealWorkspace {
+    grid-template-columns: 1fr;
+  }
+
+  .mealComposer {
+    position: static;
+    min-height: 0;
+  }
+
+  .mealComposer__empty {
+    min-height: 220px;
+  }
+}
+
+@media (max-width: 760px) {
+  .mealTotals {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .mealTotals > div:nth-child(2) {
+    border-right: 0;
+  }
+
+  .mealTotals > div:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .mealEntryRow {
+    grid-template-columns: 1fr auto;
+  }
+
+  .mealEntryRow__actions {
+    grid-column: 1 / -1;
+  }
+
+  .mealDateBar label {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .mealComposer__heading {
+    flex-direction: column;
+  }
+}

@@ -8,7 +8,7 @@ The product explores how a digital-health platform could responsibly extend into
 
 ## Phase status
 
-**Phase 5/16 — Nutrition Knowledge Platform: complete**
+**Phase 6/16 — Meal Logging: complete**
 
 See [docs/ROADMAP.md](docs/ROADMAP.md) for the full delivery sequence.
 
@@ -24,7 +24,7 @@ Authenticated:
 - `/profile` — profile and consent review
 - `/dashboard` — truthful Today workspace
 - `/foods` — source-aware food knowledge library
-- `/meals` — meal workspace foundation linked to the catalog
+- `/meals` — full daily meal logging, history, favourites and recent foods
 - `/plans` — diet-plan workspace foundation
 - `/health` — health-record workspace foundation
 - `/progress` — longitudinal progress workspace foundation
@@ -73,6 +73,19 @@ Authenticated:
 - source-aware food library UI
 - regional discovery foods that remain unloggable until curated
 
+### Meal logging
+
+- breakfast, lunch, dinner and snack slots
+- catalog-backed food search
+- catalog portions or custom gram quantities
+- immutable nutrient snapshots per saved entry
+- daily nutrient aggregation
+- edit/delete with authenticated ownership checks
+- date navigation and 31-day history API
+- favourites and recent foods
+- Today dashboard backed by real meal totals
+- no personalized target judgments before Phase 7
+
 ## Data provenance
 
 The prototype keeps nutrition sources explicit.
@@ -100,9 +113,10 @@ V1__baseline.sql
 V2__identity_and_sessions.sql
 V3__health_profiles_and_consent.sql
 V4__nutrition_catalog.sql
+V5__meal_logging.sql
 ```
 
-## Nutrition endpoints
+## Nutrition and meal endpoints
 
 Authenticated:
 
@@ -110,9 +124,19 @@ Authenticated:
 GET /api/nutrition/foods
 GET /api/nutrition/foods/{slug}
 GET /api/nutrition/metadata
+
+GET    /api/meals/day
+GET    /api/meals/history
+POST   /api/meals/entries
+PUT    /api/meals/entries/{entryId}
+DELETE /api/meals/entries/{entryId}
+GET    /api/meals/recent
+GET    /api/meals/favorites
+PUT    /api/meals/favorites/{foodSlug}
+DELETE /api/meals/favorites/{foodSlug}
 ```
 
-Search supports name/alias, category, dietary classification, broad region, nutrient-data status and pagination.
+Meal history is snapshot-based: later catalog edits do not silently rewrite previously saved nutrient totals.
 
 ## Product principles
 
@@ -141,6 +165,7 @@ See:
 - [Security model](docs/SECURITY.md)
 - [Profile & consent model](docs/PROFILE_AND_CONSENT.md)
 - [Nutrition catalog](docs/NUTRITION_CATALOG.md)
+- [Meal logging](docs/MEAL_LOGGING.md)
 
 ## Local development
 

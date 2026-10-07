@@ -5,7 +5,7 @@
 - [x] Phase 3 — Authentication & security
 - [x] Phase 4 — Health onboarding & user profile
 - [x] Phase 5 — Nutrition knowledge platform
-- [ ] Phase 6 — Meal logging
+- [x] Phase 6 — Meal logging
 - [ ] Phase 7 — Personalized nutrition engine
 - [ ] Phase 8 — Diet plans & smart food suggestions
 - [ ] Phase 9 — Health records & ABDM architecture

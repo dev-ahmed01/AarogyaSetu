@@ -43,8 +43,14 @@
     └── inline detail + provenance
 
 /meals
-└── meal workspace foundation
-    └── links into /foods before logging arrives
+└── daily meal logging
+    ├── date navigation
+    ├── compact daily totals
+    ├── breakfast / lunch / dinner / snacks
+    ├── contextual food search
+    ├── favourites + recent foods
+    ├── portion / gram controls
+    └── edit / remove
 
 /plans
 └── diet-plan workspace placeholder
@@ -133,9 +139,14 @@ Each page should have:
 - contextual secondary actions,
 - no duplicated CTA wording competing for attention.
 
+## Meal-logging hierarchy
+
+Meal logging uses the day as the primary object. Daily totals are visually secondary to the four meal slots, and add/edit controls live in one contextual panel rather than opening a dense modal or separate route.
+
+The Today dashboard can now surface real logged totals, but it still does not interpret them as personalized success/failure before Phase 7.
+
 ## Future route ownership
 
-- Phase 6: meal workflows
 - Phase 8: plan workflows
 - Phase 9: health-record workflows
 - Phase 13: progress analytics

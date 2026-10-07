@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import in.aarogya.identity.service.AccountExistsException;
 import in.aarogya.identity.service.InvalidRefreshTokenException;
+import in.aarogya.meals.service.FoodNotLoggableException;
+import in.aarogya.meals.service.MealEntryNotFoundException;
 import in.aarogya.nutrition.service.FoodNotFoundException;
 import in.aarogya.profile.service.ProfileIncompleteException;
 
@@ -38,9 +40,18 @@ public class ApiExceptionHandler {
         );
     }
 
-    @ExceptionHandler(FoodNotFoundException.class)
-    ResponseEntity<Map<String, Object>> foodNotFound(FoodNotFoundException exception) {
-        return response(HttpStatus.NOT_FOUND, "FOOD_NOT_FOUND", exception.getMessage());
+    @ExceptionHandler(FoodNotLoggableException.class)
+    ResponseEntity<Map<String, Object>> foodNotLoggable(FoodNotLoggableException exception) {
+        return response(
+            HttpStatus.UNPROCESSABLE_ENTITY,
+            "FOOD_NOT_LOGGABLE",
+            exception.getMessage()
+        );
+    }
+
+    @ExceptionHandler({FoodNotFoundException.class, MealEntryNotFoundException.class})
+    ResponseEntity<Map<String, Object>> notFound(RuntimeException exception) {
+        return response(HttpStatus.NOT_FOUND, "NOT_FOUND", exception.getMessage());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
