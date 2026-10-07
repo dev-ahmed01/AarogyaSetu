@@ -93,7 +93,7 @@ public class AuthService {
                 "LOGIN",
                 "FAILURE",
                 email,
-                "{"reason":"bad_credentials"}"
+                "{\"reason\":\"bad_credentials\"}"
             );
             throw exception;
         }
