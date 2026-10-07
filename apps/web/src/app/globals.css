@@ -3347,3 +3347,422 @@ textarea:focus-visible {
     flex-direction: column;
   }
 }
+
+
+/* Phase 8 — draft meal plans and smart suggestions */
+
+.planControlBar {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-feature);
+  background: #fff;
+}
+
+.planControlBar label {
+  display: grid;
+  gap: 5px;
+}
+
+.planControlBar label > span {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.planControlBar input {
+  min-height: 40px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-weight: 800;
+}
+
+.planControlBar__actions {
+  display: flex;
+  gap: 10px;
+}
+
+.planWorkspace {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(330px, 0.75fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.planMain {
+  min-width: 0;
+}
+
+.planSummary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-feature);
+  background: #fff;
+}
+
+.planSummary > div {
+  min-height: 92px;
+  padding: 18px;
+  display: grid;
+  align-content: center;
+  gap: 6px;
+  border-right: 1px solid var(--border);
+}
+
+.planSummary > div:last-child {
+  border-right: 0;
+}
+
+.planSummary span {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.planSummary strong {
+  font-size: 12px;
+}
+
+.planMealList {
+  margin-top: 14px;
+  display: grid;
+  gap: 14px;
+}
+
+.planMealCard {
+  padding: 22px;
+  display: grid;
+  grid-template-columns: minmax(180px, 0.9fr) minmax(210px, 0.8fr) minmax(260px, 1.3fr);
+  gap: 24px;
+  align-items: start;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-feature);
+  background: #fff;
+}
+
+.planMealCard__meal h2 {
+  margin: 7px 0 0;
+  font-family: var(--font-display);
+  font-size: 24px;
+  line-height: 1.08;
+}
+
+.planMealCard__meal p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.planMealCard__metrics {
+  display: grid;
+  gap: 8px;
+}
+
+.planMealCard__metrics > div {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.planMealCard__metrics > div:last-child {
+  border-bottom: 0;
+}
+
+.planMealCard__metrics span,
+.planMealCard__why > span {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.planMealCard__metrics strong {
+  font-size: 11px;
+}
+
+.planMealCard__why {
+  min-width: 0;
+}
+
+.planMealCard__why p {
+  margin: 9px 0 0;
+  color: var(--text);
+  font-size: 11px;
+  line-height: 1.58;
+}
+
+.planMealCard__why small {
+  display: block;
+  margin-top: 10px;
+  color: var(--muted-light);
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.planMealCard > .quietLink {
+  grid-column: 1 / -1;
+  width: fit-content;
+}
+
+.planTotalsNote {
+  margin-top: 14px;
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 28px;
+  border-radius: var(--radius-feature);
+  background: var(--surface-soft);
+}
+
+.planTotalsNote h2 {
+  margin: 7px 0 0;
+  font-family: var(--font-display);
+  font-size: 26px;
+  line-height: 1.1;
+}
+
+.planTotalsNote dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.planTotalsNote dl > div {
+  min-height: 68px;
+  padding: 12px;
+  display: grid;
+  align-content: center;
+  gap: 5px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: #fff;
+}
+
+.planTotalsNote dt {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.planTotalsNote dd {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.planNotices {
+  margin-top: 14px;
+  padding: 18px 22px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: #fff;
+}
+
+.planNotices p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.58;
+}
+
+.planNotices p + p {
+  margin-top: 7px;
+}
+
+.planEmpty {
+  min-height: 430px;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  padding: 42px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-feature);
+  background: #fff;
+  text-align: center;
+}
+
+.planEmpty h2 {
+  max-width: 620px;
+  margin: 8px 0 0;
+  font-family: var(--font-display);
+  font-size: 34px;
+  line-height: 1.08;
+}
+
+.planEmpty p {
+  max-width: 570px;
+  margin: 13px 0 22px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.smartSuggestionPanel {
+  position: sticky;
+  top: 92px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-feature);
+  background: #fff;
+}
+
+.smartSuggestionPanel__heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.smartSuggestionPanel__heading h2 {
+  margin: 7px 0 0;
+  font-family: var(--font-display);
+  font-size: 27px;
+  line-height: 1.08;
+}
+
+.smartSuggestionList {
+  margin-top: 20px;
+  display: grid;
+  gap: 10px;
+}
+
+.smartSuggestion {
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--canvas);
+}
+
+.smartSuggestion > div:first-child {
+  display: grid;
+  gap: 4px;
+}
+
+.smartSuggestion > div:first-child strong {
+  font-size: 12px;
+}
+
+.smartSuggestion > div:first-child span,
+.smartSuggestion__focus span,
+.smartSuggestion__focus small {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.smartSuggestion__focus {
+  margin-top: 12px;
+  padding-top: 11px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 12px;
+  border-top: 1px solid var(--border);
+}
+
+.smartSuggestion__focus strong {
+  font-size: 11px;
+}
+
+.smartSuggestion__focus small {
+  grid-column: 1 / -1;
+}
+
+.smartSuggestion p {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.smartSuggestionPanel__empty {
+  margin: 20px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.smartSuggestionPanel__link {
+  display: inline-block;
+  margin-top: 18px;
+}
+
+@media (max-width: 1080px) {
+  .planWorkspace {
+    grid-template-columns: 1fr;
+  }
+
+  .smartSuggestionPanel {
+    position: static;
+  }
+
+  .planMealCard {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .planMealCard__why {
+    grid-column: 1 / -1;
+  }
+
+  .planSummary {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .planSummary > div:nth-child(2) {
+    border-right: 0;
+  }
+
+  .planSummary > div:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+@media (max-width: 760px) {
+  .planControlBar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .planControlBar__actions {
+    flex-direction: column-reverse;
+  }
+
+  .planControlBar__actions .button {
+    width: 100%;
+  }
+
+  .planSummary,
+  .planMealCard,
+  .planTotalsNote,
+  .planTotalsNote dl {
+    grid-template-columns: 1fr;
+  }
+
+  .planSummary > div {
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .planSummary > div:last-child {
+    border-bottom: 0;
+  }
+
+  .planMealCard__why {
+    grid-column: auto;
+  }
+
+  .planMealCard > .quietLink {
+    grid-column: auto;
+  }
+}

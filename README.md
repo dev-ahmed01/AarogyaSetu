@@ -8,7 +8,7 @@ The product explores how a digital-health platform could responsibly extend into
 
 ## Phase status
 
-**Phase 7/16 — Personalized Nutrition Engine: complete**
+**Phase 8/16 — Diet Plans & Smart Food Suggestions: complete**
 
 See [docs/ROADMAP.md](docs/ROADMAP.md) for the full delivery sequence.
 
@@ -26,7 +26,7 @@ Authenticated:
 - `/foods` — source-aware food knowledge library
 - `/meals` — full daily meal logging, history, favourites and recent foods
 - `/guidance` — explainable personalized recommendation detail
-- `/plans` — diet-plan workspace foundation
+- `/plans` — smart food suggestions and persisted draft meal sketches
 - `/health` — health-record workspace foundation
 - `/progress` — longitudinal progress workspace foundation
 
@@ -101,6 +101,20 @@ Authenticated:
 - no calorie-deficit prescription for weight-management goals
 - `/guidance` explanation surface with rule/reason/evidence visibility
 
+### Diet plans & smart food suggestions
+
+- source-referenced candidate foods only
+- diet-pattern and allergen filtering before ranking
+- fibre/protein focus derived from Phase 7 reason codes
+- balanced fallback without inventing a nutrient target
+- deterministic meal/category affinity and variety heuristics
+- persisted four-slot draft meal sketches
+- food/portion/source/nutrient snapshots in each plan item
+- regenerating a date archives the prior draft
+- draft totals labelled as example totals, not intake targets
+- Jain automatic planning explicitly disabled until ingredient-level constraints are modeled
+- regional ranking deliberately deferred to Phase 11
+
 ## Data provenance
 
 The prototype keeps nutrition sources explicit.
@@ -130,6 +144,7 @@ V3__health_profiles_and_consent.sql
 V4__nutrition_catalog.sql
 V5__meal_logging.sql
 V6__recommendation_engine.sql
+V7__diet_plans.sql
 ```
 
 ## Nutrition and meal endpoints
@@ -152,6 +167,11 @@ PUT    /api/meals/favorites/{foodSlug}
 DELETE /api/meals/favorites/{foodSlug}
 
 GET /api/recommendations/today?date=YYYY-MM-DD
+
+GET    /api/plans/day?date=YYYY-MM-DD
+GET    /api/plans/suggestions?date=YYYY-MM-DD&limit=6
+POST   /api/plans/generate
+DELETE /api/plans/{planId}
 ```
 
 Meal history is snapshot-based: later catalog edits do not silently rewrite previously saved nutrient totals. Recommendation responses carry rule/version/reason/evidence metadata rather than returning an opaque score.
@@ -185,6 +205,7 @@ See:
 - [Nutrition catalog](docs/NUTRITION_CATALOG.md)
 - [Meal logging](docs/MEAL_LOGGING.md)
 - [Recommendation engine](docs/RECOMMENDATION_ENGINE.md)
+- [Diet plans & suggestions](docs/DIET_PLANS.md)
 
 ## Local development
 

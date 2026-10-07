@@ -16,6 +16,7 @@ import in.aarogya.identity.service.InvalidRefreshTokenException;
 import in.aarogya.meals.service.FoodNotLoggableException;
 import in.aarogya.meals.service.MealEntryNotFoundException;
 import in.aarogya.nutrition.service.FoodNotFoundException;
+import in.aarogya.plans.service.PlanGenerationUnavailableException;
 import in.aarogya.profile.service.ProfileIncompleteException;
 
 @RestControllerAdvice
@@ -52,6 +53,17 @@ public class ApiExceptionHandler {
     @ExceptionHandler({FoodNotFoundException.class, MealEntryNotFoundException.class})
     ResponseEntity<Map<String, Object>> notFound(RuntimeException exception) {
         return response(HttpStatus.NOT_FOUND, "NOT_FOUND", exception.getMessage());
+    }
+
+    @ExceptionHandler(PlanGenerationUnavailableException.class)
+    ResponseEntity<Map<String, Object>> planUnavailable(
+        PlanGenerationUnavailableException exception
+    ) {
+        return response(
+            HttpStatus.UNPROCESSABLE_ENTITY,
+            "PLAN_GENERATION_UNAVAILABLE",
+            exception.getMessage()
+        );
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

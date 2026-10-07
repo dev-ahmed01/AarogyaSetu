@@ -16,6 +16,10 @@ public interface FoodRepository extends JpaRepository<Food, UUID> {
 
     Optional<Food> findBySlugAndActiveTrue(String slug);
 
+    List<Food> findByActiveTrueAndNutrientStatusOrderByCanonicalNameAsc(
+        String nutrientStatus
+    );
+
     @Query("""
         select distinct f
         from Food f

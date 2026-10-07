@@ -91,6 +91,28 @@ Observation + reason code + safety class + evidence
 
 The browser does not independently calculate personalized guidance. External dietary references and Aarogya-specific product heuristics remain explicitly separated.
 
+## Plan-generation architecture
+
+The plans module consumes recommendation output but does not modify recommendation rules.
+
+```text
+Recommendation assessment
+        +
+Profile diet/allergy context
+        +
+Nutrition catalog
+        ↓
+Safety filter
+        ↓
+Deterministic ranking
+        ↓
+Suggestions / persisted plan snapshot
+```
+
+Plan items snapshot source and nutrient values so a later catalog update does not silently rewrite the artifact.
+
+Regional ranking is deliberately outside this module until the regional-intelligence phase.
+
 ## Health-data safety
 
 This application is a wellness/research prototype. It does not diagnose conditions or prescribe medical treatment.

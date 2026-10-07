@@ -1,12 +1,10 @@
-import { PlaceholderPage } from "@/components/placeholder-page";
+import { AppShell } from "@/components/app-shell";
+import { PlansClient } from "@/components/plans-client";
 
 export default function PlansPage() {
   return (
-    <PlaceholderPage
-      eyebrow="Plans"
-      title="Diet plans"
-      description="Personalized meal planning will live here once profile, nutrition and recommendation foundations are ready."
-      nextPhase="Phase 8"
-    />
+    <AppShell>
+      <PlansClient />
+    </AppShell>
   );
 }

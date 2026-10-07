@@ -61,7 +61,13 @@
     └── edit / remove
 
 /plans
-└── diet-plan workspace placeholder
+└── smart planning workspace
+    ├── plan date
+    ├── persisted draft meal sketch
+    ├── example nutrient totals
+    ├── per-item explanation/provenance
+    ├── regenerate / clear draft
+    └── flexible smart food suggestions
 
 /health
 └── health-record workspace placeholder
@@ -159,9 +165,16 @@ Guidance is deliberately not a primary navigation destination. Today surfaces on
 
 The detailed view exposes reasoning and evidence instead of a score-first interface.
 
+## Plan hierarchy
+
+Plans intentionally separate a structured example day from a flexible candidate list.
+
+The draft meal sketch is a planning artifact, not a meal-log mutation. Example nutrient totals describe the generated portions and are never presented as prescribed daily targets.
+
+Each item retains a "Why this appeared" explanation so Phase 7 reasoning remains visible after food ranking.
+
 ## Future route ownership
 
-- Phase 8: plan workflows
 - Phase 9: health-record workflows
 - Phase 13: progress analytics
 
