@@ -34,15 +34,44 @@ class LongitudinalAnalyticsServiceTests {
         var userId = UUID.randomUUID();
         var asOf = LocalDate.of(2026, 10, 7);
 
+        var currentOne = entry(
+            LocalDate.of(2026, 10, 6),
+            "LUNCH",
+            "1000",
+            "40",
+            "15"
+        );
+        var currentTwo = entry(
+            LocalDate.of(2026, 10, 7),
+            "DINNER",
+            "2000",
+            "60",
+            "25"
+        );
+        var previousOne = entry(
+            LocalDate.of(2026, 9, 29),
+            "LUNCH",
+            "900",
+            "35",
+            "12"
+        );
+        var previousTwo = entry(
+            LocalDate.of(2026, 9, 30),
+            "DINNER",
+            "1100",
+            "45",
+            "18"
+        );
+
         when(meals.findByUser_IdAndMealDateBetweenOrderByMealDateDescCreatedAtAsc(
             userId,
             LocalDate.of(2026, 9, 24),
             asOf
         )).thenReturn(List.of(
-            entry(LocalDate.of(2026, 10, 6), "LUNCH", "1000", "40", "15"),
-            entry(LocalDate.of(2026, 10, 7), "DINNER", "2000", "60", "25"),
-            entry(LocalDate.of(2026, 9, 29), "LUNCH", "900", "35", "12"),
-            entry(LocalDate.of(2026, 9, 30), "DINNER", "1100", "45", "18")
+            currentOne,
+            currentTwo,
+            previousOne,
+            previousTwo
         ));
 
         when(health.consent(userId)).thenReturn(
