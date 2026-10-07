@@ -8,7 +8,9 @@ The product explores how a digital-health platform could responsibly extend into
 
 ## Phase status
 
-**Phase 15/16 — Research & Evaluation Module: complete**
+**Phase 16/16 — Production Hardening, Testing & Release Readiness: complete**
+
+**Release: Aarogya v1.0.0 academic research prototype**
 
 See [docs/ROADMAP.md](docs/ROADMAP.md) for the full delivery sequence.
 
@@ -35,6 +37,27 @@ Authenticated:
 - `/research` — admin-only privacy-safe research evaluation and aggregate export
 
 ## Implemented foundation
+
+### Production hardening & privacy controls
+
+- fail-closed production configuration guard
+- secure-cookie and same-site deployment requirements
+- authentication endpoint rate limiting
+- minimized JWT payloads with current-role database lookup
+- hashed failed-login email audit fingerprints
+- API/web response security headers
+- graceful API shutdown and public readiness/liveness probes
+- bounded database connection-pool configuration
+- Flyway clean disabled and validate-on-migrate enabled
+- personal-data JSON export
+- password-confirmed USER account deletion
+- audit anonymization before account deletion
+- non-root API and web runtime containers
+- full-stack Docker Compose
+- PostgreSQL-backed CI application-context test
+- Docker/Compose build verification in CI
+- Dependabot coverage for npm, Maven and GitHub Actions
+- Spring Boot 3.5.x release line and maintained Next.js 15.5.x backport line
 
 ### Authentication & security
 
@@ -346,6 +369,9 @@ POST /api/research/events
 GET /api/admin/research/overview
 GET /api/admin/research/metrics
 GET /api/admin/research/export
+
+GET    /api/account/export
+DELETE /api/account
 ```
 
 Meal history is snapshot-based: later catalog edits do not silently rewrite previously saved nutrient totals. Recommendation responses carry rule/version/reason/evidence metadata rather than returning an opaque score.
@@ -387,6 +413,8 @@ See:
 - [Longitudinal analytics](docs/LONGITUDINAL_ANALYTICS.md)
 - [Nutritionist & admin operations](docs/ADMIN_OPERATIONS.md)
 - [Research & evaluation](docs/RESEARCH_EVALUATION.md)
+- [Release readiness](docs/RELEASE_READINESS.md)
+- [Deployment](docs/DEPLOYMENT.md)
 
 ## Local development
 
@@ -396,10 +424,20 @@ Prerequisites:
 - Maven 3.9+
 - Docker / Docker Compose
 
-### 1. Start PostgreSQL
+### Fastest: run the full stack
 
 ```bash
 cp .env.example .env
+docker compose up --build
+```
+
+Then open http://localhost:3000.
+
+### Manual development
+
+Start PostgreSQL:
+
+```bash
 docker compose up -d db
 ```
 

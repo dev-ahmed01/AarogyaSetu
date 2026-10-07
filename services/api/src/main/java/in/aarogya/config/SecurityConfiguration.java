@@ -1,5 +1,6 @@
 package in.aarogya.config;
 
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,13 +14,42 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import in.aarogya.security.AuthRateLimitFilter;
 import in.aarogya.security.JsonAccessDeniedHandler;
 import in.aarogya.security.JsonAuthenticationEntryPoint;
 import in.aarogya.security.JwtAuthenticationFilter;
+import in.aarogya.security.SecurityHeadersFilter;
 
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfiguration {
+
+    @Bean
+    FilterRegistrationBean<JwtAuthenticationFilter> disableJwtServletRegistration(
+        JwtAuthenticationFilter filter
+    ) {
+        var registration = new FilterRegistrationBean<>(filter);
+        registration.setEnabled(false);
+        return registration;
+    }
+
+    @Bean
+    FilterRegistrationBean<AuthRateLimitFilter> disableRateLimitServletRegistration(
+        AuthRateLimitFilter filter
+    ) {
+        var registration = new FilterRegistrationBean<>(filter);
+        registration.setEnabled(false);
+        return registration;
+    }
+
+    @Bean
+    FilterRegistrationBean<SecurityHeadersFilter> disableHeadersServletRegistration(
+        SecurityHeadersFilter filter
+    ) {
+        var registration = new FilterRegistrationBean<>(filter);
+        registration.setEnabled(false);
+        return registration;
+    }
 
     @Bean
     PasswordEncoder passwordEncoder() {
@@ -37,6 +67,8 @@ public class SecurityConfiguration {
     SecurityFilterChain securityFilterChain(
         HttpSecurity http,
         JwtAuthenticationFilter jwtAuthenticationFilter,
+        AuthRateLimitFilter authRateLimitFilter,
+        SecurityHeadersFilter securityHeadersFilter,
         JsonAuthenticationEntryPoint authenticationEntryPoint,
         JsonAccessDeniedHandler accessDeniedHandler
     ) throws Exception {
@@ -51,7 +83,7 @@ public class SecurityConfiguration {
                 .accessDeniedHandler(accessDeniedHandler)
             )
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/api/status", "/actuator/health", "/actuator/info").permitAll()
+                .requestMatchers("/api/status", "/actuator/health", "/actuator/health/**", "/actuator/info").permitAll()
                 .requestMatchers(
                     "/api/auth/register",
                     "/api/auth/login",
@@ -64,6 +96,14 @@ public class SecurityConfiguration {
             .addFilterBefore(
                 jwtAuthenticationFilter,
                 UsernamePasswordAuthenticationFilter.class
+            )
+            .addFilterBefore(
+                authRateLimitFilter,
+                JwtAuthenticationFilter.class
+            )
+            .addFilterBefore(
+                securityHeadersFilter,
+                AuthRateLimitFilter.class
             )
             .build();
     }

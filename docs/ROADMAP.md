@@ -15,4 +15,13 @@
 - [x] Phase 13 — Health dashboard & longitudinal analytics
 - [x] Phase 14 — Nutritionist/admin console
 - [x] Phase 15 — Research & evaluation module
-- [ ] Phase 16 — Hardening, testing & production readiness
+- [x] Phase 16 — Hardening, testing & production readiness
+
+## Release state
+
+Aarogya v1.0.0 — 16 / 16 phases complete.
+
+The completed repository is a deployment-ready academic research prototype.
+
+See RELEASE_READINESS.md for the final release gate and security boundaries.
+See DEPLOYMENT.md for local/full-stack and production deployment guidance.

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import { AccountDataControls } from "@/components/account-data-controls";
 import { PageHeader } from "@/components/page-header";
 import { StatusChip, Surface } from "@/components/ui";
 import {
@@ -210,6 +211,8 @@ export function ProfileClient() {
             {researchConsent?.policyVersion ?? "—"}.
           </p>
         </Surface>
+
+        <AccountDataControls />
 
         <Surface className="profileCard">
           <span className="cardEyebrow">Goals</span>

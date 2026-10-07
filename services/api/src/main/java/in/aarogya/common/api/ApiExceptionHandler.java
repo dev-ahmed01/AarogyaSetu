@@ -90,6 +90,11 @@ public class ApiExceptionHandler {
         return response(HttpStatus.BAD_REQUEST, "BAD_REQUEST", exception.getMessage());
     }
 
+    @ExceptionHandler(IllegalStateException.class)
+    ResponseEntity<Map<String, Object>> conflict(IllegalStateException exception) {
+        return response(HttpStatus.CONFLICT, "CONFLICT", exception.getMessage());
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     ResponseEntity<Map<String, Object>> validation(MethodArgumentNotValidException exception) {
         var fields = new LinkedHashMap<String, String>();

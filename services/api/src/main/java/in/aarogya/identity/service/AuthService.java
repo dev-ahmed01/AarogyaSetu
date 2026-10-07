@@ -73,7 +73,7 @@ public class AuthService {
             user,
             "ACCOUNT_REGISTERED",
             "SUCCESS",
-            email,
+            "account:" + user.getId(),
             null
         );
 
@@ -92,7 +92,7 @@ public class AuthService {
                 null,
                 "LOGIN",
                 "FAILURE",
-                email,
+                "email-sha256:" + tokenHashingService.sha256(email),
                 "{\"reason\":\"bad_credentials\"}"
             );
             throw exception;
@@ -107,7 +107,7 @@ public class AuthService {
             user,
             "LOGIN",
             "SUCCESS",
-            email,
+            "account:" + user.getId(),
             null
         );
 
@@ -139,7 +139,7 @@ public class AuthService {
                 user,
                 "TOKEN_REFRESH",
                 "SUCCESS",
-                user.getEmail(),
+                "account:" + user.getId(),
                 null
             );
 
@@ -165,7 +165,7 @@ public class AuthService {
                     session.getUser(),
                     "LOGOUT",
                     "SUCCESS",
-                    session.getUser().getEmail(),
+                    "account:" + session.getUser().getId(),
                     null
                 );
             });

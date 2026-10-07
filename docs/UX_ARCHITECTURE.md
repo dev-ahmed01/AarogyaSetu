@@ -24,7 +24,10 @@
 /profile
 └── current profile
     ├── personalization state
-    ├── consent state
+    ├── personalization consent
+    ├── research participation consent
+    ├── personal-data export
+    ├── password-confirmed account deletion (USER)
     ├── goals
     └── self-reported safety context
 
@@ -283,6 +286,18 @@ Metric definitions are visible on the same screen so a researcher can understand
 
 The route never provides drill-down to an individual participant, meal record or health record.
 
-## Future route ownership
+## Data-control hierarchy
 
-Production hardening is deferred to Phase 16.
+Data controls live on Profile rather than becoming another navigation destination.
+
+Export is available as a quiet secondary action. Account deletion uses a separate confirmation state and current-password verification so it cannot be confused with consent withdrawal.
+
+Research withdrawal, personalization pause and account deletion remain distinct actions with distinct consequences.
+
+Staff accounts see the export control but not self-service deletion because attributable content-review history requires operator-managed offboarding.
+
+## Release UX boundary
+
+Phase 16 does not add a new dashboard. Hardening remains largely invisible unless a security/configuration boundary is reached. The existing product hierarchy therefore stays stable at release.
+
+The repository is now at the end of the planned 16-phase route architecture.

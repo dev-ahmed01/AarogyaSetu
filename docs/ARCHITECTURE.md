@@ -39,6 +39,8 @@ The API will evolve into these bounded modules:
 - engagement
 - analytics
 - administration
+- research-evaluation
+- account-data
 - audit
 
 Cross-module communication should use explicit application services and domain contracts. Controllers must not directly coordinate persistence across unrelated modules.
@@ -265,6 +267,40 @@ Metric definitions are versioned in the database. The pre/post metric uses the p
 Dietary-pattern cohorts and all outcome/exposure cells below five participants are suppressed.
 
 The research module does not expose raw health records, allergies, health contexts, individual meal logs or personalized recommendation details.
+
+## Release/runtime architecture
+
+Phase 16 adds a fail-closed production layer around the existing modular monolith.
+
+~~~text
+browser
+   ↓
+Next.js standalone runtime (non-root)
+   ↓ credentialed HTTPS
+Spring Boot API (non-root)
+   ├── security headers
+   ├── auth rate limiter
+   ├── JWT/current-account authentication
+   ├── application modules
+   ├── readiness/liveness
+   └── graceful shutdown
+            ↓
+      PostgreSQL 16
+      ├── Flyway migrate + validate
+      └── Hibernate schema validate
+~~~
+
+Production startup validates the security-sensitive environment before accepting traffic. Development defaults are allowed only outside APP_ENV=production.
+
+The cookie-authenticated browser topology is intentionally same-site. SameSite=None is rejected in production until an explicit CSRF-token design exists.
+
+Access JWTs contain only subject/token metadata. Current user role and enabled state are loaded from the database during request authentication.
+
+Authentication abuse limiting is local to an API instance; a horizontally scaled public deployment should move that policy to shared infrastructure.
+
+Personal-data export is an authenticated self-service read model over user-owned records. USER deletion verifies the current password, anonymizes retained audit metadata, and then uses database cascades. Staff deletion is operator-controlled because review history is attributable.
+
+CI now validates three layers: Next.js production build, Spring Boot against real PostgreSQL/Flyway migrations, and production container/Compose builds.
 
 ## Health-data safety
 

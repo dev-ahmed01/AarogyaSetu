@@ -6577,3 +6577,82 @@ textarea:focus-visible {
     flex-direction: column;
   }
 }
+
+
+/* Phase 16 — personal data controls */
+
+.accountDataControlGrid {
+  margin-top: 17px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.accountDataControlGrid > section {
+  padding: 16px;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--canvas);
+}
+
+.accountDataControlGrid strong {
+  font-size: 10px;
+}
+
+.accountDataControlGrid p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.6;
+}
+
+.accountDeleteForm {
+  display: grid;
+  gap: 10px;
+}
+
+.accountDeleteForm label {
+  display: grid;
+  gap: 6px;
+}
+
+.accountDeleteForm label > span {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 750;
+}
+
+.accountDeleteForm input {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+}
+
+.accountDeleteForm input:focus {
+  outline: 2px solid rgba(79, 125, 97, 0.16);
+  border-color: var(--primary);
+}
+
+.accountDeleteForm > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.accountDataError {
+  margin-top: 13px;
+}
+
+@media (max-width: 720px) {
+  .accountDataControlGrid {
+    grid-template-columns: 1fr;
+  }
+}
