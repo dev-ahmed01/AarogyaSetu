@@ -58,7 +58,7 @@ public class SecurityConfiguration {
                     "/api/auth/refresh",
                     "/api/auth/logout"
                 ).permitAll()
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/admin/**").hasAnyRole("ADMIN", "NUTRITIONIST")
                 .anyRequest().authenticated()
             )
             .addFilterBefore(

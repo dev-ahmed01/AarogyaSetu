@@ -49,6 +49,9 @@ public class Food {
     @Column(name = "nutrient_status", nullable = false, length = 50)
     private String nutrientStatus;
 
+    @Column(name = "curation_status", nullable = false, length = 40)
+    private String curationStatus;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "source_id")
     private NutritionSource source;
@@ -93,6 +96,7 @@ public class Food {
     void onCreate() {
         var now = Instant.now();
         if (id == null) id = UUID.randomUUID();
+        if (curationStatus == null) curationStatus = "NEEDS_REVIEW";
         if (createdAt == null) createdAt = now;
         updatedAt = now;
     }
@@ -100,6 +104,37 @@ public class Food {
     @PreUpdate
     void onUpdate() {
         updatedAt = Instant.now();
+    }
+
+    public void applyCuratedNutrition(
+        NutritionSource source,
+        String sourceFoodRef
+    ) {
+        this.source = source;
+        this.sourceFoodRef = sourceFoodRef;
+        this.nutrientStatus = "SOURCE_REFERENCED";
+        this.curationStatus = "IN_REVIEW";
+        this.active = false;
+    }
+
+    public void markReadyToPublish() {
+        this.curationStatus = "READY_TO_PUBLISH";
+        this.active = false;
+    }
+
+    public void publish() {
+        this.curationStatus = "PUBLISHED";
+        this.active = true;
+    }
+
+    public void unpublish() {
+        this.curationStatus = "UNPUBLISHED";
+        this.active = false;
+    }
+
+    public void returnForChanges() {
+        this.curationStatus = "NEEDS_REVIEW";
+        this.active = false;
     }
 
     public UUID getId() { return id; }
@@ -111,6 +146,7 @@ public class Food {
     public String getDietaryClassification() { return dietaryClassification; }
     public String getPrimaryRegion() { return primaryRegion; }
     public String getNutrientStatus() { return nutrientStatus; }
+    public String getCurationStatus() { return curationStatus; }
     public NutritionSource getSource() { return source; }
     public String getSourceFoodRef() { return sourceFoodRef; }
     public boolean isActive() { return active; }

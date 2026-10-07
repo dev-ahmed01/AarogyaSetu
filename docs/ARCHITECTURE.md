@@ -199,6 +199,43 @@ Phase 13 deliberately adds no analytics fact table: the current calculations are
 
 Health analytics require HEALTH_RECORD_ANALYSIS consent and currently query only MANUAL BODY_WEIGHT observations in kg. Synthetic ABDM_MOCK values are excluded before calculation, and the series is not interpreted clinically.
 
+## Administration architecture
+
+Phase 14 adds an operational boundary around nutrition content rather than exposing generic entity CRUD.
+
+~~~text
+NUTRITIONIST
+    ↓
+curation queue
+    ↓
+provenance + core nutrient review
+    ↓
+READY_TO_PUBLISH
+    ↓
+ADMIN
+    ↓
+PUBLISHED
+~~~
+
+Publication state is separate from nutrient-data state.
+
+Published food cannot be edited in place. It must first be unpublished, then curated, reviewed and republished. Saving curated nutrition makes the catalog food inactive until final publication, preventing half-reviewed values from becoming loggable.
+
+Every review transition is written to the append-only `food_curation_reviews` table. Sensitive operational actions also create security audit events.
+
+The server enforces publish-ready invariants:
+
+- FOOD_COMPOSITION provenance source,
+- source record/reference identifier,
+- default portion,
+- energy, protein, carbohydrate, fat and fibre with expected units.
+
+Nutritionists can curate and mark ready. Only admins can publish, unpublish, return for changes, register provenance sources and inspect the operational audit.
+
+The operations module does not provide staff access to individual health records, meal logs or personalized recommendations.
+
+Historical meal and plan snapshots remain immutable even when a current catalog food is unpublished or re-curated.
+
 ## Health-data safety
 
 This application is a wellness/research prototype. It does not diagnose conditions or prescribe medical treatment.

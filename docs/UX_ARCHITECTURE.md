@@ -114,6 +114,21 @@
     ├── deterministic descriptive insights
     ├── consent-aware manual health series
     └── data-quality boundary
+
+/admin
+└── staff operations workspace
+    ├── Review queue
+    │   ├── food list by curation state
+    │   ├── selected food provenance
+    │   ├── five core nutrient fields
+    │   ├── default portion
+    │   ├── role-appropriate review action
+    │   └── append-only review history
+    ├── Sources
+    │   ├── provenance registry
+    │   └── admin-only source creation
+    └── Audit (ADMIN)
+        └── recent operational events
 ```
 
 ## Primary product flow

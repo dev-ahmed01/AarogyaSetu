@@ -42,6 +42,23 @@ public class FoodNutrient {
     protected FoodNutrient() {
     }
 
+    public FoodNutrient(
+        Food food,
+        String nutrientCode,
+        BigDecimal amountPer100g,
+        String unit,
+        NutritionSource source,
+        String sourceFoodRef
+    ) {
+        this.id = UUID.randomUUID();
+        this.food = food;
+        this.nutrientCode = nutrientCode;
+        this.amountPer100g = amountPer100g;
+        this.unit = unit;
+        this.source = source;
+        this.sourceFoodRef = sourceFoodRef;
+    }
+
     public UUID getId() { return id; }
     public String getNutrientCode() { return nutrientCode; }
     public BigDecimal getAmountPer100g() { return amountPer100g; }

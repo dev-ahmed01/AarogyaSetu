@@ -8,7 +8,7 @@ The product explores how a digital-health platform could responsibly extend into
 
 ## Phase status
 
-**Phase 13/16 — Health Dashboard & Longitudinal Analytics: complete**
+**Phase 14/16 — Nutritionist & Admin Console: complete**
 
 See [docs/ROADMAP.md](docs/ROADMAP.md) for the full delivery sequence.
 
@@ -31,6 +31,7 @@ Authenticated:
 - `/alerts` — focused alert inbox with snooze, acknowledge, dismiss and history
 - `/progress` — weekly consistency goal, forgiving streaks and milestone achievements
 - `/analytics` — 7/30-day descriptive nutrition trends, comparison windows and consent-aware manual health series
+- `/admin` — role-gated nutrition content review, provenance, publication and audit operations
 
 ## Implemented foundation
 
@@ -173,6 +174,23 @@ Authenticated:
 - no points economy, leaderboard or streak-loss punishment
 - `/progress` now uses real meal-log history instead of a placeholder
 
+### Nutritionist & admin operations
+
+- `NUTRITIONIST` review role and `ADMIN` publication role
+- append-only food curation review history
+- separate curation status from nutrient status
+- published foods cannot be edited in place
+- curated nutrition requires a `FOOD_COMPOSITION` source and source record reference
+- five core per-100g nutrient requirements before publication
+- default portion requirement before publication
+- nutritionist `READY_TO_PUBLISH` handoff
+- admin-only publish, unpublish and return-for-changes actions
+- admin-only provenance-source registration
+- admin-only operational audit view
+- nutritionists do not receive platform user / meal / health-record aggregate counts
+- no individual health-record or meal-log browsing in the operations console
+- historical meal and plan snapshots remain unchanged after catalog edits
+
 ### Longitudinal analytics
 
 - 7-day and 30-day current windows
@@ -223,6 +241,7 @@ V8__health_records_and_abdm.sql
 V9__nudges_and_alerts.sql
 V10__regional_dietary_intelligence.sql
 V11__goals_streaks_gamification.sql
+V12__admin_content_curation.sql
 ```
 
 ## Nutrition and meal endpoints
@@ -283,6 +302,20 @@ POST /api/progress/goals/meal-logging/resume
 
 GET /api/analytics/longitudinal?date=YYYY-MM-DD&window=7
 GET /api/analytics/longitudinal?date=YYYY-MM-DD&window=30
+
+GET  /api/admin/overview
+GET  /api/admin/foods
+GET  /api/admin/foods/{foodId}
+PUT  /api/admin/foods/{foodId}/curation
+POST /api/admin/foods/{foodId}/ready
+GET  /api/admin/sources
+
+# ADMIN only
+POST /api/admin/foods/{foodId}/publish
+POST /api/admin/foods/{foodId}/unpublish
+POST /api/admin/foods/{foodId}/return
+POST /api/admin/sources
+GET  /api/admin/audit
 ```
 
 Meal history is snapshot-based: later catalog edits do not silently rewrite previously saved nutrient totals. Recommendation responses carry rule/version/reason/evidence metadata rather than returning an opaque score.
@@ -322,6 +355,7 @@ See:
 - [Regional dietary intelligence](docs/REGIONAL_DIETARY_INTELLIGENCE.md)
 - [Goals, streaks & gentle gamification](docs/GOALS_STREAKS_GAMIFICATION.md)
 - [Longitudinal analytics](docs/LONGITUDINAL_ANALYTICS.md)
+- [Nutritionist & admin operations](docs/ADMIN_OPERATIONS.md)
 
 ## Local development
 

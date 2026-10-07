@@ -50,6 +50,25 @@ public interface FoodRepository extends JpaRepository<Food, UUID> {
         Pageable pageable
     );
 
+    @Query("""
+        select f
+        from Food f
+        where (
+            :query is null
+            or lower(f.canonicalName) like lower(concat('%', :query, '%'))
+            or lower(f.slug) like lower(concat('%', :query, '%'))
+            or lower(coalesce(f.primaryRegion, '')) like lower(concat('%', :query, '%'))
+          )
+          and (:curationStatus is null or f.curationStatus = :curationStatus)
+        """)
+    Page<Food> searchForCuration(
+        @Param("query") String query,
+        @Param("curationStatus") String curationStatus,
+        Pageable pageable
+    );
+
+    long countByCurationStatus(String curationStatus);
+
     @Query("select distinct f.categoryCode from Food f where f.active = true order by f.categoryCode")
     List<String> findDistinctCategories();
 

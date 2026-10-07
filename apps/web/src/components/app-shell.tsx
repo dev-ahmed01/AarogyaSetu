@@ -59,6 +59,18 @@ function AppShellInner({ children }: { children: ReactNode }) {
         </Link>
 
         <div className="appTopbar__meta">
+          {user.role !== "USER" ? (
+            <Link
+              className={
+                pathname === "/admin"
+                  ? "operationsTopbarLink is-active"
+                  : "operationsTopbarLink"
+              }
+              href="/admin"
+            >
+              Operations
+            </Link>
+          ) : null}
           <Link className="alertTopbarLink" href="/alerts">
             <span>Alerts</span>
             {alertCount > 0 ? <strong>{alertCount > 9 ? "9+" : alertCount}</strong> : null}

@@ -1,7 +1,6 @@
 package in.aarogya.security.domain;
 
 import java.time.Instant;
-import java.util.UUID;
 
 import in.aarogya.identity.domain.UserAccount;
 import jakarta.persistence.Column;
@@ -58,4 +57,12 @@ public class SecurityAuditEvent {
         this.metadataJson = metadataJson;
         this.occurredAt = Instant.now();
     }
+
+    public Long getId() { return id; }
+    public UserAccount getUser() { return user; }
+    public String getEventType() { return eventType; }
+    public String getEventOutcome() { return eventOutcome; }
+    public String getSubject() { return subject; }
+    public Instant getOccurredAt() { return occurredAt; }
+    public String getMetadataJson() { return metadataJson; }
 }

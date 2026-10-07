@@ -13,6 +13,6 @@
 - [x] Phase 11 — Regional dietary intelligence
 - [x] Phase 12 — Goals, streaks & gamification
 - [x] Phase 13 — Health dashboard & longitudinal analytics
-- [ ] Phase 14 — Nutritionist/admin console
+- [x] Phase 14 — Nutritionist/admin console
 - [ ] Phase 15 — Research & evaluation module
 - [ ] Phase 16 — Hardening, testing & production readiness

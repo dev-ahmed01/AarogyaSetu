@@ -37,6 +37,21 @@ public class FoodPortion {
     protected FoodPortion() {
     }
 
+    public FoodPortion(
+        Food food,
+        String label,
+        BigDecimal grams,
+        boolean defaultPortion,
+        int displayOrder
+    ) {
+        this.id = UUID.randomUUID();
+        this.food = food;
+        this.label = label;
+        this.grams = grams;
+        this.defaultPortion = defaultPortion;
+        this.displayOrder = displayOrder;
+    }
+
     public UUID getId() { return id; }
     public String getLabel() { return label; }
     public BigDecimal getGrams() { return grams; }

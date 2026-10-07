@@ -42,6 +42,27 @@ public class NutritionSource {
     protected NutritionSource() {
     }
 
+    public NutritionSource(
+        String sourceCode,
+        String name,
+        String versionLabel,
+        String sourceType,
+        String sourceUrl,
+        String licenseLabel,
+        String usageNote,
+        LocalDate retrievedOn
+    ) {
+        this.id = UUID.randomUUID();
+        this.sourceCode = sourceCode;
+        this.name = name;
+        this.versionLabel = versionLabel;
+        this.sourceType = sourceType;
+        this.sourceUrl = sourceUrl;
+        this.licenseLabel = licenseLabel;
+        this.usageNote = usageNote;
+        this.retrievedOn = retrievedOn;
+    }
+
     public UUID getId() { return id; }
     public String getSourceCode() { return sourceCode; }
     public String getName() { return name; }

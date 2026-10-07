@@ -5650,3 +5650,610 @@ textarea:focus-visible {
     flex-direction: column;
   }
 }
+
+
+/* Phase 14 — nutritionist/admin operations */
+
+.operationsTopbarLink {
+  min-height: 32px;
+  padding: 0 11px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-pill);
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.operationsTopbarLink:hover,
+.operationsTopbarLink.is-active {
+  background: var(--surface-soft);
+  color: var(--primary-dark);
+}
+
+.adminViewSwitch {
+  padding: 4px;
+  display: inline-flex;
+  gap: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: #fff;
+}
+
+.adminViewSwitch button {
+  min-height: 34px;
+  padding: 0 13px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 9px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.adminViewSwitch button.is-active {
+  background: var(--primary);
+  color: #fff;
+}
+
+.adminSummaryStrip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-feature);
+  background: #fff;
+}
+
+.adminSummaryStrip > div {
+  min-height: 84px;
+  padding: 16px 18px;
+  display: grid;
+  align-content: center;
+  gap: 5px;
+  border-right: 1px solid var(--border);
+}
+
+.adminSummaryStrip > div:last-child {
+  border-right: 0;
+}
+
+.adminSummaryStrip span {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.adminSummaryStrip strong {
+  font-family: var(--font-display);
+  font-size: 24px;
+}
+
+.adminQueueSection,
+.adminAuditSection {
+  margin-top: 18px;
+}
+
+.adminQueueToolbar {
+  padding: 14px;
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr) 190px auto;
+  align-items: end;
+  gap: 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: #fff;
+}
+
+.adminQueueToolbar label,
+.adminSourceCreate label,
+.adminCurationForm label {
+  display: grid;
+  gap: 6px;
+}
+
+.adminQueueToolbar label > span,
+.adminSourceCreate label > span,
+.adminCurationForm label > span {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 750;
+}
+
+.adminQueueToolbar input,
+.adminQueueToolbar select,
+.adminSourceCreate input,
+.adminSourceCreate select,
+.adminSourceCreate textarea,
+.adminCurationForm input,
+.adminCurationForm select,
+.adminCurationForm textarea {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+}
+
+.adminQueueToolbar input:focus,
+.adminQueueToolbar select:focus,
+.adminSourceCreate input:focus,
+.adminSourceCreate select:focus,
+.adminSourceCreate textarea:focus,
+.adminCurationForm input:focus,
+.adminCurationForm select:focus,
+.adminCurationForm textarea:focus {
+  outline: 2px solid rgba(79, 125, 97, 0.16);
+  border-color: var(--primary);
+}
+
+.adminReviewWorkspace {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: minmax(245px, 0.72fr) minmax(0, 1.65fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.adminFoodQueue,
+.adminFoodDetail,
+.adminSourceRegistry,
+.adminSourceCreate,
+.adminAuditSection,
+.adminAccessBoundary {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-feature);
+  background: #fff;
+}
+
+.adminFoodQueue {
+  overflow: hidden;
+}
+
+.adminFoodQueue__heading {
+  padding: 15px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.adminFoodQueue__heading strong {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.adminFoodQueueItem {
+  width: 100%;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.adminFoodQueueItem:last-child {
+  border-bottom: 0;
+}
+
+.adminFoodQueueItem:hover,
+.adminFoodQueueItem.is-active {
+  background: var(--surface-soft);
+}
+
+.adminFoodQueueItem > div:first-child {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.adminFoodQueueItem strong {
+  overflow: hidden;
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.adminFoodQueueItem span {
+  color: var(--muted);
+  font-size: 8px;
+}
+
+.adminFoodDetail {
+  min-height: 520px;
+  padding: 23px;
+}
+
+.adminFoodDetail__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.adminFoodDetail__header h2,
+.adminSourceCreate h2,
+.adminSectionHeading h2,
+.adminAccessBoundary h2 {
+  margin: 7px 0 0;
+  font-family: var(--font-display);
+  line-height: 1.08;
+}
+
+.adminFoodDetail__header h2 {
+  font-size: 31px;
+}
+
+.adminFoodDetail__header p {
+  margin: 9px 0 0;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.adminFoodDetail__status {
+  display: grid;
+  justify-items: end;
+  gap: 7px;
+}
+
+.adminFoodDetail__status > span {
+  color: var(--muted);
+  font-size: 8px;
+}
+
+.adminIntegrityRow {
+  margin-top: 19px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--canvas);
+}
+
+.adminIntegrityRow > div {
+  padding: 12px;
+  display: grid;
+  gap: 4px;
+  border-right: 1px solid var(--border);
+}
+
+.adminIntegrityRow > div:last-child {
+  border-right: 0;
+}
+
+.adminIntegrityRow span {
+  color: var(--muted);
+  font-size: 8px;
+}
+
+.adminIntegrityRow strong {
+  font-size: 10px;
+}
+
+.adminPublishedBoundary {
+  margin-top: 18px;
+  padding: 15px;
+  border-radius: var(--radius-card);
+  background: var(--surface-soft);
+}
+
+.adminPublishedBoundary strong {
+  font-size: 10px;
+}
+
+.adminPublishedBoundary p,
+.adminSourceCreate > p,
+.adminAccessBoundary p {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.adminCurationForm {
+  margin-top: 20px;
+  display: grid;
+  gap: 17px;
+}
+
+.adminFormGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.adminNutrientGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(100px, 1fr));
+  gap: 8px;
+}
+
+.adminNutrientGrid label > div {
+  position: relative;
+}
+
+.adminNutrientGrid input {
+  padding-right: 38px;
+}
+
+.adminNutrientGrid b {
+  position: absolute;
+  top: 50%;
+  right: 11px;
+  transform: translateY(-50%);
+  color: var(--muted);
+  font-size: 8px;
+}
+
+.adminReviewNote textarea {
+  resize: vertical;
+}
+
+.adminDecisionBar {
+  margin-top: 18px;
+  padding-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  border-top: 1px solid var(--border);
+}
+
+.adminReviewHistory {
+  margin-top: 24px;
+  padding-top: 19px;
+  border-top: 1px solid var(--border);
+}
+
+.adminSectionHeading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.adminSectionHeading h2 {
+  font-size: 28px;
+}
+
+.adminSectionHeading h3 {
+  margin: 6px 0 0;
+  font-family: var(--font-display);
+  font-size: 21px;
+}
+
+.adminSectionHeading > span {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.adminReviewHistory article,
+.adminAuditList article {
+  padding: 12px 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 5px 15px;
+  border-bottom: 1px solid var(--border);
+}
+
+.adminReviewHistory article > div,
+.adminAuditList article > div:first-child {
+  display: grid;
+  gap: 3px;
+}
+
+.adminReviewHistory article strong,
+.adminAuditList article strong {
+  font-size: 10px;
+}
+
+.adminReviewHistory article span,
+.adminReviewHistory article time,
+.adminAuditList article span,
+.adminAuditList article time {
+  color: var(--muted);
+  font-size: 8px;
+}
+
+.adminReviewHistory article p,
+.adminAuditList article p {
+  grid-column: 1 / -1;
+  margin: 1px 0 0;
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.55;
+}
+
+.adminReviewHistory__empty,
+.adminQueueEmpty {
+  padding: 18px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.adminSourcesWorkspace {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(270px, 0.75fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.adminSourceRegistry,
+.adminSourceCreate {
+  padding: 22px;
+}
+
+.adminSourceList {
+  margin-top: 17px;
+  display: grid;
+  gap: 8px;
+}
+
+.adminSourceList article {
+  padding: 14px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--canvas);
+}
+
+.adminSourceList article > div {
+  display: grid;
+  gap: 3px;
+}
+
+.adminSourceList strong {
+  font-size: 10px;
+}
+
+.adminSourceList span,
+.adminSourceList p {
+  color: var(--muted);
+  font-size: 8px;
+}
+
+.adminSourceList p {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.adminSourceCreate h2 {
+  font-size: 26px;
+}
+
+.adminSourceCreate form {
+  margin-top: 17px;
+  display: grid;
+  gap: 10px;
+}
+
+.adminAuditSection {
+  padding: 22px;
+}
+
+.adminAuditList {
+  margin-top: 17px;
+}
+
+.adminAuditList article > div:nth-child(2) {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.adminAccessBoundary {
+  padding: 28px;
+  background: var(--surface-soft);
+}
+
+.adminAccessBoundary h2 {
+  font-size: 29px;
+}
+
+@media (max-width: 980px) {
+  .adminReviewWorkspace,
+  .adminSourcesWorkspace {
+    grid-template-columns: 1fr;
+  }
+
+  .adminNutrientGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .adminSummaryStrip {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .adminSummaryStrip > div:nth-child(2) {
+    border-right: 0;
+  }
+
+  .adminSummaryStrip > div:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .adminQueueToolbar,
+  .adminFormGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .adminFoodDetail__header,
+  .adminSectionHeading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .adminFoodDetail__status {
+    justify-items: start;
+  }
+
+  .adminIntegrityRow {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .adminIntegrityRow > div:nth-child(2) {
+    border-right: 0;
+  }
+
+  .adminIntegrityRow > div:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+@media (max-width: 520px) {
+  .adminViewSwitch {
+    width: 100%;
+  }
+
+  .adminViewSwitch button {
+    flex: 1;
+  }
+
+  .adminSummaryStrip,
+  .adminIntegrityRow,
+  .adminNutrientGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .adminSummaryStrip > div,
+  .adminIntegrityRow > div {
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .adminSummaryStrip > div:last-child,
+  .adminIntegrityRow > div:last-child {
+    border-bottom: 0;
+  }
+
+  .adminFoodQueueItem {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .adminDecisionBar {
+    flex-direction: column;
+  }
+
+  .adminDecisionBar .button {
+    width: 100%;
+  }
+}
